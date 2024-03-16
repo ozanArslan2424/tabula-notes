@@ -16,7 +16,12 @@ import { DownloadMarkdownButton } from "../buttons/download-button";
 import { SavingButton } from "../buttons/saving-button";
 import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
@@ -94,7 +99,12 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
   if (editing) {
     return (
       <Card className="relative flex w-full flex-col items-center justify-center gap-4 bg-background pb-8 pt-4">
-        <Button className="absolute right-4 top-4" type="button" variant="custom_submit" onClick={handleTagChanges}>
+        <Button
+          className="absolute right-4 top-4"
+          type="button"
+          variant="custom_submit"
+          onClick={handleTagChanges}
+        >
           Kaydet
         </Button>
         <form className="mx-auto w-1/2 space-y-2" onSubmit={handleCreateTag}>

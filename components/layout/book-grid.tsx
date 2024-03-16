@@ -4,9 +4,10 @@ import { Book } from "@prisma/client";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { HomeLink, SettingsLink } from "../buttons/action-btns";
-import { BookCard, NewBookCard } from "../cards/book-card";
+import { CreateBookButton } from "../buttons/create-book";
+import { BookCard } from "../cards/book-card";
 
-type Props = { books: Book[] };
+type Props = { books: Book[] | undefined };
 
 export const BookCardsGrid = ({ books }: Props) => {
   const [searchValue, setSearchValue] = useState("");
@@ -16,6 +17,7 @@ export const BookCardsGrid = ({ books }: Props) => {
       <nav className="flex items-center gap-2">
         <HomeLink />
         <SettingsLink />
+        <CreateBookButton />
         <div className="relative">
           <Input
             onChange={(e) => setSearchValue(e.target.value)}
@@ -28,15 +30,20 @@ export const BookCardsGrid = ({ books }: Props) => {
           <SearchIcon size={12} className="absolute left-2 top-2" />
         </div>
       </nav>
-
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {books
-          .filter((book) => book.title.toLowerCase().indexOf(searchValue.toLowerCase()) > -1)
-          .map((book) => (
-            <BookCard key={book.id} book={book} />
-          ))}
-        <NewBookCard />
-      </div>
+      {books?.length === 0 && (
+        <div className="flex items-center justify-center rounded-lg border bg-card p-4 shadow">
+          <p className="text-muted-foreground">Henüz hiç kitap eklenmemiş.</p>
+        </div>
+      )}
+      {books !== undefined && (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {books
+            .filter((book) => book.title.toLowerCase().indexOf(searchValue.toLowerCase()) > -1)
+            .map((book) => (
+              <BookCard key={book.id} book={book} />
+            ))}
+        </div>
+      )}
     </div>
   );
 };

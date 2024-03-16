@@ -1,38 +1,12 @@
 "use server";
 import { db } from "@/lib/db";
+import { BookFormSchema } from "@/lib/schemas";
 import { TagType } from "@/lib/types";
 import { revalidatePath } from "next/cache";
+import * as z from "zod";
 import { getCurrentUser } from "./auth-read";
 
-export const changeBookProps = async ({
-  bookId,
-  title,
-  description,
-}: {
-  bookId: string;
-  title: string;
-  description: string;
-}) => {
-  try {
-    await db.book.update({
-      where: {
-        id: bookId,
-      },
-      data: {
-        title,
-        description,
-      },
-    });
-    return { success: "Kitap bilgileri değiştirildi." };
-  } catch (error) {
-    console.error("Failed to update:", error);
-    return { error: "Kitap güncellenemedi." };
-  } finally {
-    revalidatePath("/dash");
-  }
-};
-
-export const changeGroupTitle = async (groupId: number, title: string) => {
+export const updateGroupTitle = async (groupId: number, title: string) => {
   try {
     await db.group.update({
       where: {
@@ -44,8 +18,7 @@ export const changeGroupTitle = async (groupId: number, title: string) => {
     });
     return { success: "Grup ismi değiştirildi." };
   } catch (error) {
-    console.error("Failed to update:", error);
-    return { error: "İsim değiştirilemedi." };
+    console.error("Failed to change group title:", error);
   }
 };
 
@@ -87,12 +60,54 @@ export async function updateNoteTags({
             where: { name: tag.name },
             create: { name: tag.name, userId: user?.id! },
           })),
-          deleteMany: deletedTags.map((tag) => ({ name: tag.name })),
+          deleteMany: {
+            name: {
+              in: deletedTags.map((tag) => tag.name),
+            },
+          },
         },
       },
     });
   } catch (error) {
     console.error("Failed to update note tags:", error);
     return { error: "Etiketler (nedense) kaydedilemedi." };
+  }
+}
+
+export async function updateTask({ taskId, completed }: { taskId: number; completed: boolean }) {
+  try {
+    await db.task.update({
+      where: {
+        id: taskId,
+      },
+      data: {
+        completed,
+      },
+    });
+    return { success: "OKEYTOOO." };
+  } catch (error) {
+    console.error("Failed to update task:", error);
+    return { error: "Yapılacak madde güncellenemedi." };
+  }
+}
+
+export async function updateBookSettings(bookId: string, values: z.infer<typeof BookFormSchema>) {
+  try {
+    await db.book.update({
+      where: {
+        id: bookId,
+      },
+      data: {
+        title: values.title,
+        description: values.description,
+        hasTasks: values.hasTasks,
+      },
+    });
+    return { success: "Kitap ayarları güncellendi." };
+  } catch (error) {
+    console.error("Failed to update book settings:", error);
+    return { error: "Kitap ayarları güncellenemedi." };
+  } finally {
+    revalidatePath(`/dash/${bookId}`, "page");
   }
 }

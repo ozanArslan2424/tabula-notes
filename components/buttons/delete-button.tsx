@@ -10,6 +10,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Trash2Icon } from "lucide-react";
+import { Button } from "../ui/button";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
 
 type Props = {
@@ -22,7 +23,7 @@ export const DeleteNoteButton = ({ onClick }: Props) => {
       <AlertDialogTrigger asChild>
         <DropdownMenuItem className="space-x-2 text-red-500">
           <Trash2Icon size={14} />
-          <span>Notu sil</span>
+          <span>Grubu sil</span>
         </DropdownMenuItem>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -48,10 +49,9 @@ export const DeleteGroupButton = ({ onClick }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <DropdownMenuItem className="space-x-2 text-red-500">
+        <Button size="sm_icon" variant="ghost" className="hover:text-red-500">
           <Trash2Icon size={14} />
-          <span>Grubu sil</span>
-        </DropdownMenuItem>
+        </Button>
       </AlertDialogTrigger>
 
       <AlertDialogContent>

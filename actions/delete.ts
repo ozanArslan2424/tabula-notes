@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { TagType } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 
-export const deleteBook = async ({ bookId }: { bookId: string }) => {
+export const deleteBook = async (bookId: string) => {
   try {
     await db.book.delete({
       where: {
@@ -38,7 +38,15 @@ export const deleteGroup = async ({ groupId, bookId }: { groupId: number; bookId
   }
 };
 
-export const deleteNote = async ({ noteId, groupId, bookId }: { noteId: number; groupId: number; bookId: string }) => {
+export const deleteNote = async ({
+  noteId,
+  groupId,
+  bookId,
+}: {
+  noteId: number;
+  groupId: number;
+  bookId: string;
+}) => {
   try {
     await db.note.delete({
       where: {
@@ -51,6 +59,23 @@ export const deleteNote = async ({ noteId, groupId, bookId }: { noteId: number; 
   } catch (error) {
     console.error("fail to del note", error);
     return { error: "Not silinemedi." };
+  } finally {
+    revalidatePath(`/dash/${bookId}`, "page");
+  }
+};
+
+export const deleteTask = async ({ taskId, bookId }: { taskId: number; bookId: string }) => {
+  try {
+    await db.task.delete({
+      where: {
+        id: taskId,
+      },
+    });
+
+    return { success: "Yapılacak başarıyla silindi" };
+  } catch (error) {
+    console.error("fail to del task", error);
+    return { error: "Yapılacak silinemedi." };
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
   }

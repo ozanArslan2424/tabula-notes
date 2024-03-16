@@ -1,61 +1,136 @@
 "use client";
-import { PlusCircleIcon } from "lucide-react";
-import { useState } from "react";
+import { createNewTask } from "@/actions/create";
+import { deleteTask } from "@/actions/delete";
+import { updateTask } from "@/actions/update";
+import { TaskType } from "@/lib/types";
+import { PlusCircleIcon, SidebarCloseIcon, SidebarOpenIcon, Trash2Icon } from "lucide-react";
+import { useEffect, useState, useTransition } from "react";
+import { LoadingIcon2 } from "../custom-loading";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-type Props = {};
+type Props = {
+  tasks: TaskType[];
+  bookId: string;
+};
 
-export const TodoCard = (props: Props) => {
-  const [todos, setTodos] = useState<string[]>([]);
+export const TodoCard = ({ tasks, bookId }: Props) => {
   const [input, setInput] = useState<string>("");
+  const [isPending, startTransition] = useTransition();
+  const [tasksOpen, setTasksOpen] = useState<boolean>(true);
 
   const handleTodoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTodos([...todos, input]);
+    startTransition(() => {
+      createNewTask({
+        bookId: bookId,
+        name: input,
+      });
+    });
     setInput("");
   };
+
   return (
-    <div className="flex w-96 flex-col gap-2">
-      <div className="flex w-full items-center justify-between rounded-lg border bg-card p-2 text-card-foreground shadow">
-        <p className="px-2 text-lg font-semibold">Yapılacaklar</p>
+    <div className="flex flex-col gap-2">
+      <div
+        className={`flex w-full items-center justify-between rounded-lg p-2 text-card-foreground shadow ${tasksOpen ? "border bg-card" : "bg-accent"}`}
+      >
+        {tasksOpen && <p className="px-2 text-lg font-semibold">Yapılacaklar</p>}
+        <Button size="sm_icon" variant="secondary" onClick={() => setTasksOpen(!tasksOpen)}>
+          {tasksOpen && <SidebarCloseIcon size={14} />}
+          {!tasksOpen && <SidebarOpenIcon size={14} />}
+        </Button>
       </div>
-      <div className="flex flex-col gap-4 rounded-lg border bg-card p-2 text-card-foreground shadow">
-        <form className="flex items-center gap-2" onSubmit={handleTodoSubmit}>
-          <Input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            type="text"
-            name="todo"
-            id="todo"
-            placeholder="Yapılacak ekle"
-            className="h-7 w-full bg-accent text-accent-foreground"
-          />
-          <Button type="submit" size="sm_icon" variant="custom_submit">
-            <span className="sr-only">Yapılacak ekle</span>
-            <PlusCircleIcon size={14} />
-          </Button>
-        </form>
-      </div>
-      {todos.length !== 0 && (
+      {tasksOpen && (
         <div className="flex flex-col gap-1 rounded-lg border bg-card p-2 text-card-foreground shadow">
-          {todos.map((todo, index) => {
-            return (
-              <div key={index} className="flex items-center gap-2 rounded-sm px-2 hover:bg-accent">
-                <Checkbox id={todo} name={todo} className="peer" />
-                <Label
-                  className="custom-checked w-full cursor-pointer py-2 transition-all peer-data-[state=checked]:text-muted-foreground peer-data-[state=checked]:line-through"
-                  htmlFor={todo}
-                >
-                  {todo}
-                </Label>
-              </div>
-            );
-          })}
+          <form className="mb-3 flex items-center gap-2" onSubmit={handleTodoSubmit}>
+            <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              type="text"
+              name="todo"
+              id="todo"
+              placeholder="Yapılacak ekle"
+              className="h-7 w-full bg-accent text-accent-foreground"
+            />
+            <Button type="submit" size="sm_icon" variant="custom_submit">
+              <span className="sr-only">Yapılacak ekle</span>
+              <PlusCircleIcon size={14} />
+            </Button>
+          </form>
+          {tasks.length !== 0 && (
+            <>
+              {tasks.map((task) => {
+                return <TaskItem key={task.id} task={task} bookId={bookId} />;
+              })}
+              {isPending && (
+                <div className="mx-auto">
+                  <LoadingIcon2 size={10} />
+                </div>
+              )}
+            </>
+          )}
         </div>
       )}
+    </div>
+  );
+};
+
+const TaskItem = ({
+  task,
+  bookId,
+  disabled,
+}: {
+  task: TaskType;
+  bookId: string;
+  disabled?: boolean;
+}) => {
+  const [completed, setCompleted] = useState<boolean>(task.completed);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      updateTask({ taskId: task.id, completed: completed });
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [completed, task.id]);
+
+  const handleDeleteTask = (id: number) => {
+    startTransition(() => {
+      deleteTask({ taskId: id, bookId: bookId });
+    });
+  };
+
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex w-full items-center gap-2 rounded-sm px-2 hover:bg-accent">
+        <Checkbox
+          disabled={isPending}
+          id={task.name}
+          name={task.name}
+          className="peer"
+          checked={completed}
+          onCheckedChange={() => setCompleted(!completed)}
+        />
+        <Label
+          className="custom-checked w-full cursor-pointer py-2 transition-all peer-data-[state=checked]:text-muted-foreground peer-data-[state=checked]:line-through"
+          htmlFor={task.name}
+        >
+          {isPending ? <LoadingIcon2 size={10} /> : task.name}
+        </Label>
+      </div>
+      <Button
+        disabled={isPending}
+        size="sm_icon"
+        variant="ghost"
+        className="hover:text-red-500"
+        onClick={() => handleDeleteTask(task.id)}
+      >
+        <Trash2Icon size={14} />
+      </Button>
     </div>
   );
 };

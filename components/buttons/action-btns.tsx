@@ -6,7 +6,12 @@ import { LinkButton } from "./link-button";
 
 export const HomeLink = () => {
   return (
-    <LinkButton className="h-7 bg-background text-foreground" size="sm" variant="outline" href="/dash">
+    <LinkButton
+      className="h-7 bg-background text-foreground"
+      size="sm"
+      variant="outline"
+      href="/dash"
+    >
       <HomeIcon className="mr-2" size={14} />
       Kütüphane
     </LinkButton>
@@ -15,16 +20,26 @@ export const HomeLink = () => {
 
 export const SettingsLink = () => {
   return (
-    <LinkButton className="h-7 bg-background text-foreground" size="sm" variant="outline" href="/settings">
+    <LinkButton
+      className="h-7 bg-background text-foreground"
+      size="sm"
+      variant="outline"
+      href="/settings"
+    >
       <Settings2Icon className="mr-2" size={14} />
-      Ayarlar
+      Hesap Ayarları
     </LinkButton>
   );
 };
 
 export const ProfileLink = () => {
   return (
-    <LinkButton className="h-7 bg-background text-foreground" size="sm" variant="outline" href="/profile">
+    <LinkButton
+      className="h-7 bg-background text-foreground"
+      size="sm"
+      variant="outline"
+      href="/profile"
+    >
       <UserCircleIcon className="mr-2" size={14} />
       Profil
     </LinkButton>

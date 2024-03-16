@@ -12,10 +12,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
+import { Button } from "../ui/button";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
 import { TooltipSet } from "../ui/tooltip";
 
-export const DownloadMarkdownButton = ({ markdown, noteId }: { markdown: string; noteId: number }) => {
+export const DownloadMarkdownButton = ({
+  markdown,
+  noteId,
+}: {
+  markdown: string;
+  noteId: number;
+}) => {
   const downloadMarkdownFile = () => {
     const link = document.createElement("a");
     const file = new Blob([markdown], { type: "text/plain" });
@@ -44,7 +51,10 @@ export const DownloadMarkdownButton = ({ markdown, noteId }: { markdown: string;
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
-          <AlertDialogAction onClick={downloadMarkdownFile} className="hover:bg-submit hover:text-submit-foreground">
+          <AlertDialogAction
+            onClick={downloadMarkdownFile}
+            className="hover:bg-submit hover:text-submit-foreground"
+          >
             İndir
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -74,21 +84,24 @@ export const DownloadGroupButton = async ({
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <DropdownMenuItem className="space-x-2">
+        <Button size="sm_icon" variant="ghost">
           <DownloadIcon size={14} />
-          <span>Markdown olarak indir</span>
-        </DropdownMenuItem>
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Gruptaki bütün notlar indirilecek.</AlertDialogTitle>
           <AlertDialogDescription>
-            Bu gruptaki notları bilgisayarına <code>.md</code> dosyası olarak indirmek istediğine emin misin?
+            Bu gruptaki notları bilgisayarına <code>.md</code> dosyası olarak indirmek istediğine
+            emin misin?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
-          <AlertDialogAction onClick={downloadMarkdownFile} className="hover:bg-submit hover:text-submit-foreground">
+          <AlertDialogAction
+            onClick={downloadMarkdownFile}
+            className="hover:bg-submit hover:text-submit-foreground"
+          >
             İndir
           </AlertDialogAction>
         </AlertDialogFooter>

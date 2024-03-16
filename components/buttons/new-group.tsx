@@ -27,7 +27,10 @@ export const NewGroupButton = ({ bookId }: { bookId: string }) => {
   return (
     <>
       {open ? (
-        <form className="flex h-min items-center gap-2 rounded-lg border bg-card p-2 shadow" onSubmit={handleSubmit}>
+        <form
+          className="flex h-min items-center gap-2 rounded-lg border bg-card p-2 shadow"
+          onSubmit={handleSubmit}
+        >
           <Input
             onChange={(e) => setTitle(e.target.value)}
             value={title}
@@ -35,20 +38,32 @@ export const NewGroupButton = ({ bookId }: { bookId: string }) => {
             placeholder="Grup adı"
             className="h-7 min-w-32"
             disabled={isPending}
+            autoFocus={open}
           />
-          <TooltipSet text="Vazgeç">
-            <Button type="reset" size="sm_icon" variant="custom_destructive" onClick={() => setOpen(false)}>
-              <XCircleIcon size={14} />
-            </Button>
-          </TooltipSet>
           <TooltipSet text="Onay">
             <Button type="submit" size="sm_icon" variant="custom_submit" disabled={isPending}>
               <CheckCircle2Icon size={14} />
             </Button>
           </TooltipSet>
+          <TooltipSet text="Vazgeç">
+            <Button
+              type="reset"
+              size="sm_icon"
+              variant="custom_destructive"
+              onClick={() => setOpen(false)}
+            >
+              <XCircleIcon size={14} />
+            </Button>
+          </TooltipSet>
         </form>
       ) : (
-        <Button variant="secondary" size="sm" onClick={() => setOpen(true)} className="my-2" disabled={isPending}>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => setOpen(true)}
+          className="my-2"
+          disabled={isPending}
+        >
           {isPending ? (
             <LoadingIcon2 size={10} />
           ) : (

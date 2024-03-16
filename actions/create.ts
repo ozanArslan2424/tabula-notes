@@ -1,47 +1,27 @@
 "use server";
 import { db } from "@/lib/db";
+import { BookFormSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
+import * as z from "zod";
+import { getCurrentUser } from "./auth-read";
 
-export const createNewBook = async ({
-  title,
-  description,
-  userId,
-}: {
-  title: string;
-  description: string;
-  userId: string;
-}) => {
-  if (!userId) {
-    return { error: "Giriş yaptığınıza emin olun!" };
+export async function createBook(values: z.infer<typeof BookFormSchema>) {
+  const user = await getCurrentUser();
+  try {
+    const book = await db.book.create({
+      data: {
+        title: values.title,
+        description: values.description,
+        hasTasks: values.hasTasks,
+        userId: user?.id!,
+      },
+    });
+    return { success: "Kitap başarıyla oluşturuldu.", id: book.id };
+  } catch (error) {
+    console.error("Failed to create book:", error);
+    return { error: "Kitap oluşturulamadı." };
   }
-  if (!title) {
-    return { error: "Kitap adı boş olamaz" };
-  }
-  if (title.length < 2) {
-    return { error: "Kitap adı 2 karakterden kısa olamaz" };
-  }
-  if (title.length > 100) {
-    return { error: "Kitap adı 100 karakterden uzun olamaz" };
-  }
-  if (title && title.length <= 100 && title.length >= 2) {
-    try {
-      const newBook = await db.book.create({
-        data: {
-          title: title,
-          description: description,
-          userId: userId,
-        },
-        select: { id: true },
-      });
-      return { success: "Kitap başarıyla oluşturuldu", id: newBook.id };
-    } catch (error) {
-      console.error("Failed to create:", error);
-      return { error: "Beklenmeyen bir sorun çıktı." };
-    } finally {
-      revalidatePath("/dash", "page");
-    }
-  }
-};
+}
 
 export async function createNewGroup({ title, bookId }: { title: string; bookId: string }) {
   if (!title) {
@@ -66,7 +46,7 @@ export async function createNewGroup({ title, bookId }: { title: string; bookId:
       console.error("Failed to create:", error);
       return { error: "Beklenmeyen bir sorun çıktı." };
     } finally {
-      revalidatePath(`/dash/${bookId}`);
+      revalidatePath(`/dash/${bookId}`, "page");
     }
   }
 }
@@ -83,6 +63,23 @@ export async function createNewNote({ bookId, groupId }: { bookId: string; group
   } catch (error) {
     console.error("Failed to create:", error);
   } finally {
-    revalidatePath(`/dash/${bookId}`);
+    revalidatePath(`/dash/${bookId}`, "page");
+  }
+}
+
+export async function createNewTask({ bookId, name }: { bookId: string; name: string }) {
+  try {
+    const task_ids = await db.task.create({
+      data: {
+        bookId: bookId,
+        name: name,
+      },
+    });
+
+    return task_ids.id;
+  } catch (error) {
+    console.error("Failed to create:", error);
+  } finally {
+    revalidatePath(`/dash/${bookId}`, "page");
   }
 }

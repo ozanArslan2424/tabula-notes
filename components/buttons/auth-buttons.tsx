@@ -33,10 +33,20 @@ export const SocialButtons = () => {
 
   return (
     <div className="flex w-full items-center space-x-2">
-      <Button size="lg" variant="outline" className="w-full space-x-2" onClick={() => onClick("google")}>
+      <Button
+        size="lg"
+        variant="outline"
+        className="w-full space-x-2"
+        onClick={() => onClick("google")}
+      >
         <FcGoogle className="h-6 w-6" />
       </Button>
-      <Button size="lg" variant="outline" className="w-full space-x-2" onClick={() => onClick("github")}>
+      <Button
+        size="lg"
+        variant="outline"
+        className="w-full space-x-2"
+        onClick={() => onClick("github")}
+      >
         <FaGithub className="h-6 w-6" />
       </Button>
     </div>

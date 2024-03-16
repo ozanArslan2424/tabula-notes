@@ -11,14 +11,27 @@ import {
 import { signIn, signOut } from "@/auth";
 import { db } from "@/lib/db";
 import { sendPasswordResetEmail, sendTwoFactorEmail, sendVerificationEmail } from "@/lib/mail";
-import { LoginSchema, NewPasswordSchema, PasswordResetSchema, RegisterSchema, SettingsSchema } from "@/lib/schemas";
-import { generatePasswordResetToken, generateTwoFactorToken, generateVerificationToken } from "@/lib/tokens";
+import {
+  LoginSchema,
+  NewPasswordSchema,
+  PasswordResetSchema,
+  RegisterSchema,
+  SettingsSchema,
+} from "@/lib/schemas";
+import {
+  generatePasswordResetToken,
+  generateTwoFactorToken,
+  generateVerificationToken,
+} from "@/lib/tokens";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 import * as z from "zod";
 
-export const loginAction = async (values: z.infer<typeof LoginSchema>, callbackUrl?: string | null) => {
+export const loginAction = async (
+  values: z.infer<typeof LoginSchema>,
+  callbackUrl?: string | null,
+) => {
   const validatedFields = LoginSchema.safeParse(values);
   if (!validatedFields.success) {
     return { error: "Bir şeyler yanlış gitti. Lütfen tekrar deneyin." };
@@ -131,7 +144,10 @@ export const logoutAction = async () => {
   await signOut();
 };
 
-export const newPasswordAction = async (values: z.infer<typeof NewPasswordSchema>, token?: string | null) => {
+export const newPasswordAction = async (
+  values: z.infer<typeof NewPasswordSchema>,
+  token?: string | null,
+) => {
   if (!token) {
     return { error: "Token bulunamadı, doğru sayfada olduğunuzdan emin olun." };
   }

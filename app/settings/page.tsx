@@ -7,7 +7,9 @@ export default async function SettingsPage() {
       <Card className="mx-auto w-full max-w-2xl p-5">
         <CardHeader>
           <CardTitle>Ayarlar</CardTitle>
-          <CardDescription>Hesap ayarlarını değiştirdikten sonra kaydetmeyi unutma.</CardDescription>
+          <CardDescription>
+            Hesap ayarlarını değiştirdikten sonra kaydetmeyi unutma.
+          </CardDescription>
         </CardHeader>
         <SettingsForm />
       </Card>

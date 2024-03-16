@@ -91,6 +91,17 @@ model Book {
     updatedAt   DateTime @updatedAt
     User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId      String
+    hasTasks    Boolean  @default(false)
+    tasks       Task[]
+}
+
+model Task {
+    id        Int      @id @default(autoincrement())
+    name      String
+    completed Boolean  @default(false)
+    createdAt DateTime @default(now())
+    Book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+    bookId    String
 }
 
 model Group {
@@ -98,7 +109,6 @@ model Group {
     title     String
     notes     Note[]
     createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
     Book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
     bookId    String
 }

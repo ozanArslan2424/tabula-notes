@@ -52,8 +52,12 @@ export const SettingsSchema = z
     role: z.enum([UserRole.USER, UserRole.ADMIN]),
     // SİLİNECEK ^
     email: z.optional(z.string().email()),
-    password: z.optional(z.string().min(8, { message: "Şifreniz en az 8 karakterden oluşmalıdır." })),
-    newPassword: z.optional(z.string().min(8, { message: "Şifreniz en az 8 karakterden oluşmalıdır." })),
+    password: z.optional(
+      z.string().min(8, { message: "Şifreniz en az 8 karakterden oluşmalıdır." }),
+    ),
+    newPassword: z.optional(
+      z.string().min(8, { message: "Şifreniz en az 8 karakterden oluşmalıdır." }),
+    ),
   })
   .refine(
     (data) => {
@@ -79,3 +83,9 @@ export const SettingsSchema = z
       path: ["password"],
     },
   );
+
+export const BookFormSchema = z.object({
+  title: z.string().min(2, { message: "Kitap en az 2 karakterden oluşmalıdır." }),
+  description: z.optional(z.string()),
+  hasTasks: z.boolean(),
+});

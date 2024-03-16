@@ -19,7 +19,11 @@ export const ThemeToggle = () => {
     );
 
   return (
-    <Button variant="outline" size="icon" onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}>
+    <Button
+      variant="outline"
+      size="icon"
+      onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
+    >
       {resolvedTheme === "light" ? <MoonIcon size={14} /> : <SunIcon size={14} />}
     </Button>
   );
