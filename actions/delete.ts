@@ -1,6 +1,5 @@
 "use server";
-import { db } from "@/lib/db";
-import { TagType } from "@/lib/types";
+import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 export const deleteBook = async (bookId: string) => {
@@ -78,33 +77,5 @@ export const deleteTask = async ({ taskId, bookId }: { taskId: number; bookId: s
     return { error: "Yapılacak silinemedi." };
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
-  }
-};
-
-export const deleteUnusedTags = async (deletedTags: TagType[]) => {
-  try {
-    const unusedTags = await db.tag.findMany({
-      where: {
-        name: {
-          in: deletedTags.map((tag) => tag.name),
-        },
-        note: {
-          none: {},
-        },
-      },
-    });
-
-    await db.tag.deleteMany({
-      where: {
-        id: {
-          in: unusedTags.map((tag) => tag.id),
-        },
-      },
-    });
-
-    return { success: "Unused tags deleted successfully" };
-  } catch (error) {
-    console.error("Failed to delete unused tags", error);
-    return { error: "Failed to delete unused tags" };
   }
 };

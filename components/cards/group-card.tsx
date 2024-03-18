@@ -8,9 +8,8 @@ import { toast } from "sonner";
 import { DeleteGroupButton } from "../buttons/delete-button";
 import { DownloadGroupButton } from "../buttons/download-button";
 import { NewNoteButton } from "../buttons/new-note";
-import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
-import { TooltipSet } from "../ui/tooltip";
+import { LoadingIcon } from "../ui/custom-loading";
 import { NoteCard } from "./note-card";
 
 type NoteGroupCardProps = {
@@ -60,21 +59,17 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
               onChange={(e) => setTitleState(e.target.value)}
               className="mr-1 rounded-md border border-input bg-transparent pl-2 text-lg font-semibold capitalize outline-none ring-primary focus:ring-1"
             />
-            <TooltipSet text="Onay">
-              <Button type="submit" size="sm_icon" variant="custom_submit" disabled={isPending}>
-                {isPending ? <LoadingIcon size={14} /> : <CheckCircle2Icon size={14} />}
-              </Button>
-            </TooltipSet>
-            <TooltipSet text="Vazgeç">
-              <Button size="sm_icon" variant="custom_destructive">
-                <XCircleIcon size={14} />
-              </Button>
-            </TooltipSet>
+            <Button type="submit" size="sm_icon" variant="custom_submit" disabled={isPending}>
+              {isPending ? <LoadingIcon size={14} /> : <CheckCircle2Icon size={14} />}
+            </Button>
+            <Button size="sm_icon" variant="custom_destructive">
+              <XCircleIcon size={14} />
+            </Button>
           </form>
         </div>
       ) : (
-        <div className="mr-2 flex w-full items-center justify-between rounded-lg border bg-card p-2 shadow">
-          <p className="pl-2 text-lg font-semibold capitalize">{titleState}</p>
+        <div className="mr-2 flex w-full items-center justify-between rounded-lg border bg-card px-4 py-2 shadow">
+          <p className=" text-lg font-semibold capitalize">{titleState}</p>
           <div className="flex items-center gap-2">
             <DownloadGroupButton groupTitle={group.title} groupNotes={group.notes} />
             <Button

@@ -13,8 +13,6 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
-import { DropdownMenuItem } from "../ui/dropdown-menu";
-import { TooltipSet } from "../ui/tooltip";
 
 export const DownloadMarkdownButton = ({
   markdown,
@@ -34,14 +32,11 @@ export const DownloadMarkdownButton = ({
 
   return (
     <AlertDialog>
-      <TooltipSet text="Markdown olarak indir">
-        <AlertDialogTrigger asChild>
-          <DropdownMenuItem className="space-x-2">
-            <DownloadIcon size={14} />
-            <span>Markdown olarak indir</span>
-          </DropdownMenuItem>
-        </AlertDialogTrigger>
-      </TooltipSet>
+      <AlertDialogTrigger asChild>
+        <Button size="sm_icon" variant="ghost">
+          <DownloadIcon size={14} />
+        </Button>
+      </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Not indirilecek.</AlertDialogTitle>
@@ -53,7 +48,7 @@ export const DownloadMarkdownButton = ({
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
             onClick={downloadMarkdownFile}
-            className="hover:bg-submit hover:text-submit-foreground"
+            className="sm:hover:bg-submit sm:hover:text-submit-foreground"
           >
             İndir
           </AlertDialogAction>
@@ -100,7 +95,7 @@ export const DownloadGroupButton = async ({
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
             onClick={downloadMarkdownFile}
-            className="hover:bg-submit hover:text-submit-foreground"
+            className="sm:hover:bg-submit sm:hover:text-submit-foreground"
           >
             İndir
           </AlertDialogAction>

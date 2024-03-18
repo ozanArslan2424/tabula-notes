@@ -1,9 +1,12 @@
 import { Header } from "@/components/layout/header";
 import { CurrentSessionProvider } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "./api/uploadthing/core";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,6 +26,7 @@ export default function RootLayout({
       <CurrentSessionProvider>
         <body className={inter.className}>
           <ThemeProvider attribute="class">
+            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             <Header />
             <main>{children}</main>
             <Toaster />

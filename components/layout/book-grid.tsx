@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Book } from "@prisma/client";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
-import { HomeLink, SettingsLink } from "../buttons/action-btns";
+import { SettingsLink } from "../buttons/action-btns";
 import { CreateBookButton } from "../buttons/create-book";
 import { BookCard } from "../cards/book-card";
 
@@ -15,7 +15,6 @@ export const BookCardsGrid = ({ books }: Props) => {
   return (
     <div className="mx-auto flex flex-col gap-4">
       <nav className="flex items-center gap-2">
-        <HomeLink />
         <SettingsLink />
         <CreateBookButton />
         <div className="relative">

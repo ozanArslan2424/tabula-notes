@@ -2,8 +2,8 @@ import { updateNote } from "@/actions/update";
 import { useDebounce } from "@/hooks/use-debounce";
 import { CheckIcon } from "lucide-react";
 import { useEffect, useTransition } from "react";
-import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
+import { LoadingIcon } from "../ui/custom-loading";
 
 export const SavingButton = ({ noteId, markdown }: { noteId: number; markdown: string | null }) => {
   const [isPending, startTransition] = useTransition();

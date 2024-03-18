@@ -2,8 +2,8 @@
 import { createNewNote } from "@/actions/create";
 import { PlusCircleIcon } from "lucide-react";
 import { useTransition } from "react";
-import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
+import { LoadingIcon } from "../ui/custom-loading";
 
 export const NewNoteButton = ({ bookId, groupId }: { bookId: string; groupId: number }) => {
   const [isPending, startTransition] = useTransition();

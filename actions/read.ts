@@ -1,7 +1,7 @@
 "use server";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "./auth-read";
+import { getCurrentUser } from "./user";
 
 export async function getAllBooks() {
   const user = await getCurrentUser();
@@ -44,12 +44,6 @@ export async function getBookContents(bookId: string) {
             select: {
               id: true,
               content: true,
-              tags: {
-                select: {
-                  id: true,
-                  name: true,
-                },
-              },
             },
           },
         },

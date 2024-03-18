@@ -1,9 +1,37 @@
 "use server";
-import { db } from "@/lib/db";
+import { getEmailChangeTokenByEmail } from "@/actions/user";
+import db from "@/lib/db";
 import { BookFormSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
+import { v4 } from "uuid";
 import * as z from "zod";
-import { getCurrentUser } from "./auth-read";
+import { getCurrentUser } from "./user";
+
+export const generateEmailChangeToken = async (email: string) => {
+  const token = v4();
+  const expires = new Date(new Date().getTime() + 3600 * 1000); // 1 hour
+  const user = await getCurrentUser();
+  const existingToken = await getEmailChangeTokenByEmail(email);
+
+  if (existingToken) {
+    await db.emailChangeToken.delete({
+      where: {
+        id: existingToken.id,
+      },
+    });
+  }
+
+  const emailChangeToken = await db.emailChangeToken.create({
+    data: {
+      email,
+      token,
+      expires,
+      userId: user?.id,
+    },
+  });
+
+  return emailChangeToken;
+};
 
 export async function createBook(values: z.infer<typeof BookFormSchema>) {
   const user = await getCurrentUser();
@@ -24,30 +52,19 @@ export async function createBook(values: z.infer<typeof BookFormSchema>) {
 }
 
 export async function createNewGroup({ title, bookId }: { title: string; bookId: string }) {
-  if (!title) {
-    return { error: "Grup adı boş olamaz" };
-  }
-  if (title.length < 2) {
-    return { error: "Grup adı 2 karakterden kısa olamaz" };
-  }
-  if (title.length > 100) {
-    return { error: "Grup adı 100 karakterden uzun olamaz" };
-  }
-  if (title && title.length <= 100 && title.length >= 2) {
-    try {
-      await db.group.create({
-        data: {
-          title: title,
-          bookId: bookId,
-        },
-      });
-      return { success: "Grup başarıyla oluşturuldu" };
-    } catch (error) {
-      console.error("Failed to create:", error);
-      return { error: "Beklenmeyen bir sorun çıktı." };
-    } finally {
-      revalidatePath(`/dash/${bookId}`, "page");
-    }
+  try {
+    await db.group.create({
+      data: {
+        title: title,
+        bookId: bookId,
+      },
+    });
+    return { success: "Grup başarıyla oluşturuldu" };
+  } catch (error) {
+    console.error("Failed to create:", error);
+    return { error: "Beklenmeyen bir sorun çıktı." };
+  } finally {
+    revalidatePath(`/dash/${bookId}`, "page");
   }
 }
 

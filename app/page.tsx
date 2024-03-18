@@ -1,13 +1,12 @@
-import { getCurrentUser } from "@/actions/auth-read";
-import { redirect } from "next/navigation";
+import { LoginButton } from "@/components/auth/auth-buttons";
 
 export default async function LandingPage() {
-  const user = await getCurrentUser();
-  if (user) redirect("/dash");
   return (
     <>
       <p>Hello, World!</p>
       <p>Landing Page</p>
+
+      <LoginButton />
     </>
   );
 }

@@ -1,19 +1,17 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { TooltipSet } from "@/components/ui/tooltip";
-import { HomeIcon, Settings2Icon, UserCircleIcon, XCircleIcon } from "lucide-react";
-import { LinkButton } from "./link-button";
+import { HomeIcon, Settings2Icon, UserCircleIcon } from "lucide-react";
+import { LinkButton } from "../ui/link-button";
 
 export const HomeLink = () => {
   return (
     <LinkButton
-      className="h-7 bg-background text-foreground"
+      className="h-7 space-x-2 bg-background text-foreground"
       size="sm"
       variant="outline"
       href="/dash"
     >
-      <HomeIcon className="mr-2" size={14} />
-      Kütüphane
+      <HomeIcon size={14} />
+      <span className="sr-only sm:not-sr-only">Kütüphane</span>
     </LinkButton>
   );
 };
@@ -21,13 +19,13 @@ export const HomeLink = () => {
 export const SettingsLink = () => {
   return (
     <LinkButton
-      className="h-7 bg-background text-foreground"
+      className="h-7 space-x-2 bg-background text-foreground"
       size="sm"
       variant="outline"
       href="/settings"
     >
-      <Settings2Icon className="mr-2" size={14} />
-      Hesap Ayarları
+      <Settings2Icon size={14} />
+      <span className="sr-only sm:not-sr-only">Hesap Ayarları</span>
     </LinkButton>
   );
 };
@@ -35,23 +33,13 @@ export const SettingsLink = () => {
 export const ProfileLink = () => {
   return (
     <LinkButton
-      className="h-7 bg-background text-foreground"
+      className="h-7 space-x-2 bg-background text-foreground"
       size="sm"
       variant="outline"
       href="/profile"
     >
-      <UserCircleIcon className="mr-2" size={14} />
-      Profil
+      <UserCircleIcon size={14} />
+      <span className="sr-only sm:not-sr-only">Profil</span>
     </LinkButton>
-  );
-};
-
-export const CancelButton = ({ onClick }: { onClick: () => void }) => {
-  return (
-    <TooltipSet text="Vazgeç">
-      <Button size="sm_icon" variant="custom_destructive" onClick={onClick}>
-        <XCircleIcon size={14} />
-      </Button>
-    </TooltipSet>
   );
 };

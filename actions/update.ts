@@ -1,10 +1,9 @@
 "use server";
-import { db } from "@/lib/db";
-import { BookFormSchema } from "@/lib/schemas";
-import { TagType } from "@/lib/types";
+import db from "@/lib/db";
+import { BookFormSchema, SettingsSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
-import { getCurrentUser } from "./auth-read";
+import { getCurrentUser } from "./user";
 
 export const updateGroupTitle = async (groupId: number, title: string) => {
   try {
@@ -38,41 +37,6 @@ export const updateNote = async (noteId: number, editorContent: string) => {
     return { error: "Bir şeyler yanlış gitti." };
   }
 };
-
-export async function updateNoteTags({
-  noteId,
-  tags,
-  deletedTags,
-}: {
-  noteId: number;
-  tags: TagType[];
-  deletedTags: TagType[];
-}) {
-  const user = await getCurrentUser();
-  try {
-    await db.note.update({
-      where: {
-        id: noteId,
-      },
-      data: {
-        tags: {
-          connectOrCreate: tags.map((tag) => ({
-            where: { name: tag.name },
-            create: { name: tag.name, userId: user?.id! },
-          })),
-          deleteMany: {
-            name: {
-              in: deletedTags.map((tag) => tag.name),
-            },
-          },
-        },
-      },
-    });
-  } catch (error) {
-    console.error("Failed to update note tags:", error);
-    return { error: "Etiketler (nedense) kaydedilemedi." };
-  }
-}
 
 export async function updateTask({ taskId, completed }: { taskId: number; completed: boolean }) {
   try {
@@ -109,5 +73,24 @@ export async function updateBookSettings(bookId: string, values: z.infer<typeof 
     return { error: "Kitap ayarları güncellenemedi." };
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
+  }
+}
+
+export async function updateUserSettings(values: z.infer<typeof SettingsSchema>) {
+  const user = await getCurrentUser();
+  try {
+    await db.user.update({
+      where: {
+        id: user?.id,
+      },
+      data: {
+        name: values.name,
+        image: values.image,
+      },
+    });
+    return { success: "Kullanıcı ayarları güncellendi." };
+  } catch (error) {
+    console.error("Failed to update user settings:", error);
+    return { error: "Kullanıcı ayarları güncellenemedi." };
   }
 }

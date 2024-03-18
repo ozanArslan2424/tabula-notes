@@ -25,10 +25,4 @@ export type GroupType = {
 export type NoteType = {
   id: number;
   content: string | null;
-  tags: TagType[];
-};
-
-export type TagType = {
-  id?: number;
-  name: string;
 };

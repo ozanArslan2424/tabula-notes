@@ -1,6 +1,6 @@
 "use client";
-import { LoadingIcon } from "@/components/custom-loading";
 import { Button } from "@/components/ui/button";
+import { LoadingIcon } from "@/components/ui/custom-loading";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";

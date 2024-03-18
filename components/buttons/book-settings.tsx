@@ -18,9 +18,9 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { LoadingIcon2 } from "../custom-loading";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
+import { LoadingIcon2 } from "../ui/custom-loading";
 import {
   Dialog,
   DialogContent,
@@ -62,9 +62,9 @@ export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button className="h-7 bg-background text-foreground" size="sm" variant="outline">
-          <Settings2Icon className="mr-2" size={14} />
-          Kitap Ayarları
+        <Button className="h-7 space-x-2 bg-background text-foreground" size="sm" variant="outline">
+          <Settings2Icon size={14} />
+          <span className="sr-only md:not-sr-only">Kitap Ayarları</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -149,7 +149,7 @@ export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
             <Button
               variant="ghost"
               size="sm"
-              className="w-max hover:bg-destructive"
+              className="w-max sm:hover:bg-destructive"
               onClick={() => {
                 startTransition(() => {
                   deleteBook(currentBook.id!).then(() => {

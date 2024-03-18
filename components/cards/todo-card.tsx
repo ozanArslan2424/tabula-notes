@@ -5,9 +5,9 @@ import { updateTask } from "@/actions/update";
 import { TaskType } from "@/lib/types";
 import { PlusCircleIcon, SidebarCloseIcon, SidebarOpenIcon, Trash2Icon } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
-import { LoadingIcon2 } from "../custom-loading";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
+import { LoadingIcon2 } from "../ui/custom-loading";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
@@ -37,11 +37,11 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
       <div
         className={`flex w-full items-center justify-between rounded-lg p-2 text-card-foreground shadow ${tasksOpen ? "border bg-card" : "bg-accent"}`}
       >
-        {tasksOpen && <p className="px-2 text-lg font-semibold">Yapılacaklar</p>}
         <Button size="sm_icon" variant="secondary" onClick={() => setTasksOpen(!tasksOpen)}>
-          {tasksOpen && <SidebarCloseIcon size={14} />}
-          {!tasksOpen && <SidebarOpenIcon size={14} />}
+          {tasksOpen && <SidebarCloseIcon size={14} className="rotate-90 sm:rotate-0" />}
+          {!tasksOpen && <SidebarOpenIcon size={14} className="rotate-90 sm:rotate-0" />}
         </Button>
+        {tasksOpen && <p className="px-2 text-lg font-semibold">Yapılacaklar</p>}
       </div>
       {tasksOpen && (
         <div className="flex flex-col gap-1 rounded-lg border bg-card p-2 text-card-foreground shadow">
@@ -67,7 +67,7 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
               })}
               {isPending && (
                 <div className="mx-auto">
-                  <LoadingIcon2 size={10} />
+                  <LoadingIcon2 />
                 </div>
               )}
             </>
@@ -119,7 +119,7 @@ const TaskItem = ({
           className="custom-checked w-full cursor-pointer py-2 transition-all peer-data-[state=checked]:text-muted-foreground peer-data-[state=checked]:line-through"
           htmlFor={task.name}
         >
-          {isPending ? <LoadingIcon2 size={10} /> : task.name}
+          {isPending ? <LoadingIcon2 /> : task.name}
         </Label>
       </div>
       <Button

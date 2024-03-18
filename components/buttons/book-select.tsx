@@ -13,7 +13,7 @@ export const BookSelector = async ({ bookTitle }: { bookTitle: string }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex h-7 min-w-56 items-center rounded-md border border-input bg-background px-3 shadow-sm">
+      <DropdownMenuTrigger className="flex h-7 min-w-[218px] items-center rounded-md border border-input bg-background px-3 shadow-sm">
         <p className="text-xs font-semibold capitalize">
           <span className="text-muted-foreground">Seçili kitap: </span> {bookTitle}
         </p>
@@ -24,7 +24,9 @@ export const BookSelector = async ({ bookTitle }: { bookTitle: string }) => {
           books.map((book) => {
             return (
               <Link href={`/dash/${book.id}`} key={book.id}>
-                <DropdownMenuItem className="text-xs capitalize">{book.title}</DropdownMenuItem>
+                <DropdownMenuItem className="min-w-[218px] text-xs capitalize">
+                  {book.title}
+                </DropdownMenuItem>
               </Link>
             );
           })}

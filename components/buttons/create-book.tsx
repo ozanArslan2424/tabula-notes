@@ -1,6 +1,13 @@
 "use client";
 import { createBook } from "@/actions/create";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { BookFormSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircleIcon } from "lucide-react";
@@ -9,10 +16,17 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { LoadingIcon2 } from "../custom-loading";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { LoadingIcon2 } from "../ui/custom-loading";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 import { Input } from "../ui/input";
 
 export const CreateBookButton = () => {
@@ -47,9 +61,9 @@ export const CreateBookButton = () => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="outline" className="h-7 bg-background text-foreground">
-          <PlusCircleIcon className="mr-2" size={14} />
-          Yeni kitap
+        <Button size="sm" variant="outline" className="h-7 space-x-2 bg-background text-foreground">
+          <PlusCircleIcon size={14} />
+          <span className="sr-only md:not-sr-only">Kitap Oluştur</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -59,7 +73,10 @@ export const CreateBookButton = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex w-full flex-col gap-2 p-4">
+          <form
+            onSubmit={form.handleSubmit(handleSubmit)}
+            className="flex w-full flex-col gap-2 p-4"
+          >
             <FormField
               control={form.control}
               name="title"
@@ -87,7 +104,12 @@ export const CreateBookButton = () => {
                 <FormItem>
                   <FormLabel>Açıklama</FormLabel>
                   <FormControl>
-                    <Input {...field} type="text" placeholder="Kısa Bir Açıklama" disabled={isPending} />
+                    <Input
+                      {...field}
+                      type="text"
+                      placeholder="Kısa Bir Açıklama"
+                      disabled={isPending}
+                    />
                   </FormControl>
                 </FormItem>
               )}
