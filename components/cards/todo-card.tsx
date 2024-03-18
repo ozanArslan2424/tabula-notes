@@ -3,7 +3,7 @@ import { createNewTask } from "@/actions/create";
 import { deleteTask } from "@/actions/delete";
 import { updateTask } from "@/actions/update";
 import { TaskType } from "@/lib/types";
-import { PlusCircleIcon, SidebarCloseIcon, SidebarOpenIcon, Trash2Icon } from "lucide-react";
+import { PlusCircleIcon, Trash2Icon } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
@@ -19,7 +19,6 @@ type Props = {
 export const TodoCard = ({ tasks, bookId }: Props) => {
   const [input, setInput] = useState<string>("");
   const [isPending, startTransition] = useTransition();
-  const [tasksOpen, setTasksOpen] = useState<boolean>(true);
 
   const handleTodoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,46 +33,38 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <div
-        className={`flex w-full items-center justify-between rounded-lg p-2 text-card-foreground shadow ${tasksOpen ? "border bg-card" : "bg-accent"}`}
-      >
-        <Button size="sm_icon" variant="secondary" onClick={() => setTasksOpen(!tasksOpen)}>
-          {tasksOpen && <SidebarCloseIcon size={14} className="rotate-90 sm:rotate-0" />}
-          {!tasksOpen && <SidebarOpenIcon size={14} className="rotate-90 sm:rotate-0" />}
-        </Button>
-        {tasksOpen && <p className="px-2 text-lg font-semibold">Yapılacaklar</p>}
+      <div className="flex w-full items-center justify-between rounded-lg bg-card p-2 text-card-foreground shadow">
+        <p className="text-md px-2 font-semibold">Yapılacaklar</p>
       </div>
-      {tasksOpen && (
-        <div className="flex flex-col gap-1 rounded-lg border bg-card p-2 text-card-foreground shadow">
-          <form className="mb-3 flex items-center gap-2" onSubmit={handleTodoSubmit}>
-            <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              type="text"
-              name="todo"
-              id="todo"
-              placeholder="Yapılacak ekle"
-              className="h-7 w-full bg-accent text-accent-foreground"
-            />
-            <Button type="submit" size="sm_icon" variant="custom_submit">
-              <span className="sr-only">Yapılacak ekle</span>
-              <PlusCircleIcon size={14} />
-            </Button>
-          </form>
-          {tasks.length !== 0 && (
-            <>
-              {tasks.map((task) => {
-                return <TaskItem key={task.id} task={task} bookId={bookId} />;
-              })}
-              {isPending && (
-                <div className="mx-auto">
-                  <LoadingIcon2 />
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      )}
+      <div className="flex flex-col gap-1 rounded-lg border bg-card p-2 text-card-foreground shadow">
+        <form className="mb-3 flex items-center gap-2" onSubmit={handleTodoSubmit}>
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            type="text"
+            name="todo"
+            id="todo"
+            placeholder="Yapılacak ekle"
+            className="h-7 w-full bg-accent text-accent-foreground"
+          />
+          <Button type="submit" size="sm_icon" variant="custom_submit">
+            <span className="sr-only">Yapılacak ekle</span>
+            <PlusCircleIcon size={14} />
+          </Button>
+        </form>
+        {tasks.length !== 0 && (
+          <>
+            {tasks.map((task) => {
+              return <TaskItem key={task.id} task={task} bookId={bookId} />;
+            })}
+            {isPending && (
+              <div className="mx-auto">
+                <LoadingIcon2 />
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

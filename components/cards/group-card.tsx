@@ -7,10 +7,9 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { DeleteGroupButton } from "../buttons/delete-button";
 import { DownloadGroupButton } from "../buttons/download-button";
-import { NewNoteButton } from "../buttons/new-note";
 import { Button } from "../ui/button";
 import { LoadingIcon } from "../ui/custom-loading";
-import { NoteCard } from "./note-card";
+import { Input } from "../ui/input";
 
 type NoteGroupCardProps = {
   group: GroupType;
@@ -19,6 +18,7 @@ type NoteGroupCardProps = {
 export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
   const [isPending, startTransition] = useTransition();
   const [titleState, setTitleState] = useState(group.title);
+  const [error, setError] = useState(false);
   const [editing, setEditing] = useState(false);
 
   const handleDeleteGroup = () => {
@@ -36,40 +36,61 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    updateGroupTitle(group.id, titleState).then((data) => {
-      if (data?.success) {
-        setEditing(false);
-      }
+    if (titleState === group.title) {
+      setEditing(false);
+      setError(false);
+      return;
+    }
+    if (titleState === "") {
+      toast.error("Grup adı boş olamaz");
+      setError(true);
+      return;
+    }
+    if (titleState.length < 2) {
+      toast.error("Grup adı en az 2 karakter olmalı");
+      setError(true);
+      return;
+    }
+    if (titleState.length > 20) {
+      toast.error("Grup adı en fazla 20 karakter olabilir");
+      setError(true);
+      return;
+    }
+    startTransition(() => {
+      updateGroupTitle(group.id, titleState).then((data) => {
+        if (data?.success) {
+          setEditing(false);
+          setError(false);
+        }
+      });
     });
   };
 
-  const handleReset = () => {
-    setTitleState(group.title);
-    setEditing(false);
-  };
-
   return (
-    <div className="flex min-w-[400px] max-w-[576px] flex-col gap-2">
+    <div className="mr-2 w-full rounded-lg border bg-card px-4 py-2 shadow">
       {editing ? (
-        <div className="mr-2 flex w-full items-center justify-between rounded-lg border bg-card p-2 shadow">
-          <form onSubmit={handleSubmit} onReset={handleReset} className="flex items-center gap-2">
-            <input
-              autoFocus
-              value={titleState}
-              onChange={(e) => setTitleState(e.target.value)}
-              className="mr-1 rounded-md border border-input bg-transparent pl-2 text-lg font-semibold capitalize outline-none ring-primary focus:ring-1"
-            />
-            <Button type="submit" size="sm_icon" variant="custom_submit" disabled={isPending}>
-              {isPending ? <LoadingIcon size={14} /> : <CheckCircle2Icon size={14} />}
-            </Button>
-            <Button size="sm_icon" variant="custom_destructive">
-              <XCircleIcon size={14} />
-            </Button>
-          </form>
-        </div>
+        <form
+          onSubmit={handleSubmit}
+          onReset={() => setEditing(false)}
+          className="flex items-center gap-2"
+        >
+          <Input
+            autoFocus
+            value={titleState}
+            onChange={(e) => setTitleState(e.target.value)}
+            className={error ? "border-red-500" : ""}
+          />
+          <Button type="reset" size="sm_icon" variant="custom_destructive" disabled={isPending}>
+            <XCircleIcon size={14} />
+          </Button>
+          <Button type="submit" size="sm_icon" variant="custom_submit" disabled={isPending}>
+            {isPending ? <LoadingIcon size={14} /> : <CheckCircle2Icon size={14} />}
+          </Button>
+        </form>
       ) : (
-        <div className="mr-2 flex w-full items-center justify-between rounded-lg border bg-card px-4 py-2 shadow">
-          <p className=" text-lg font-semibold capitalize">{titleState}</p>
+        <div className="flex items-center justify-between">
+          <p className="text-lg font-semibold capitalize">{titleState}</p>
+
           <div className="flex items-center gap-2">
             <DownloadGroupButton groupTitle={group.title} groupNotes={group.notes} />
             <Button
@@ -84,14 +105,6 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
           </div>
         </div>
       )}
-      {group.notes
-        .sort((a, b) => a.id.toString().localeCompare(b.id.toString()))
-        .map((note) => {
-          return <NoteCard key={note.id} bookId={bookId} groupId={group.id} note={note} />;
-        })}
-      <div className="flex w-full items-center justify-center">
-        <NewNoteButton groupId={group.id} bookId={bookId} />
-      </div>
     </div>
   );
 };
