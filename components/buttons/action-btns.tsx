@@ -5,12 +5,12 @@ import { LinkButton } from "../ui/link-button";
 export const HomeLink = () => {
   return (
     <LinkButton
-      className="h-7 space-x-2 bg-background text-foreground"
+      className="w-8 space-x-3 bg-background text-foreground sm:w-full sm:justify-start"
       size="sm"
       variant="outline"
       href="/dash"
     >
-      <HomeIcon size={14} />
+      <HomeIcon size={14} className="shrink-0" />
       <span className="sr-only sm:not-sr-only">Kütüphane</span>
     </LinkButton>
   );
@@ -19,12 +19,12 @@ export const HomeLink = () => {
 export const SettingsLink = () => {
   return (
     <LinkButton
-      className="h-7 space-x-2 bg-background text-foreground"
+      className="w-8 space-x-3 bg-background text-foreground sm:w-full sm:justify-start"
       size="sm"
       variant="outline"
       href="/settings"
     >
-      <Settings2Icon size={14} />
+      <Settings2Icon size={14} className="shrink-0" />
       <span className="sr-only sm:not-sr-only">Hesap Ayarları</span>
     </LinkButton>
   );
@@ -33,12 +33,12 @@ export const SettingsLink = () => {
 export const ProfileLink = () => {
   return (
     <LinkButton
-      className="h-7 space-x-2 bg-background text-foreground"
+      className="w-8 space-x-3 bg-background text-foreground sm:w-full sm:justify-start"
       size="sm"
       variant="outline"
       href="/profile"
     >
-      <UserCircleIcon size={14} />
+      <UserCircleIcon size={14} className="shrink-0" />
       <span className="sr-only sm:not-sr-only">Profil</span>
     </LinkButton>
   );

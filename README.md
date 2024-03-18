@@ -18,7 +18,7 @@ A simple and markdown compatible note taking web app. It's main purpose is to pr
 ## Future:
 - Tags and filter by tags features.
 - Profile pictures for users with role USER.
-- Design upgrade.
+- Better markdown support for editing.
 
 ## Dependencies:
 - "@auth/prisma-adapter": "^1.5.0",

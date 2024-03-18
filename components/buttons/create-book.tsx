@@ -61,8 +61,12 @@ export const CreateBookButton = () => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="outline" className="h-7 space-x-2 bg-background text-foreground">
-          <PlusCircleIcon size={14} />
+        <Button
+          size="sm"
+          variant="outline"
+          className="w-8 space-x-3 bg-background text-foreground sm:w-full sm:justify-start"
+        >
+          <PlusCircleIcon size={14} className="shrink-0" />
           <span className="sr-only md:not-sr-only">Kitap Oluştur</span>
         </Button>
       </DialogTrigger>

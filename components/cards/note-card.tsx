@@ -50,7 +50,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
   const convertedMarkdown = markdown.replace(/(?:\r\n|\r|\n)/g, "  \n");
 
   return (
-    <Card className={`flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
+    <Card className={`flex w-full max-w-[576px] flex-col ${focused ? "bg-accent" : "bg-card"}`}>
       <CardContent className="rounded-t-lg px-4 py-2">
         {focused ? (
           <TextareaAutosize
@@ -75,7 +75,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
           </div>
         )}
       </CardContent>
-      <CardFooter className="flex items-center justify-between justify-self-end rounded-b-lg px-4 py-2 font-mono text-xs text-muted-foreground">
+      <CardFooter className="flex items-center justify-between justify-self-end rounded-b-lg px-4 py-0.5 font-mono text-xs text-muted-foreground">
         <div>
           {wordCount} Kelime {charCount} Karakter
         </div>

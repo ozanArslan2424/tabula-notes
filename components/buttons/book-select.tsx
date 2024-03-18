@@ -13,18 +13,18 @@ export const BookSelector = async ({ bookTitle }: { bookTitle: string }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex h-7 min-w-[218px] items-center rounded-md border border-input bg-background px-3 shadow-sm">
-        <p className="text-xs font-semibold capitalize">
+      <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border border-input bg-background shadow-sm sm:w-full sm:px-3">
+        <p className="hidden text-xs font-semibold capitalize sm:block">
           <span className="text-muted-foreground">Seçili kitap: </span> {bookTitle}
         </p>
-        <ChevronDown size={14} className="custom-rotate ml-auto transition-all" />
+        <ChevronDown size={14} className="custom-rotate shrink-0 transition-all sm:ml-auto" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-40 text-xs">
+      <DropdownMenuContent>
         {books &&
           books.map((book) => {
             return (
               <Link href={`/dash/${book.id}`} key={book.id}>
-                <DropdownMenuItem className="min-w-[218px] text-xs capitalize">
+                <DropdownMenuItem className="min-w-48 text-xs capitalize">
                   {book.title}
                 </DropdownMenuItem>
               </Link>

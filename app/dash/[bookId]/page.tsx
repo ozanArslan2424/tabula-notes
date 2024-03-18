@@ -7,7 +7,8 @@ import { CreateBookButton } from "@/components/buttons/create-book";
 import { NewGroupButton } from "@/components/buttons/create-group";
 import { NoteGroupTitleCard } from "@/components/cards/group-card";
 import { TodoCard } from "@/components/cards/todo-card";
-import { CalendarIcon, TextIcon } from "lucide-react";
+import { Nav } from "@/components/layout/side-menu";
+import { BookOpenTextIcon, CalendarIcon, TextIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -23,23 +24,29 @@ export default async function BookPage({ params: { bookId } }: Props) {
   if (!currentBook) return null;
 
   return (
-    <div className="flex w-full flex-col gap-4 md:px-8 lg:px-16">
-      <nav className="mx-auto flex items-center gap-2 sm:mx-0">
-        <HomeLink />
-        <CreateBookButton />
-        <BookSettings currentBook={currentBook} />
-        <BookSelector bookTitle={currentBook.title} />
-        <div className="hidden h-7 min-w-40 items-center gap-2 rounded-md border border-input bg-muted px-3 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
-          <TextIcon size={14} />
-          {currentBook.description}
+    <div className="flex">
+      <Nav>
+        <div className="flex flex-col gap-2">
+          <HomeLink />
+          <CreateBookButton />
+          <BookSettings currentBook={currentBook} />
+          <BookSelector bookTitle={currentBook.title} />
+          <div className="hidden min-h-8 items-center gap-2 rounded-md border border-input bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
+            <TextIcon size={14} className="shrink-0" />
+            <p className="hyphens-auto text-wrap break-words">{currentBook.description}</p>
+          </div>
+          <div className="hidden h-8 w-max items-center gap-2 rounded-md border border-input bg-muted px-3 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
+            <CalendarIcon size={14} className="shrink-0" />
+            {currentBook.createdAt.toLocaleDateString()}
+          </div>
+          {currentBook.hasTasks && <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />}
         </div>
-        <div className="hidden h-7 w-max items-center gap-2 rounded-md border border-input bg-muted px-3 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
-          <CalendarIcon size={14} />
-          {currentBook.createdAt.toLocaleDateString()}
-        </div>
-      </nav>
-      <div className="flex flex-col gap-2 sm:flex-row">
-        {currentBook.hasTasks && <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />}
+      </Nav>
+      <main className="px-2 py-4 md:px-8">
+        <h1 className="mb-8 text-2xl font-semibold">
+          <BookOpenTextIcon size={24} className="mr-2 inline-block" />
+          {currentBook.title}
+        </h1>
         <div className="flex min-h-screen gap-2 overflow-scroll">
           {currentBook.groups
             .sort((a, b) => a.id.toString().localeCompare(b.id.toString()))
@@ -48,7 +55,7 @@ export default async function BookPage({ params: { bookId } }: Props) {
             })}
           <NewGroupButton bookId={currentBook.id} />
         </div>
-      </div>
+      </main>
     </div>
   );
 }

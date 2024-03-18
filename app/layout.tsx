@@ -28,7 +28,7 @@ export default function RootLayout({
           <ThemeProvider attribute="class">
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             <Header />
-            <main>{children}</main>
+            {children}
             <Toaster />
           </ThemeProvider>
         </body>

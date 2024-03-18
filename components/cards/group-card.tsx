@@ -49,7 +49,7 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
   };
 
   return (
-    <div className="flex min-w-[400px] flex-col gap-2 sm:min-w-[600px]">
+    <div className="flex min-w-[400px] max-w-[576px] flex-col gap-2">
       {editing ? (
         <div className="mr-2 flex w-full items-center justify-between rounded-lg border bg-card p-2 shadow">
           <form onSubmit={handleSubmit} onReset={handleReset} className="flex items-center gap-2">

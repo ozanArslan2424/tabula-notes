@@ -62,8 +62,12 @@ export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button className="h-7 space-x-2 bg-background text-foreground" size="sm" variant="outline">
-          <Settings2Icon size={14} />
+        <Button
+          className="w-8 space-x-3 bg-background text-foreground sm:w-full sm:justify-start"
+          size="sm"
+          variant="outline"
+        >
+          <Settings2Icon size={14} className="shrink-0" />
           <span className="sr-only md:not-sr-only">Kitap Ayarları</span>
         </Button>
       </DialogTrigger>
