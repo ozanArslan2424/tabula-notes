@@ -76,7 +76,7 @@ function text({ url, host }: Record<"url" | "host", string>) {
 }
 
 //-----------------------------------------------------------------------------
-const domain = process.env.NEXT_PUBLIC_APP_URL;
+const domain = process.env.NEXT_PUBLIC_URL;
 
 export async function sendEmailChangeToken(email: string, token: string) {
   const confirmLink = `${domain}/new-email?token=${token}`;

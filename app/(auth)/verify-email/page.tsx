@@ -1,9 +1,13 @@
 import { LinkButton } from "@/components/ui/link-button";
+import { getCurrentUser } from "@/lib/actions/user";
 import { MailIcon } from "lucide-react";
+import { redirect } from "next/navigation";
 
 type Props = {};
 
-export default function VerifyEmailPage({}: Props) {
+export default async function VerifyEmailPage({}: Props) {
+  const user = await getCurrentUser();
+  if (user) redirect("/dash");
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="mb-2 text-center text-3xl font-bold">E-Posta Gönderildi</h1>

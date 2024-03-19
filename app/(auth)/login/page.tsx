@@ -1,5 +1,5 @@
-import { getCurrentUser } from "@/actions/user";
 import { LoginForm } from "@/components/auth/login-form";
+import { getCurrentUser } from "@/lib/actions/user";
 import { redirect } from "next/navigation";
 
 type Props = {};

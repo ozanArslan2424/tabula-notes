@@ -1,5 +1,4 @@
 "use client";
-import { Logout } from "@/actions/logout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { Logout } from "@/lib/actions/logout";
 import { HomeIcon, LogOutIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -44,7 +44,9 @@ export const UserButton = () => {
         <DropdownMenuTrigger asChild>
           <Avatar className="h-9 w-9 cursor-pointer rounded-md border border-input p-0.5 shadow-sm">
             <AvatarImage className="rounded-md" src={user?.image!} />
-            <AvatarFallback className="rounded-md">{user?.name![0]}</AvatarFallback>
+            <AvatarFallback className="rounded-md">
+              {user?.name ? user?.name[0] : user.email}
+            </AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

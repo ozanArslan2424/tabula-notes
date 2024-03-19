@@ -1,6 +1,4 @@
 "use client";
-import { deleteBook } from "@/actions/delete";
-import { updateBookSettings } from "@/actions/update";
 import {
   Form,
   FormControl,
@@ -9,6 +7,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { deleteBook } from "@/lib/actions/delete";
+import { updateBookSettings } from "@/lib/actions/update";
 import { BookFormSchema } from "@/lib/schemas";
 import { BookType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";

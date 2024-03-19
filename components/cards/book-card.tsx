@@ -1,5 +1,5 @@
 "use client";
-import { deleteBook } from "@/actions/delete";
+import { deleteBook } from "@/lib/actions/delete";
 import { Book } from "@prisma/client";
 import Link from "next/link";
 import { useMemo, useTransition } from "react";
@@ -23,15 +23,15 @@ export const BookCard = ({ book }: BookCardProps) => {
   return (
     <>
       {isPending ? (
-        <div className="relative flex w-[360px] items-center justify-center border shadow">
+        <div className="relative flex min-h-[140px] w-[360px] items-center justify-center border shadow">
           <LoadingIcon />
         </div>
       ) : (
-        <div className="relative mx-auto w-max">
+        <div className="relative mx-auto min-h-[140px] w-max">
           <DeleteBookButton onClick={handleDelete} />
 
           <Link href={`/dash/${book.id}`} key={book.id}>
-            <div className="w-[360px] rounded-md border bg-card/30 p-4 transition-all sm:hover:shadow dark:sm:hover:border-primary/30">
+            <div className="min-h-[140px] w-[360px] rounded-md border bg-card/30 p-4 transition-all sm:hover:shadow dark:sm:hover:border-primary/30">
               <p className="mb-2 text-xs text-muted-foreground">{createdAtString}</p>
               <h2 className="line-clamp-2 hyphens-auto text-wrap break-words text-xl font-semibold capitalize">
                 {book.title}

@@ -1,5 +1,5 @@
 "use server";
-import { getEmailChangeTokenByEmail } from "@/actions/user";
+import { getEmailChangeTokenByEmail } from "@/lib/actions/user";
 import db from "@/lib/db";
 import { BookFormSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";

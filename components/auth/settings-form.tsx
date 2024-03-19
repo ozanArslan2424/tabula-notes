@@ -1,7 +1,7 @@
 "use client";
-import { updateUserSettings } from "@/actions/update";
-import { emailChangeAction } from "@/actions/user";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { updateUserSettings } from "@/lib/actions/update";
+import { emailChangeAction } from "@/lib/actions/user";
 import { LoginSchema, SettingsSchema } from "@/lib/schemas";
 import { UploadButton } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,10 +31,10 @@ type Props = {};
 export const SettingsForm = (props: Props) => {
   const user = useCurrentUser();
   if (!user) redirect("/login");
-  const userEmail = user.email;
 
-  const [isPending, startTransition] = useTransition();
+  const userEmail = user.email;
   const { update } = useSession();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof SettingsSchema>>({
     resolver: zodResolver(SettingsSchema),

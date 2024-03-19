@@ -1,5 +1,4 @@
 "use client";
-import { Login, OAuthLogin } from "@/actions/login";
 import {
   Form,
   FormControl,
@@ -8,6 +7,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Login, OAuthLogin } from "@/lib/actions/login";
 import { LoginSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTransition } from "react";

@@ -1,5 +1,5 @@
 "use client";
-import { createNewGroup } from "@/actions/create";
+import { createNewGroup } from "@/lib/actions/create";
 import { GroupFormSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckCircle2Icon, PlusCircleIcon, XCircleIcon } from "lucide-react";
@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "../ui/button";
-import { LoadingIcon2 } from "../ui/custom-loading";
+import { LoadingIcon } from "../ui/custom-loading";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 import { Input } from "../ui/input";
 
@@ -44,7 +44,7 @@ export const NewGroupButton = ({ bookId }: { bookId: string }) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="flex h-min items-center gap-2 rounded-lg border bg-card p-2 shadow"
+            className="flex h-12 items-center gap-2 border bg-accent p-2 shadow"
           >
             <FormField
               control={form.control}
@@ -56,7 +56,7 @@ export const NewGroupButton = ({ bookId }: { bookId: string }) => {
                       {...field}
                       type="text"
                       placeholder="Grup adı"
-                      className="h-7 min-w-32"
+                      className="h-7 min-w-32 bg-card"
                       disabled={isPending}
                       autoFocus={open}
                     />
@@ -82,17 +82,14 @@ export const NewGroupButton = ({ bookId }: { bookId: string }) => {
       ) : (
         <Button
           variant="secondary"
-          size="sm"
           onClick={() => setOpen(true)}
-          className="my-2"
+          className="aspect-square h-12 rounded-none border shadow"
           disabled={isPending}
         >
           {isPending ? (
-            <LoadingIcon2 />
+            <LoadingIcon size={14} />
           ) : (
-            <span className="flex items-center gap-2">
-              <PlusCircleIcon size={14} /> Grup Ekle
-            </span>
+            <PlusCircleIcon className="shrink-0" size={16} />
           )}
         </Button>
       )}

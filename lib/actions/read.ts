@@ -1,11 +1,9 @@
 "use server";
 import db from "@/lib/db";
-import { redirect } from "next/navigation";
 import { getCurrentUser } from "./user";
 
 export async function getAllBooks() {
   const user = await getCurrentUser();
-  if (!user) redirect("/login");
   if (user && user.id) {
     const books = await db.book.findMany({
       where: {

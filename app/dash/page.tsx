@@ -1,8 +1,13 @@
-import { getAllBooks } from "@/actions/read";
 import { BookCardsGrid } from "@/components/layout/book-grid";
+import { getAllBooks } from "@/lib/actions/read";
+import { getCurrentUser } from "@/lib/actions/user";
+import { redirect } from "next/navigation";
 
 export default async function DashPage() {
   const books = await getAllBooks();
-
-  return <BookCardsGrid books={books} />;
+  const user = await getCurrentUser();
+  if (!user) redirect("/login");
+  if (user) {
+    return <BookCardsGrid books={books} />;
+  }
 }

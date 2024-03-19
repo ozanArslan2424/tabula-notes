@@ -1,7 +1,7 @@
 "use client";
-import { createNewTask } from "@/actions/create";
-import { deleteTask } from "@/actions/delete";
-import { updateTask } from "@/actions/update";
+import { createNewTask } from "@/lib/actions/create";
+import { deleteTask } from "@/lib/actions/delete";
+import { updateTask } from "@/lib/actions/update";
 import { TaskType } from "@/lib/types";
 import { PlusCircleIcon, Trash2Icon } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
@@ -52,32 +52,22 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
             <PlusCircleIcon size={14} />
           </Button>
         </form>
-        {tasks.length !== 0 && (
-          <>
-            {tasks.map((task) => {
-              return <TaskItem key={task.id} task={task} bookId={bookId} />;
-            })}
-            {isPending && (
-              <div className="mx-auto">
-                <LoadingIcon2 />
-              </div>
-            )}
-          </>
+        {tasks.length !== 0 &&
+          tasks.map((task) => {
+            return <TaskItem key={task.id} task={task} bookId={bookId} />;
+          })}
+
+        {isPending && (
+          <div className="mx-auto">
+            <LoadingIcon2 />
+          </div>
         )}
       </div>
     </div>
   );
 };
 
-const TaskItem = ({
-  task,
-  bookId,
-  disabled,
-}: {
-  task: TaskType;
-  bookId: string;
-  disabled?: boolean;
-}) => {
+const TaskItem = ({ task, bookId }: { task: TaskType; bookId: string }) => {
   const [completed, setCompleted] = useState<boolean>(task.completed);
   const [isPending, startTransition] = useTransition();
 

@@ -1,6 +1,6 @@
 "use client";
-import { deleteGroup } from "@/actions/delete";
-import { updateGroupTitle } from "@/actions/update";
+import { deleteGroup } from "@/lib/actions/delete";
+import { updateGroupTitle } from "@/lib/actions/update";
 import { GroupType } from "@/lib/types";
 import { CheckCircle2Icon, PencilLineIcon, XCircleIcon } from "lucide-react";
 import { useState, useTransition } from "react";
@@ -67,7 +67,7 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
   };
 
   return (
-    <div className="mr-2 w-full rounded-lg border bg-card px-4 py-2 shadow">
+    <div className="sticky top-0 flex min-h-12 w-full items-center border bg-accent px-4 shadow">
       {editing ? (
         <form
           onSubmit={handleSubmit}
@@ -88,7 +88,7 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
           </Button>
         </form>
       ) : (
-        <div className="flex items-center justify-between">
+        <div className="flex w-full items-center justify-between">
           <p className="text-lg font-semibold capitalize">{titleState}</p>
 
           <div className="flex items-center gap-2">

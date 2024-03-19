@@ -1,5 +1,5 @@
 "use client";
-import { createNewNote } from "@/actions/create";
+import { createNewNote } from "@/lib/actions/create";
 import { PlusCircleIcon } from "lucide-react";
 import { useTransition } from "react";
 import { Button } from "../ui/button";

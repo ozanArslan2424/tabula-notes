@@ -21,8 +21,14 @@ const config = {
     verifyRequest: "/verify-email",
   },
   providers: [
-    Google,
-    Github,
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    }),
+    Github({
+      clientId: process.env.AUTH_GITHUB_ID,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
+    }),
     Email({
       server: {
         host: process.env.EMAIL_HOST,

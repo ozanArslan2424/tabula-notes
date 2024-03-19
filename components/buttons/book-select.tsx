@@ -1,10 +1,10 @@
-import { getAllBooks } from "@/actions/read";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getAllBooks } from "@/lib/actions/read";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 

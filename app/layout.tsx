@@ -3,13 +3,15 @@ import { CurrentSessionProvider } from "@/components/providers/session-provider"
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Geologica, Inter, Montserrat } from "next/font/google";
 import { Toaster } from "sonner";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+const geologica = Geologica({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,7 +26,7 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="tr">
       <CurrentSessionProvider>
-        <body className={inter.className}>
+        <body className={montserrat.className}>
           <ThemeProvider attribute="class">
             <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
             <Header />

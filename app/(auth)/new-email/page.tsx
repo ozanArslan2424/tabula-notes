@@ -1,7 +1,7 @@
 "use client";
-import { newVerificationAction } from "@/actions/user";
 import { LoginButton } from "@/components/auth/auth-buttons";
 import { LoadingIcon } from "@/components/ui/custom-loading";
+import { newVerificationAction } from "@/lib/actions/user";
 import { CheckIcon, XIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
