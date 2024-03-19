@@ -17,10 +17,7 @@ export async function OAuthLogin(provider: string) {
   });
 }
 
-export const CredentialsLogin = async (
-  values: z.infer<typeof CredentialsSchema>,
-  callbackUrl?: string | null,
-) => {
+export const CredentialsLogin = async (values: z.infer<typeof CredentialsSchema>) => {
   const validatedFields = CredentialsSchema.safeParse(values);
   if (!validatedFields.success) {
     return { error: "Bir şeyler yanlış gitti. Lütfen tekrar deneyin." };
@@ -48,7 +45,7 @@ export const CredentialsLogin = async (
     await signIn("credentials", {
       email,
       password,
-      redirectTo: callbackUrl || "/dash",
+      redirectTo: "/dash",
     });
   } catch (error) {
     if (error instanceof AuthError) {

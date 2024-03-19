@@ -23,16 +23,20 @@ export const Register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: "Bu e-posta adresi zaten kullanılıyor." };
   }
 
-  await db.user.create({
-    data: {
-      name,
-      email,
-      password: hashedPassword,
-    },
-  });
+  try {
+    await db.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    });
 
-  const registerVerificationToken = await generateRegisterToken(email);
-  await sendRegisterToken(registerVerificationToken.email, registerVerificationToken.token);
+    const registerVerificationToken = await generateRegisterToken(email);
+    await sendRegisterToken(registerVerificationToken.email, registerVerificationToken.token);
 
-  return { success: "Kayıt başarılı! Doğrulama e-postası gönderildi." };
+    return { success: "Kayıt başarılı! Doğrulama e-postası gönderildi." };
+  } catch {
+    return { error: "Bir şeyler yanlış gitti. Lütfen tekrar deneyin." };
+  }
 };

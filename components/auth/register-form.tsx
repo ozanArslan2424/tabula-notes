@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "../ui/button";
 import { LoadingIcon2 } from "../ui/custom-loading";
@@ -30,9 +31,11 @@ export const RegisterForm = () => {
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof RegisterSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     startTransition(async () => {
-      await Register(values);
+      await Register(values).then((data) => {
+        toast.message(data.success);
+      });
     });
   };
 
