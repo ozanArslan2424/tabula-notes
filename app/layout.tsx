@@ -13,9 +13,9 @@ const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Tabula Notes",
+  title: "Tabula Notlar",
   description:
-    "Tabula Notes, daha organik bir deneyim sunma amacıyla oluşturulmuş bir not alma uygulamasıdır.",
+    "Tabula Notlar, daha organik bir deneyim sunma amacıyla oluşturulmuş bir not alma uygulamasıdır.",
 };
 
 export default function RootLayout({

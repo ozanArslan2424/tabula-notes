@@ -6,7 +6,7 @@ export const Nav = ({ children }: { children: React.ReactNode }) => {
       <div>
         <Link href="/">
           <h1 className="mb-8 hidden text-2xl font-semibold tracking-tight sm:block">
-            Tabula Notes
+            Tabula Notlar
           </h1>
         </Link>
         {children}
