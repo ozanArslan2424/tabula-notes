@@ -1,12 +1,16 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { UserRole } from "@prisma/client";
+import bcrypt from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
 import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
 import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Email from "next-auth/providers/nodemailer";
+import { getUserByEmail } from "./lib/actions/user";
 import db from "./lib/db";
 import { customVerificationRequest } from "./lib/mail";
+import { CredentialsSchema } from "./lib/schemas";
 
 const config = {
   adapter: PrismaAdapter(db),
@@ -17,8 +21,15 @@ const config = {
   pages: {
     signIn: "/login",
     newUser: "/dash",
-    error: "/login-error",
     verifyRequest: "/verify-email",
+  },
+  events: {
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
+      });
+    },
   },
   providers: [
     Google({
@@ -41,6 +52,23 @@ const config = {
       from: process.env.EMAIL_FROM,
       sendVerificationRequest({ identifier: email, url, provider: { server, from } }) {
         return customVerificationRequest({ identifier: email, url, provider: { server, from } });
+      },
+    }),
+    Credentials({
+      async authorize(credentials) {
+        const validatedFields = CredentialsSchema.safeParse(credentials);
+
+        if (validatedFields.success) {
+          const { email, password } = validatedFields.data;
+
+          const user = await getUserByEmail(email);
+          if (!user || !user.password) return null;
+
+          const passwordsMatch = await bcrypt.compare(password, user.password);
+
+          if (passwordsMatch) return user;
+        }
+        return null;
       },
     }),
   ],

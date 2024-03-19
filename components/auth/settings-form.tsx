@@ -41,6 +41,7 @@ export const SettingsForm = (props: Props) => {
     defaultValues: {
       name: user?.name || undefined,
       image: user?.image || undefined,
+      newPassword: "",
     },
   });
 
@@ -142,7 +143,25 @@ export const SettingsForm = (props: Props) => {
                 </FormItem>
               )}
             />
-
+            <FormField
+              control={form.control}
+              name="newPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Şifre</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      id="newPassword"
+                      type="password"
+                      required
+                      placeholder="********"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button className="mt-2 w-full" type="submit" disabled={isPending}>
               {isPending ? <LoadingIcon2 /> : "Kaydet"}
             </Button>

@@ -7,9 +7,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Login, OAuthLogin } from "@/lib/actions/login";
-import { LoginSchema } from "@/lib/schemas";
+import { CredentialsLogin, OAuthLogin } from "@/lib/actions/login";
+import { CredentialsSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -20,16 +21,17 @@ import { Input } from "../ui/input";
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof CredentialsSchema>>({
+    resolver: zodResolver(CredentialsSchema),
     defaultValues: {
       email: "",
+      password: "",
     },
   });
 
-  const handleSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const handleSubmit = (values: z.infer<typeof CredentialsSchema>) => {
     startTransition(async () => {
-      await Login(values);
+      await CredentialsLogin(values);
     });
   };
 
@@ -43,10 +45,10 @@ export const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)}>
+      <form className="space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
         <h1 className="mb-2 text-center text-3xl font-bold">Giriş Yap</h1>
         <p className="mb-4 text-center text-muted-foreground">
-          Giriş yapmak için e-posta adresinizi girmeniz yeterli.
+          Giriş yapmak için bilgilerinizi girin.
         </p>
         <FormField
           control={form.control}
@@ -61,10 +63,29 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Şifre</FormLabel>
+              <FormControl>
+                <Input {...field} id="password" type="password" required placeholder="********" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button className="mt-2 w-full" type="submit" disabled={isPending}>
           {isPending ? <LoadingIcon2 /> : "Giriş Yap"}
         </Button>
       </form>
+      <p className="mt-4 text-center text-muted-foreground">
+        Hesabınız yok mu?{" "}
+        <Link href="/register" className="underline hover:text-foreground">
+          Kayıt olun
+        </Link>
+      </p>
       <div className="my-4 flex items-center gap-2">
         <div className="h-0.5 w-full bg-accent"></div>
         <p className="text-primary">veya</p>

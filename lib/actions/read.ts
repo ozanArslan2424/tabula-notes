@@ -50,3 +50,17 @@ export async function getBookContents(bookId: string) {
   });
   return book;
 }
+
+export const getVerificationTokenByEmail = async (email: string) => {
+  try {
+    const verificationToken = await db.registerVerificationToken.findFirst({
+      where: {
+        email,
+      },
+    });
+
+    return verificationToken;
+  } catch {
+    return null;
+  }
+};

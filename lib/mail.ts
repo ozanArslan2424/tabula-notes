@@ -105,3 +105,31 @@ export async function sendEmailChangeToken(email: string, token: string) {
     }
   });
 }
+
+export async function sendRegisterToken(email: string, token: string) {
+  const confirmLink = `${domain}/new-user?token=${token}`;
+
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  var mailOptions = {
+    from: process.env.MAIL_FROM,
+    to: email,
+    subject: "E-posta adresi doğrulama linki.",
+    text: `Kaydolmak için link: ${confirmLink}`,
+    html: `<p>Kaydolmak için <a href="${confirmLink}">buraya tıkla.</a></p>`,
+  };
+
+  transporter.sendMail(mailOptions, function (error: Error, info: any) {
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return true;
+    }
+  });
+}
