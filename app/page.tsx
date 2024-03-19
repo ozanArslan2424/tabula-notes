@@ -3,7 +3,7 @@ import { LinkButton } from "@/components/ui/link-button";
 export default async function LandingPage() {
   return (
     <main className="relative w-full px-2 py-16 md:px-4">
-      <div className="absolute left-4 top-4">
+      <div className="absolute left-4 top-4 w-max">
         <LinkButton href="/dash">Kütüphane</LinkButton>
       </div>
       <div className="prose mx-auto w-max dark:prose-invert">
