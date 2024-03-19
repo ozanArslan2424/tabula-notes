@@ -1,5 +1,5 @@
-import { useDebounce } from "@/hooks/use-debounce";
 import { updateNote } from "@/lib/actions/update";
+import { useDebounce } from "@/lib/hooks/use-debounce";
 import { CheckIcon, SaveIcon, XIcon } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import { Button } from "../ui/button";

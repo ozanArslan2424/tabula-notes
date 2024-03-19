@@ -9,8 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { Logout } from "@/lib/actions/logout";
+import { useCurrentUser } from "@/lib/hooks/use-current-user";
 import { HomeIcon, LogOutIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";

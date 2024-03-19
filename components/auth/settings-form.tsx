@@ -1,7 +1,7 @@
 "use client";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { updateUserSettings } from "@/lib/actions/update";
 import { emailChangeAction } from "@/lib/actions/user";
+import { useCurrentUser } from "@/lib/hooks/use-current-user";
 import { LoginSchema, SettingsSchema } from "@/lib/schemas";
 import { UploadButton } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
