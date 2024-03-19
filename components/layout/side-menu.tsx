@@ -5,7 +5,7 @@ export const Nav = ({ children }: { children: React.ReactNode }) => {
     <nav className="flex h-[100dvh] w-min flex-col justify-between bg-accent px-2 py-4 sm:w-[332px] sm:px-4">
       <div>
         <Link href="/">
-          <h1 className="mb-8 hidden text-2xl font-semibold tracking-tight sm:block">
+          <h1 className="mb-4 hidden text-2xl font-semibold tracking-tight sm:block">
             Tabula Notlar
           </h1>
         </Link>

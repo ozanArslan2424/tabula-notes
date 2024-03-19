@@ -33,7 +33,7 @@ export const BookCardsGrid = ({ books }: Props) => {
         </div>
       </Nav>
       <main className="px-2 py-4 md:px-8">
-        <h1 className="mb-8 text-2xl font-semibold">Kütüphane</h1>
+        <h1 className="mb-4 text-2xl font-semibold">Kütüphane</h1>
         {books?.length === 0 && (
           <div className="flex items-center justify-center rounded-lg border bg-card p-4 shadow">
             <p className="text-muted-foreground">Henüz hiç kitap eklenmemiş.</p>

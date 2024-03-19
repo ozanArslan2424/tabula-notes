@@ -49,7 +49,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
   const convertedMarkdown = markdown.replace(/(?:\r\n|\r|\n)/g, "  \n");
 
   return (
-    <Card className={`relative mt-2 flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
+    <Card className={`z-5 relative mt-2 flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
       <div className="absolute right-2 top-0.5 flex flex-row items-center gap-2">
         <SavingButton noteId={note.id} markdown={markdown} />
         <DownloadMarkdownButton noteId={note.id} markdown={markdown} />

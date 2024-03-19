@@ -36,8 +36,8 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
       <div className="flex w-full items-center justify-between rounded-lg bg-card p-2 text-card-foreground shadow">
         <p className="text-md px-2 font-semibold">Yapılacaklar</p>
       </div>
-      <div className="flex flex-col gap-1 rounded-lg border bg-card p-2 text-card-foreground shadow">
-        <form className="mb-3 flex items-center gap-2" onSubmit={handleTodoSubmit}>
+      <div className="rounded-lg border bg-card p-2 text-card-foreground shadow">
+        <form className="mb-4 flex items-center gap-2" onSubmit={handleTodoSubmit}>
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -52,16 +52,18 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
             <PlusCircleIcon size={14} />
           </Button>
         </form>
-        {tasks.length !== 0 &&
-          tasks.map((task) => {
-            return <TaskItem key={task.id} task={task} bookId={bookId} />;
-          })}
+        <div className="flex max-h-[480px] flex-col gap-1 overflow-y-scroll">
+          {tasks.length !== 0 &&
+            tasks.map((task) => {
+              return <TaskItem key={task.id} task={task} bookId={bookId} />;
+            })}
 
-        {isPending && (
-          <div className="mx-auto">
-            <LoadingIcon2 />
-          </div>
-        )}
+          {isPending && (
+            <div className="mx-auto">
+              <LoadingIcon2 />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ export default async function LandingPage() {
       <div className="absolute left-4 top-4 w-max">
         <LinkButton href="/dash">Kütüphane</LinkButton>
       </div>
-      <div className="prose mx-auto w-max dark:prose-invert">
+      <div className="prose prose-sm mx-auto hyphens-auto text-wrap break-words dark:prose-invert sm:prose-base lg:prose-lg sm:w-max">
         <h1>Tabula Notlar</h1>
         <p>
           Basit ve markdown uyumlu not alma web uygulaması. Temel amacı, genellikle dijital not alma

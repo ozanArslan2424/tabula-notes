@@ -3,7 +3,7 @@ import { ThemeToggle } from "../buttons/switch-theme";
 
 export const Header = () => {
   return (
-    <header className="absolute right-2 top-4 flex items-center gap-2 md:right-8">
+    <header className="absolute right-2 top-4 z-10 flex items-center gap-2 md:right-8">
       <ThemeToggle />
       <UserButton />
     </header>

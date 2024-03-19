@@ -67,7 +67,7 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
   };
 
   return (
-    <div className="sticky top-0 flex min-h-12 w-full items-center border bg-accent px-4 shadow">
+    <div className="sticky top-0 z-10 flex min-h-12 w-full items-center border bg-accent px-4 shadow">
       {editing ? (
         <form
           onSubmit={handleSubmit}

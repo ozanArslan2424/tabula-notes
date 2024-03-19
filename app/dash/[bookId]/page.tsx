@@ -49,12 +49,12 @@ export default async function BookPage({ params: { bookId } }: Props) {
           </div>
         </Nav>
 
-        <main className="px-2 py-4 md:px-8">
-          <h1 className="mb-8 text-2xl font-semibold">
+        <main className="py-4 pl-2 md:pl-8">
+          <h1 className="mb-4 text-2xl font-semibold">
             <BookOpenTextIcon size={24} className="mr-2 inline-block" />
             {currentBook.title}
           </h1>
-          <div className="flex min-h-[calc(100dvh-120px)] max-w-[calc(100vw-40px)] gap-2 overflow-x-scroll sm:max-w-[calc(100vw-380px)]">
+          <div className="flex min-h-[calc(100dvh-120px)] max-w-[calc(100vw-40px)] gap-2 overflow-x-scroll pr-12 sm:max-w-[calc(100vw-380px)]">
             {currentBook.groups
               .sort((a, b) => a.id - b.id)
               .map((group) => {
@@ -71,7 +71,7 @@ export default async function BookPage({ params: { bookId } }: Props) {
                           <NoteCard key={note.id} bookId={bookId} groupId={group.id} note={note} />
                         );
                       })}
-                    <div className="flex w-full items-center justify-center">
+                    <div className="flex w-full items-center justify-center pb-12">
                       <NewNoteButton groupId={group.id} bookId={bookId} />
                     </div>
                   </div>
