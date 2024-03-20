@@ -24,9 +24,7 @@ export const BookSelector = async ({ bookTitle }: { bookTitle: string }) => {
           books.map((book) => {
             return (
               <Link href={`/dash/${book.id}`} key={book.id}>
-                <DropdownMenuItem className="min-w-48 text-xs capitalize">
-                  {book.title}
-                </DropdownMenuItem>
+                <DropdownMenuItem className="min-w-48 text-xs capitalize">{book.title}</DropdownMenuItem>
               </Link>
             );
           })}

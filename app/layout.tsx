@@ -1,6 +1,5 @@
 import { Header } from "@/components/layout/header";
-import { CurrentSessionProvider } from "@/components/providers/session-provider";
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ThemeProvider } from "@/components/layout/theme-provider";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
@@ -42,16 +41,14 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="tr">
-      <CurrentSessionProvider>
-        <body className={montserrat.className}>
-          <ThemeProvider attribute="class">
-            <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-            <Header />
-            {children}
-            <Toaster />
-          </ThemeProvider>
-        </body>
-      </CurrentSessionProvider>
+      <body className={montserrat.className}>
+        <ThemeProvider attribute="class">
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <Header />
+          {children}
+          <Toaster />
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

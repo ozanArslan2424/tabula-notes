@@ -1,9 +1,9 @@
 "use server";
 import db from "@/lib/db";
-import { getCurrentUser } from "./user";
+import { getSession } from "../auth";
 
 export async function getAllBooks() {
-  const user = await getCurrentUser();
+  const { user } = await getSession();
   if (user && user.id) {
     const books = await db.book.findMany({
       where: {
@@ -50,17 +50,3 @@ export async function getBookContents(bookId: string) {
   });
   return book;
 }
-
-export const getVerificationTokenByEmail = async (email: string) => {
-  try {
-    const verificationToken = await db.registerVerificationToken.findFirst({
-      where: {
-        email,
-      },
-    });
-
-    return verificationToken;
-  } catch {
-    return null;
-  }
-};

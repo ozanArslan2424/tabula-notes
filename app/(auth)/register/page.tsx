@@ -1,14 +1,15 @@
 import { RegisterForm } from "@/components/auth/register-form";
-import { getCurrentUser } from "@/lib/actions/user";
+import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
-type Props = {};
+export default async function RegisterPage() {
+  const { user } = await getSession();
 
-export default async function RegisterPage(props: Props) {
-  const user = await getCurrentUser();
-  if (user) redirect("/dash");
+  if (user) {
+    redirect("/dash");
+  }
   return (
-    <div className="mx-auto w-max">
+    <div className="w-max mx-auto mt-32">
       <RegisterForm />
     </div>
   );

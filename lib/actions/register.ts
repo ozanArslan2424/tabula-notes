@@ -1,11 +1,9 @@
 "use server";
-import bcrypt from "bcryptjs";
+import * as argon2 from "argon2";
+import { generateId } from "lucia";
 import * as z from "zod";
 import db from "../db";
-import { sendRegisterToken } from "../mail";
 import { RegisterSchema } from "../schemas";
-import { generateRegisterToken } from "./create";
-import { getUserByEmail } from "./user";
 
 export const Register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -14,28 +12,36 @@ export const Register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: "Bir şeyler yanlış gitti. Lütfen tekrar deneyin." };
   }
 
-  const { name, email, password } = validatedFields.data;
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const { username, email, password } = validatedFields.data;
 
-  const existingUser = await getUserByEmail(email);
+  const hashedPassword = await argon2.hash(password);
+  const userId = generateId(15);
+  const randomRegisterToken = generateId(15);
+  const expires = new Date(new Date().getTime() + 3600 * 1000); // 1 hour
 
-  if (existingUser) {
-    return { error: "Bu e-posta adresi zaten kullanılıyor." };
-  }
+  const token = await db.registerToken.create({
+    data: {
+      email: email,
+      expires: expires,
+      token: randomRegisterToken,
+    },
+  });
 
   try {
     await db.user.create({
       data: {
-        name,
-        email,
+        id: userId,
+        email: email,
+        username: username,
         password: hashedPassword,
+        registerTokens: {
+          connect: {
+            id: token.id,
+          },
+        },
       },
     });
-
-    const registerVerificationToken = await generateRegisterToken(email);
-    await sendRegisterToken(registerVerificationToken.email, registerVerificationToken.token);
-
-    return { success: "Kayıt başarılı! Doğrulama e-postası gönderildi." };
+    return { token: token };
   } catch {
     return { error: "Bir şeyler yanlış gitti. Lütfen tekrar deneyin." };
   }

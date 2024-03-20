@@ -1,12 +1,11 @@
 import { updateNote } from "@/lib/actions/update";
 import { useDebounce } from "@/lib/hooks/use-debounce";
 import { CheckIcon, SaveIcon, XIcon } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { LoadingIcon } from "../ui/custom-loading";
 
 export const SavingButton = ({ noteId, markdown }: { noteId: number; markdown: string | null }) => {
-  const [isPending, startTransition] = useTransition();
   const [status, setStatus] = useState<"idle" | "saving" | "saved" | "fail">("idle");
 
   const debouncedEditorContent = useDebounce(markdown || "", 500);

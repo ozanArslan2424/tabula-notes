@@ -10,20 +10,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Logout } from "@/lib/actions/logout";
-import { useCurrentUser } from "@/lib/hooks/use-current-user";
 import { HomeIcon, LogOutIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LoadingIcon } from "../ui/custom-loading";
 import { LinkButton } from "../ui/link-button";
 
-export const UserButton = () => {
+export const UserButton = ({
+  user,
+}: {
+  user: {
+    id: string;
+    email: string;
+    username: string;
+    image: string;
+    role: string;
+  } | null;
+}) => {
   const [mounted, setMounted] = useState(false);
-  const user = useCurrentUser();
 
-  useEffect(() => setMounted(true), [user]);
+  useEffect(() => setMounted(true), []);
 
-  const handleLogout = async () => {
+  const handleClick = async () => {
     await Logout();
   };
 
@@ -35,7 +43,7 @@ export const UserButton = () => {
     );
 
   if (mounted && !user) {
-    return <LoginButton />;
+    return <LinkButton href="/login">Giriş Yap</LinkButton>;
   }
 
   if (mounted && user) {
@@ -44,15 +52,13 @@ export const UserButton = () => {
         <DropdownMenuTrigger asChild>
           <Avatar className="h-9 w-9 cursor-pointer rounded-md border border-input p-0.5 shadow-sm">
             <AvatarImage className="rounded-md" src={user?.image!} />
-            <AvatarFallback className="rounded-md">
-              {user?.name ? user?.name[0] : user.email}
-            </AvatarFallback>
+            <AvatarFallback className="rounded-md">{user?.username ? user?.username[0] : user.email}</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>
             <div>
-              <p className="text-base">{user?.name}</p>
+              <p className="text-base">{user?.username}</p>
               <p className="text-xs font-normal text-muted-foreground">{user?.email}</p>
             </div>
           </DropdownMenuLabel>
@@ -68,37 +74,11 @@ export const UserButton = () => {
               <Settings2Icon size={14} className="mr-2" /> Ayarlar
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem onClick={handleLogout}>
-            <LogOutIcon size={14} className="mr-2 text-red-400" /> Çıkış Yap
+          <DropdownMenuItem className="group" onClick={handleClick}>
+            <LogOutIcon size={14} className="mr-2 group-hover:text-red-500" /> Çıkış Yap
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     );
   }
-};
-
-export const LoginButton = () => {
-  const user = useCurrentUser();
-  if (user)
-    return (
-      <LinkButton href="/dash" type="submit">
-        Kütüphaneye git
-      </LinkButton>
-    );
-
-  return (
-    <LinkButton href="/login" type="submit">
-      Giriş Yap
-    </LinkButton>
-  );
-};
-
-export const LogoutButton = () => {
-  return (
-    <form action={Logout}>
-      <Button type="submit" variant="outline" size="sm" className="w-full">
-        <LogOutIcon size={16} className="mr-2 text-red-400" /> Çıkış Yap
-      </Button>
-    </form>
-  );
 };

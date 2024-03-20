@@ -9,7 +9,7 @@ import { NoteCard } from "@/components/cards/note-card";
 import { TodoCard } from "@/components/cards/todo-card";
 import { Nav } from "@/components/layout/side-menu";
 import { getBookContents } from "@/lib/actions/read";
-import { getCurrentUser } from "@/lib/actions/user";
+import { getSession } from "@/lib/auth";
 import { BookOpenTextIcon, CalendarIcon, TextIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 
@@ -22,8 +22,10 @@ type Props = {
 export default async function BookPage({ params: { bookId } }: Props) {
   const currentBook = await getBookContents(bookId);
   if (!currentBook) return null;
-  const user = await getCurrentUser();
+
+  const { user } = await getSession();
   if (!user) redirect("/login");
+
   if (user) {
     return (
       <div className="flex">
@@ -67,9 +69,7 @@ export default async function BookPage({ params: { bookId } }: Props) {
                     {group.notes
                       .sort((a, b) => a.id - b.id)
                       .map((note) => {
-                        return (
-                          <NoteCard key={note.id} bookId={bookId} groupId={group.id} note={note} />
-                        );
+                        return <NoteCard key={note.id} bookId={bookId} groupId={group.id} note={note} />;
                       })}
                     <div className="flex w-full items-center justify-center pb-12">
                       <NewNoteButton groupId={group.id} bookId={bookId} />

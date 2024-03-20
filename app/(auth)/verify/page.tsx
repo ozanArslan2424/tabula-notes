@@ -1,8 +1,8 @@
-import { LoginForm } from "@/components/auth/login-form";
+import { VerifyForm } from "@/components/auth/verify-form";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
-export default async function LoginPage() {
+export default async function VerifyPage() {
   const { user } = await getSession();
 
   if (user) {
@@ -10,7 +10,7 @@ export default async function LoginPage() {
   }
   return (
     <div className="w-max mx-auto mt-32">
-      <LoginForm />
+      <VerifyForm />
     </div>
   );
 }

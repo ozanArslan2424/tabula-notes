@@ -1,65 +1,12 @@
 "use server";
-import { getEmailChangeTokenByEmail } from "@/lib/actions/user";
 import db from "@/lib/db";
 import { BookFormSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
-import { v4 } from "uuid";
 import * as z from "zod";
-import { getVerificationTokenByEmail } from "./read";
-import { getCurrentUser } from "./user";
-
-export const generateRegisterToken = async (email: string) => {
-  const token = v4();
-  const expires = new Date(new Date().getTime() + 3600 * 1000); // 1 hour
-
-  const existingToken = await getVerificationTokenByEmail(email);
-
-  if (existingToken) {
-    await db.registerVerificationToken.delete({
-      where: {
-        id: existingToken.id,
-      },
-    });
-  }
-
-  const registerVerificationToken = await db.registerVerificationToken.create({
-    data: {
-      email,
-      token,
-      expires,
-    },
-  });
-  return registerVerificationToken;
-};
-
-export const generateEmailChangeToken = async (email: string) => {
-  const token = v4();
-  const expires = new Date(new Date().getTime() + 3600 * 1000); // 1 hour
-  const user = await getCurrentUser();
-  const existingToken = await getEmailChangeTokenByEmail(email);
-
-  if (existingToken) {
-    await db.emailChangeToken.delete({
-      where: {
-        id: existingToken.id,
-      },
-    });
-  }
-
-  const emailChangeToken = await db.emailChangeToken.create({
-    data: {
-      email,
-      token,
-      expires,
-      userId: user?.id,
-    },
-  });
-
-  return emailChangeToken;
-};
+import { getSession } from "../auth";
 
 export async function createBook(values: z.infer<typeof BookFormSchema>) {
-  const user = await getCurrentUser();
+  const { user } = await getSession();
   try {
     const book = await db.book.create({
       data: {

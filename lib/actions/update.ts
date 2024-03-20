@@ -1,10 +1,8 @@
 "use server";
 import db from "@/lib/db";
-import { BookFormSchema, SettingsSchema } from "@/lib/schemas";
-import bcryptjs from "bcryptjs";
+import { BookFormSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
-import { getCurrentUser, getUserById } from "./user";
 
 export const updateGroupTitle = async (groupId: number, title: string) => {
   try {
@@ -75,38 +73,4 @@ export async function updateBookSettings(bookId: string, values: z.infer<typeof 
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
   }
-}
-
-export async function updateUserSettings(values: z.infer<typeof SettingsSchema>) {
-  const user = await getCurrentUser();
-
-  if (!user) {
-    return { error: "Kullanıcı bulunamadı." };
-  }
-
-  const dbUser = await getUserById(user.id);
-  if (!dbUser) {
-    return { error: "Kullanıcı bulunamadı." };
-  }
-
-  if (values.newPassword && dbUser.password) {
-    const passwordsMatch = dbUser.password === values.newPassword;
-
-    if (passwordsMatch) {
-      return { error: "Aynı şifreyi girdiniz." };
-    }
-
-    const hashedPassword = await bcryptjs.hash(values.newPassword, 10);
-    await db.user.update({
-      where: {
-        id: dbUser.id,
-      },
-      data: {
-        name: values.name,
-        image: values.image,
-        password: hashedPassword,
-      },
-    });
-  }
-  return { success: "Ayarlar güncellendi." };
 }
