@@ -50,12 +50,12 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
 
   return (
     <Card className={`z-5 relative mt-2 flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
-      <div className="absolute right-2 top-0.5 flex flex-row items-center gap-2">
+      <div className="absolute bottom-0.5 right-2 flex flex-row items-center gap-2">
         <SavingButton noteId={note.id} markdown={markdown} />
         <DownloadMarkdownButton noteId={note.id} markdown={markdown} />
         <DeleteNoteButton onClick={handleDeleteNote} />
       </div>
-      <CardContent className="rounded-b-lg px-4 pb-4 pt-6">
+      <CardContent className="rounded-b-lg px-4 py-2">
         {focused ? (
           <TextareaAutosize
             value={markdown}
@@ -71,7 +71,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
               remarkPlugins={[remarkGfm]}
               className={
                 markdown
-                  ? "prose prose-sm w-full max-w-full dark:prose-invert prose-headings:m-0 prose-p:my-0 prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-ul:my-0 prose-table:m-0 prose-hr:my-4 prose-hr:border-primary/70"
+                  ? "prose prose-sm w-full max-w-full dark:prose-invert prose-headings:m-0 prose-p:my-0 prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-ul:my-0 prose-table:m-0 prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"
                   : "w-full italic text-muted-foreground/70"
               }
             >

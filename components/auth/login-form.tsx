@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { LinkButton } from "../ui/link-button";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -79,7 +78,7 @@ export const LoginForm = () => {
               kaydolun.
             </Link>
           </p>
-
+          {/* 
           <div className="my-4 flex items-center gap-2">
             <div className="h-0.5 w-full bg-accent"></div>
             <p className="text-primary">veya</p>
@@ -89,7 +88,7 @@ export const LoginForm = () => {
           <LinkButton href="/login/github" variant="secondary" className="w-full">
             <GithubLogoBold />
             <span className="ml-2">Github ile Giriş Yap</span>
-          </LinkButton>
+          </LinkButton> */}
         </form>
       </Form>
     </>

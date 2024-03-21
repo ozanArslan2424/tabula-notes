@@ -11,7 +11,7 @@ export const Nav = ({ children }: { children: React.ReactNode }) => {
 
   if (open) {
     return (
-      <nav className="absolute left-0 top-0 z-20 flex h-[100dvh] w-screen flex-col justify-between bg-accent p-4 sm:w-[240px] md:static">
+      <nav className="absolute left-0 top-0 z-20 flex h-[100dvh] w-screen flex-col justify-between bg-accent p-4 sm:w-[280px] md:static">
         <div className="flex flex-col gap-2">
           <div className="flex justify-between">
             <Link className="mb-4" href="/">

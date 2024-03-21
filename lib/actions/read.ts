@@ -9,6 +9,10 @@ export async function getAllBooks() {
       where: {
         userId: user.id,
       },
+      include: {
+        groups: true,
+        tasks: true,
+      },
     });
     return books;
   }

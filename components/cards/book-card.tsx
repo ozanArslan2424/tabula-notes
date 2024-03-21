@@ -4,13 +4,15 @@ import { Book } from "@prisma/client";
 import Link from "next/link";
 import { useMemo, useTransition } from "react";
 import { DeleteBookButton } from "../buttons/delete-button";
+import { DownloadBookButton } from "../buttons/dwnld-book";
 import { LoadingIcon } from "../ui/custom-loading";
 
 type BookCardProps = {
   book: Book;
+  organizing: boolean;
 };
 
-export const BookCard = ({ book }: BookCardProps) => {
+export const BookCard = ({ book, organizing }: BookCardProps) => {
   const createdAtString = useMemo(() => book.createdAt.toLocaleDateString(), [book.createdAt]);
   const [isPending, startTransition] = useTransition();
 
@@ -28,8 +30,12 @@ export const BookCard = ({ book }: BookCardProps) => {
         </div>
       ) : (
         <div className="relative min-h-[140px] w-max">
-          <DeleteBookButton onClick={handleDelete} />
-
+          {organizing && (
+            <div className="absolute right-4 top-4 flex items-center gap-2 ">
+              <DownloadBookButton bookId={book.id} />
+              <DeleteBookButton onClick={handleDelete} />
+            </div>
+          )}
           <Link href={`/dash/${book.id}`} key={book.id}>
             <div className="min-h-[140px] w-[360px] rounded-md border bg-card/30 p-4 transition-all sm:hover:shadow dark:sm:hover:border-primary/30">
               <p className="mb-2 text-xs text-muted-foreground">{createdAtString}</p>

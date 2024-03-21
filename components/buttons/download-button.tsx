@@ -14,13 +14,7 @@ import {
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 
-export const DownloadMarkdownButton = ({
-  markdown,
-  noteId,
-}: {
-  markdown: string;
-  noteId: number;
-}) => {
+export const DownloadMarkdownButton = ({ markdown, noteId }: { markdown: string; noteId: number }) => {
   const downloadMarkdownFile = () => {
     const link = document.createElement("a");
     const file = new Blob([markdown], { type: "text/plain" });
@@ -87,8 +81,7 @@ export const DownloadGroupButton = async ({
         <AlertDialogHeader>
           <AlertDialogTitle>Gruptaki bütün notlar indirilecek.</AlertDialogTitle>
           <AlertDialogDescription>
-            Bu gruptaki notları bilgisayarına <code>.md</code> dosyası olarak indirmek istediğine
-            emin misin?
+            Bu gruptaki notları bilgisayarına <code>.md</code> dosyası olarak indirmek istediğine emin misin?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

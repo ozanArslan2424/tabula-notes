@@ -1,5 +1,6 @@
 "use client";
-import { HomeIcon, Settings2Icon, UserCircleIcon } from "lucide-react";
+import { HomeIcon, Settings2Icon, Trash2Icon, UserCircleIcon } from "lucide-react";
+import { Button } from "../ui/button";
 import { LinkButton } from "../ui/link-button";
 
 export const HomeLink = () => {
@@ -41,5 +42,19 @@ export const ProfileLink = () => {
       <UserCircleIcon size={14} className="shrink-0" />
       <span>Profil</span>
     </LinkButton>
+  );
+};
+
+export const OrganizeBooksButton = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <Button
+      size="sm"
+      variant="outline"
+      className="w-full justify-start space-x-3 bg-background text-foreground"
+      onClick={onClick}
+    >
+      <Trash2Icon size={14} className="shrink-0" />
+      <span>Kitapları düzenle</span>
+    </Button>
   );
 };

@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Book } from "@prisma/client";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
-import { SettingsLink } from "../buttons/action-btns";
+import { OrganizeBooksButton, SettingsLink } from "../buttons/action-btns";
 import { CreateBookButton } from "../buttons/create-book";
 import { BookCard } from "../cards/book-card";
 import { Nav } from "./side-menu";
@@ -12,6 +12,7 @@ type Props = { books: Book[] | undefined };
 
 export const BookCardsGrid = ({ books }: Props) => {
   const [searchValue, setSearchValue] = useState("");
+  const [organizing, setOrganizing] = useState(false);
 
   return (
     <div className="flex flex-col md:flex-row">
@@ -30,8 +31,12 @@ export const BookCardsGrid = ({ books }: Props) => {
         <SettingsLink />
         <CreateBookButton />
       </Nav>
-      <main className="w-full max-w-[1400px] px-4 py-4 md:px-8">
+      <main className="max-w-screen w-full px-4 py-4 md:px-8">
         <h1 className="mb-4 text-center text-2xl font-semibold md:text-left">Kütüphane</h1>
+        <div className="mx-auto mb-4 w-max sm:mx-0">
+          <OrganizeBooksButton onClick={() => setOrganizing(!organizing)} />
+        </div>
+
         {books?.length === 0 && (
           <div className="flex items-center justify-center rounded-lg border bg-card p-4 shadow">
             <p className="text-muted-foreground">Henüz hiç kitap eklenmemiş.</p>
@@ -42,7 +47,7 @@ export const BookCardsGrid = ({ books }: Props) => {
             {books
               .filter((book) => book.title.toLowerCase().indexOf(searchValue.toLowerCase()) > -1)
               .map((book) => (
-                <BookCard key={book.id} book={book} />
+                <BookCard key={book.id} book={book} organizing={organizing} />
               ))}
           </div>
         )}

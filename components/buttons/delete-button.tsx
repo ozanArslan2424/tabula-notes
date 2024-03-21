@@ -81,7 +81,7 @@ export const DeleteBookButton = ({ onClick }: { onClick: () => void }) => {
         <Button
           size="sm_icon"
           variant="ghost"
-          className="absolute right-4 top-4 gap-2 sm:hover:bg-destructive sm:hover:text-destructive-foreground"
+          className="sm:hover:bg-destructive sm:hover:text-destructive-foreground"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -94,9 +94,7 @@ export const DeleteBookButton = ({ onClick }: { onClick: () => void }) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Kitabı sil.</AlertDialogTitle>
-          <AlertDialogDescription>
-            Kitabı silmek istediğine emin misin? Bu işlem geri alınamaz.
-          </AlertDialogDescription>
+          <AlertDialogDescription>Kitabı silmek istediğine emin misin? Bu işlem geri alınamaz.</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
