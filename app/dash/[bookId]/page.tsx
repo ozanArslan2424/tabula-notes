@@ -54,7 +54,7 @@ export default async function BookPage({ params: { bookId } }: Props) {
             <BookOpenTextIcon size={24} className="mr-2 inline-block" />
             {currentBook.title}
           </h1>
-          <div className="flex min-h-[calc(100dvh-120px)] max-w-[calc(100vw-40px)] gap-2 overflow-x-scroll pr-12 sm:max-w-[calc(100vw-380px)]">
+          <div className="flex min-h-[calc(100dvh-120px)] max-w-[100vw] gap-2 overflow-x-scroll pr-12">
             {currentBook.groups
               .sort((a, b) => a.id - b.id)
               .map((group) => {
