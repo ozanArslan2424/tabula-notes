@@ -50,7 +50,7 @@ export const UserButton = ({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="h-9 w-9 cursor-pointer rounded-md border border-input p-0.5 shadow-sm">
+          <Avatar className="h-9 w-9 cursor-pointer rounded-md border border-input bg-background p-0.5 shadow-sm">
             <AvatarImage className="rounded-md" src={user?.image!} />
             <AvatarFallback className="rounded-md">{user?.username ? user?.username[0] : user.email}</AvatarFallback>
           </Avatar>

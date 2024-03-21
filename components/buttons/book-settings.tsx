@@ -1,12 +1,5 @@
 "use client";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { deleteBook } from "@/lib/actions/delete";
 import { updateBookSettings } from "@/lib/actions/update";
 import { BookFormSchema } from "@/lib/schemas";
@@ -21,14 +14,7 @@ import * as z from "zod";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { LoadingIcon2 } from "../ui/custom-loading";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 
 export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
@@ -62,28 +48,19 @@ export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button
-          className="w-8 space-x-3 bg-background text-foreground sm:w-full sm:justify-start"
-          size="sm"
-          variant="outline"
-        >
+        <Button className="w-full justify-start space-x-3 bg-background text-foreground" size="sm" variant="outline">
           <Settings2Icon size={14} className="shrink-0" />
-          <span className="sr-only md:not-sr-only">Kitap Ayarları</span>
+          <span>Kitap Ayarları</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Kitap Ayarları</DialogTitle>
-          <DialogDescription>
-            Tercihlerini değiştirdikten sonra kaydetmeyi unutma.
-          </DialogDescription>
+          <DialogDescription>Tercihlerini değiştirdikten sonra kaydetmeyi unutma.</DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className="flex w-full flex-col gap-2 p-4"
-          >
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex w-full flex-col gap-2 p-4">
             <FormField
               control={form.control}
               name="title"
@@ -111,12 +88,7 @@ export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
                 <FormItem>
                   <FormLabel>Açıklama</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="text"
-                      placeholder="Kısa Bir Açıklama"
-                      disabled={isPending}
-                    />
+                    <Input {...field} type="text" placeholder="Kısa Bir Açıklama" disabled={isPending} />
                   </FormControl>
                 </FormItem>
               )}

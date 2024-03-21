@@ -13,7 +13,7 @@ export const ThemeToggle = () => {
 
   if (!mounted)
     return (
-      <Button variant="outline" size="icon" disabled>
+      <Button variant="outline" size="icon" disabled className="bg-background">
         <LoadingIcon />
       </Button>
     );
@@ -23,6 +23,7 @@ export const ThemeToggle = () => {
       variant="outline"
       size="icon"
       onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
+      className="bg-background"
     >
       {resolvedTheme === "light" ? <MoonIcon size={14} /> : <SunIcon size={14} />}
     </Button>

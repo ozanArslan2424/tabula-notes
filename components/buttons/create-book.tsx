@@ -1,12 +1,5 @@
 "use client";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { createBook } from "@/lib/actions/create";
 import { BookFormSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,14 +12,7 @@ import * as z from "zod";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { LoadingIcon2 } from "../ui/custom-loading";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 
 export const CreateBookButton = () => {
@@ -61,13 +47,9 @@ export const CreateBookButton = () => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button
-          size="sm"
-          variant="outline"
-          className="w-8 space-x-3 bg-background text-foreground sm:w-full sm:justify-start"
-        >
+        <Button size="sm" variant="outline" className="w-full justify-start space-x-3 bg-background text-foreground">
           <PlusCircleIcon size={14} className="shrink-0" />
-          <span className="sr-only md:not-sr-only">Kitap Oluştur</span>
+          <span>Kitap Oluştur</span>
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -77,10 +59,7 @@ export const CreateBookButton = () => {
         </DialogHeader>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleSubmit)}
-            className="flex w-full flex-col gap-2 p-4"
-          >
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex w-full flex-col gap-2 p-4">
             <FormField
               control={form.control}
               name="title"
@@ -108,12 +87,7 @@ export const CreateBookButton = () => {
                 <FormItem>
                   <FormLabel>Açıklama</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="text"
-                      placeholder="Kısa Bir Açıklama"
-                      disabled={isPending}
-                    />
+                    <Input {...field} type="text" placeholder="Kısa Bir Açıklama" disabled={isPending} />
                   </FormControl>
                 </FormItem>
               )}

@@ -27,7 +27,7 @@ export const BookCard = ({ book }: BookCardProps) => {
           <LoadingIcon />
         </div>
       ) : (
-        <div className="relative mx-auto min-h-[140px] w-max">
+        <div className="relative min-h-[140px] w-max">
           <DeleteBookButton onClick={handleDelete} />
 
           <Link href={`/dash/${book.id}`} key={book.id}>

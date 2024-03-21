@@ -28,30 +28,28 @@ export default async function BookPage({ params: { bookId } }: Props) {
 
   if (user) {
     return (
-      <div className="flex">
+      <div className="flex w-full flex-col md:flex-row">
         <Nav>
-          <div className="flex flex-col gap-2">
-            <HomeLink />
-            <CreateBookButton />
-            <BookSettings currentBook={currentBook} />
-            <BookSelector bookTitle={currentBook.title} />
-            <div className="hidden min-h-8 items-center gap-2 rounded-md border border-input bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
-              <TextIcon size={14} className="shrink-0" />
-              <p className="hyphens-auto text-wrap break-words">{currentBook.description}</p>
-            </div>
-            <div className="hidden h-8 w-max items-center gap-2 rounded-md border border-input bg-muted px-3 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
-              <CalendarIcon size={14} className="shrink-0" />
-              {currentBook.createdAt.toLocaleDateString()}
-            </div>
-            {currentBook.hasTasks && (
-              <div className="hidden sm:block">
-                <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />
-              </div>
-            )}
+          <HomeLink />
+          <CreateBookButton />
+          <BookSettings currentBook={currentBook} />
+          <BookSelector bookTitle={currentBook.title} />
+          <div className="hidden min-h-8 items-center gap-2 rounded-md border border-input bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
+            <TextIcon size={14} className="shrink-0" />
+            <p className="hyphens-auto text-wrap break-words">{currentBook.description}</p>
           </div>
+          <div className="hidden h-8 w-max items-center gap-2 rounded-md border border-input bg-muted px-3 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
+            <CalendarIcon size={14} className="shrink-0" />
+            {currentBook.createdAt.toLocaleDateString()}
+          </div>
+          {currentBook.hasTasks && (
+            <div className="hidden sm:block">
+              <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />
+            </div>
+          )}
         </Nav>
 
-        <main className="py-4 pl-2 md:pl-8">
+        <main className="w-full max-w-[1400px] py-2 pl-4 md:py-4 md:pl-8">
           <h1 className="mb-4 text-2xl font-semibold">
             <BookOpenTextIcon size={24} className="mr-2 inline-block" />
             {currentBook.title}
