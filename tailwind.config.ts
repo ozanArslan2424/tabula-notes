@@ -17,15 +17,7 @@ export default withUt({
       quote: ["Cambria", "Cochin", "Georgia", "Times", "Times New Roman", "serif"],
       note: ["Montserrat", "sans-serif"],
       inter: ["Inter", "sans-serif"],
-      mono: [
-        "SFMono-Regular",
-        "Fira Code",
-        "monospace",
-        "Menlo",
-        "Liberation Mono",
-        "Consolas",
-        "ui-monospace",
-      ],
+      mono: ["SFMono-Regular", "Fira Code", "monospace", "Menlo", "Liberation Mono", "Consolas", "ui-monospace"],
     },
     container: {
       center: true,
@@ -49,13 +41,17 @@ export default withUt({
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
-        submit: {
-          DEFAULT: "hsl(var(--submit))",
-          foreground: "hsl(var(--submit-foreground))",
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "hsl(var(--success-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+        },
+        action: {
+          DEFAULT: "hsl(var(--action))",
+          foreground: "hsl(var(--action-foreground))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",

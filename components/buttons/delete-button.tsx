@@ -21,20 +21,20 @@ export const DeleteNoteButton = ({ onClick }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="sm_icon" variant="ghost" className="sm:hover:text-red-500">
+        <Button size="sm_icon" variant="ghost" className="sm:hover:text-destructive">
           <Trash2Icon size={14} />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-red-500">Bu işlem geri alınamaz!</AlertDialogTitle>
+          <AlertDialogTitle className="text-destructive">Bu işlem geri alınamaz!</AlertDialogTitle>
           <AlertDialogDescription>Notu silmek istediğine emin misin?</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
             onClick={onClick}
-            className="bg-destructive text-destructive-foreground sm:hover:text-red-500"
+            className="bg-destructive text-destructive-foreground sm:hover:text-destructive"
           >
             Sil
           </AlertDialogAction>
@@ -48,21 +48,21 @@ export const DeleteGroupButton = ({ onClick }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="sm_icon" variant="ghost" className="sm:hover:text-red-500">
+        <Button size="sm_icon" variant="ghost" className="sm:hover:text-destructive">
           <Trash2Icon size={14} />
         </Button>
       </AlertDialogTrigger>
 
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-red-500">Bu işlem geri alınamaz!</AlertDialogTitle>
+          <AlertDialogTitle className="text-destructive">Bu işlem geri alınamaz!</AlertDialogTitle>
           <AlertDialogDescription>Grubu silmek istediğine emin misin?</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
             onClick={onClick}
-            className="bg-destructive text-destructive-foreground sm:hover:text-red-500"
+            className="bg-destructive text-destructive-foreground sm:hover:text-destructive"
           >
             Sil
           </AlertDialogAction>
@@ -100,7 +100,7 @@ export const DeleteBookButton = ({ onClick }: { onClick: () => void }) => {
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
             onClick={onClick}
-            className="bg-destructive text-destructive-foreground sm:hover:text-red-500"
+            className="bg-destructive text-destructive-foreground sm:hover:text-destructive"
           >
             Sil
           </AlertDialogAction>

@@ -11,15 +11,14 @@ const linkButtonVariants = cva(
         default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         custom_submit:
-          "dark:text-secondary-foreground shadow dark:hover:bg-submit/90 hover:bg-submit/90 hover:text-submit-foreground dark:border dark:border-submit/70",
+          "dark:text-secondary-foreground shadow dark:hover:bg-success/90 hover:bg-success/90 hover:text-success-foreground dark:border dark:border-success/70",
         custom_search:
           "dark:text-secondary-foreground shadow dark:hover:bg-sky-500/90 hover:bg-sky-500/90 hover:text-primary-foreground",
         custom_action:
-          "dark:text-secondary-foreground shadow dark:hover:bg-orange-500/90 hover:bg-orange-500/90 hover:text-primary-foreground",
+          "dark:text-secondary-foreground shadow dark:hover:bg-action/90 hover:bg-action/90 hover:text-primary-foreground",
         custom_destructive:
           "dark:text-secondary-foreground shadow dark:hover:bg-destructive/90 hover:bg-destructive/90 hover:text-destructive-foreground text-destructive",
-        outline:
-          "border border-input bg-secondary shadow-sm hover:bg-accent hover:text-accent-foreground",
+        outline: "border border-input bg-secondary shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
@@ -52,12 +51,7 @@ export interface LinkButtonProps
 const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
   ({ className, variant, size, href, children, ...props }, ref) => {
     return (
-      <Link
-        href={href}
-        className={cn(linkButtonVariants({ variant, size, className }))}
-        ref={ref}
-        {...props}
-      >
+      <Link href={href} className={cn(linkButtonVariants({ variant, size, className }))} ref={ref} {...props}>
         {children}
       </Link>
     );

@@ -13,29 +13,23 @@ enum UserRole {
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String? @db.Text
-  session_state     String?
+  id           String   @id
+  provider     String
+  providerId   String
+  accessToken  String
+  refreshToken String?
+  expiresAt    DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
+  @@unique([provider, providerId])
 }
 
 model Session {
   id        String   @id @default(cuid())
-  userId    String
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
 }
 
 model User {
@@ -44,6 +38,7 @@ model User {
   email          String?         @unique
   password       String?
   image          String?
+  googleId       String?         @unique
   githubId       String?         @unique
   emailVerified  Boolean         @default(false)
   role           UserRole        @default(USER)
@@ -70,11 +65,11 @@ model Book {
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  userId      String
   hasTasks    Boolean  @default(false)
   groups      Group[]
   tasks       Task[]
   User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
 }
 
 model Task {
@@ -82,17 +77,17 @@ model Task {
   name      String
   completed Boolean  @default(false)
   createdAt DateTime @default(now())
-  bookId    String
   Book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId    String
 }
 
 model Group {
   id        Int      @id @default(autoincrement())
   title     String
   createdAt DateTime @default(now())
-  bookId    String
   notes     Note[]
   Book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId    String
 }
 
 model Note {
@@ -100,6 +95,6 @@ model Note {
   content   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  groupId   Int
   Group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  groupId   Int
 }

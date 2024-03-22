@@ -69,16 +69,12 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
   return (
     <div className="sticky top-0 z-10 flex min-h-12 w-full items-center border bg-accent px-4 shadow">
       {editing ? (
-        <form
-          onSubmit={handleSubmit}
-          onReset={() => setEditing(false)}
-          className="flex items-center gap-2"
-        >
+        <form onSubmit={handleSubmit} onReset={() => setEditing(false)} className="flex items-center gap-2">
           <Input
             autoFocus
             value={titleState}
             onChange={(e) => setTitleState(e.target.value)}
-            className={error ? "border-red-500" : ""}
+            className={error ? "border-destructive" : ""}
           />
           <Button type="reset" size="sm_icon" variant="custom_destructive" disabled={isPending}>
             <XCircleIcon size={14} />
@@ -93,12 +89,7 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
 
           <div className="flex items-center gap-2">
             <DownloadGroupButton groupTitle={group.title} groupNotes={group.notes} />
-            <Button
-              size="sm_icon"
-              variant="ghost"
-              onClick={() => setEditing(true)}
-              disabled={editing}
-            >
+            <Button size="sm_icon" variant="ghost" onClick={() => setEditing(true)} disabled={editing}>
               <PencilLineIcon size={14} />
             </Button>
             <DeleteGroupButton onClick={handleDeleteGroup} />

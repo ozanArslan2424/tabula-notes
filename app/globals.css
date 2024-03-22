@@ -25,10 +25,13 @@
     --accent: 0 0% 96.1%;
     --accent-foreground: 0 0% 9%;
 
-    --submit: 120 100% 30%;
-    --submit-foreground: 60 9.1% 97.8%;
+    --success: 120 100% 30%;
+    --success-foreground: 60 9.1% 97.8%;
 
-    --destructive: 0 84.2% 60.2%;
+    --action: 36 100% 50%;
+    --action-foreground: 0 0% 3.9%;
+
+    --destructive: 4 90% 58%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 89.8%;
@@ -59,10 +62,13 @@
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
 
-    --submit: 120 100% 30%;
-    --submit-foreground: 60 9.1% 97.8%;
+    --success: 120 100% 30%;
+    --success-foreground: 60 9.1% 97.8%;
 
-    --destructive: 0 62.8% 30.6%;
+    --action: 36 100% 50%;
+    --action-foreground: 0 0% 3.9%;
+
+    --destructive: 4 90% 58%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 14.9%;
@@ -109,4 +115,28 @@ button[data-state="open"] .custom-rotate {
 
 button[data-state="checked"] .custom-checked {
   text-decoration: line-through;
+}
+
+.disappear {
+  animation: disappear 3s ease-in-out infinite;
+}
+
+@keyframes disappear {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(2000px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    transform: translateX(-2000px);
+    opacity: 100%;
+  }
+  100% {
+    transform: translateX(2000px);
+  }
 }

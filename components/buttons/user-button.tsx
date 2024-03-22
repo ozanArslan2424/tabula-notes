@@ -75,7 +75,7 @@ export const UserButton = ({
             </DropdownMenuItem>
           </Link>
           <DropdownMenuItem className="group" onClick={handleClick}>
-            <LogOutIcon size={14} className="mr-2 group-hover:text-red-500" /> Çıkış Yap
+            <LogOutIcon size={14} className="mr-2 group-hover:text-destructive" /> Çıkış Yap
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -52,8 +52,8 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
     <Card className={`z-5 relative mt-2 flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
       <div className="absolute bottom-0.5 right-2 flex flex-row items-center gap-2">
         <SavingButton noteId={note.id} markdown={markdown} />
-        <DownloadMarkdownButton noteId={note.id} markdown={markdown} />
-        <DeleteNoteButton onClick={handleDeleteNote} />
+        {!focused && <DownloadMarkdownButton noteId={note.id} markdown={markdown} />}
+        {!focused && <DeleteNoteButton onClick={handleDeleteNote} />}
       </div>
       <CardContent className="rounded-b-lg px-4 py-2">
         {focused ? (
@@ -63,7 +63,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
             onFocus={moveCaretAtEnd}
             onBlur={() => setFocused(false)}
             autoFocus={focused}
-            className="w-full resize-none appearance-none border-none bg-transparent text-sm leading-relaxed outline-none"
+            className="h-full w-full resize-none appearance-none border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
           />
         ) : (
           <div onClick={() => setFocused(true)}>

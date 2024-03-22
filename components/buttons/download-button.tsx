@@ -42,7 +42,7 @@ export const DownloadMarkdownButton = ({ markdown, noteId }: { markdown: string;
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
             onClick={downloadMarkdownFile}
-            className="sm:hover:bg-submit sm:hover:text-submit-foreground"
+            className="sm:hover:bg-success sm:hover:text-success-foreground"
           >
             İndir
           </AlertDialogAction>
@@ -88,7 +88,7 @@ export const DownloadGroupButton = async ({
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
             onClick={downloadMarkdownFile}
-            className="sm:hover:bg-submit sm:hover:text-submit-foreground"
+            className="sm:hover:bg-success sm:hover:text-success-foreground"
           >
             İndir
           </AlertDialogAction>

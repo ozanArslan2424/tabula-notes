@@ -109,7 +109,7 @@ const TaskItem = ({ task, bookId }: { task: TaskType; bookId: string }) => {
         disabled={isPending}
         size="sm_icon"
         variant="ghost"
-        className="hover:text-red-500"
+        className="hover:text-destructive"
         onClick={() => handleDeleteTask(task.id)}
       >
         <Trash2Icon size={14} />

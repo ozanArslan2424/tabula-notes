@@ -23,19 +23,19 @@ export const SavingButton = ({ noteId, markdown }: { noteId: number; markdown: s
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedEditorContent]);
 
-  let icon = <SaveIcon size={14} />;
+  let icon = <SaveIcon size={16} />;
   switch (status) {
     case "idle":
-      icon = <SaveIcon size={14} />;
+      icon = <SaveIcon size={16} />;
       break;
     case "saving":
-      icon = <LoadingIcon size={14} />;
+      icon = <LoadingIcon size={16} />;
       break;
     case "saved":
-      icon = <CheckIcon size={14} className="text-submit" />;
+      icon = <CheckIcon size={16} strokeWidth={4} className="text-success" />;
       break;
     case "fail":
-      icon = <XIcon size={14} className="text-red-500" />;
+      icon = <XIcon size={16} className="text-destructive" />;
       break;
   }
 
