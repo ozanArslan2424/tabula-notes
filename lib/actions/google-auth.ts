@@ -22,7 +22,7 @@ export const createGoogleAuthURL = async () => {
 
     return {
       success: true,
-      data: authorizationURL,
+      data: authorizationURL.toString(),
     };
   } catch (error: any) {
     return {
@@ -31,5 +31,3 @@ export const createGoogleAuthURL = async () => {
     };
   }
 };
-
-//   const tokens = await google.validateAuthorizationCode(code);

@@ -13,13 +13,13 @@ enum UserRole {
 }
 
 model Account {
-  id           String   @id
+  id           String    @id
   provider     String
   providerId   String
   accessToken  String
   refreshToken String?
-  expiresAt    DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt    DateTime?
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String
 
   @@unique([provider, providerId])

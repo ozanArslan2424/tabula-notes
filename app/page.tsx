@@ -1,47 +1,102 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
 
 export default async function LandingPage() {
   return (
-    <main className="relative w-full px-2 py-16 md:px-4">
-      <div className="absolute left-4 top-4 w-max">
-        <LinkButton href="/dash">Kütüphane</LinkButton>
-      </div>
-      <div className="prose prose-sm mx-auto hyphens-auto text-wrap break-words dark:prose-invert sm:prose-base lg:prose-lg sm:w-max">
+    <main className="w-full px-2 py-16 md:px-4">
+      <div className="prose mx-auto text-center dark:prose-invert">
         <h1>Tabula Notlar</h1>
-        <p>
-          Basit ve markdown uyumlu not alma web uygulaması. Temel amacı, genellikle dijital not alma uygulamalarında
-          bulunmayan sütunlardan faydalanarak daha doğal bir not alma deneyimi sağlamaktır. Gerçek hayatta &quot;yana
-          doğru devam eden&quot; defterleri kullansak da, dijital not alma uygulamaları genelde yalnızca aşağıya doğru
-          devam ediyor. Bu nedenle, uygulamadaki sütunlar defter sayfaları benzeri bir deneyim sunar.
-        </p>
-        <h2>Talimatlar:</h2>
-        <ol>
-          <li>Bir hesap oluşturun.</li>
-          <li>Üst kategoriler için kitaplar oluşturun. (İsteğe bağlı olarak yapılacaklarla birlikte.) </li>
-          <li> Alt kategoriler için kitapların içine gruplar oluşturun. </li>
-          <li> Son olarak, her grup altında notlarınızı yazmaya başlayın.</li>
-        </ol>
-        <h2>Özellikler:</h2>
-        <ul>
-          <li>Kimlik doğrulaması.</li>
-          <li>Arama ile kitaplarınızın bir listesini içeren Kütüphane sayfası.</li>
-          <li>Kitaplar üst kategoriler olarak, gruplar alt kategoriler olarak.</li>
-          <li>Kitaplar için isteğe bağlı açıklamalar.</li>
-          <li>Her kitap için isteğe bağlı görev listeleri (basit yapılacaklar listesi).</li>
-          <li>Notlar için markdown olarak indirme işlevselliği.</li>
-          <li>Gruplar için markdown olarak indirme işlevselliği.</li>
-          <li>Kitaplar için markdown olarak indirme işlevselliği.</li>
-        </ul>
-        <h2>Gelecek:</h2>
-        <ul>
-          <li>Google ve GitHub girişleri.</li>
-          <li>Kitaplar yerine notlara özel yapılacaklar listeleri.</li>
-          <li>Hesap ayarları sayfası.</li>
-          <li>Profil fotoğrafı özelliği</li>
-          <li>USER ve ADMIN rolleri</li>
-          <li>Daha iyi Markdown desteği</li>
-          <li>Etiketler ve etiketlere göre filtreleme</li>
-        </ul>
+      </div>
+      <div className="flex justify-between gap-8 px-24 pt-16">
+        <div>
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Çoktan Gelmiş Özellikler</CardTitle>
+              <CardDescription>Şimdiden kullanabileceğiniz özellikler.</CardDescription>
+            </CardHeader>
+            <CardContent className="prose dark:prose-invert">
+              <ul>
+                <li>Kimlik doğrulaması ve Google ve GitHub girişleri.</li>
+                <li>Arama ile kitaplarınızın bir listesini içeren Kütüphane sayfası.</li>
+                <li>Kitaplar üst kategoriler olarak, gruplar alt kategoriler olarak.</li>
+                <li>Kitaplar için isteğe bağlı açıklamalar.</li>
+                <li>Her kitap için isteğe bağlı görev listeleri (basit yapılacaklar listesi).</li>
+                <li>Notları markdown olarak indir.</li>
+                <li>Grupları markdown olarak indir.</li>
+                <li>Kitapları markdown olarak indir.</li>
+              </ul>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Gelecek Özellikler</CardTitle>
+              <CardDescription>Gelebilir de gelmeyebilir de...</CardDescription>
+            </CardHeader>
+            <CardContent className="prose dark:prose-invert">
+              <ul>
+                <li>Kitaplar yerine notlara özel yapılacaklar listeleri.</li>
+                <li>Hesap ayarları sayfası.</li>
+                <li>Profil fotoğrafı özelliği</li>
+                <li>USER ve ADMIN rolleri</li>
+                <li>Daha iyi Markdown desteği</li>
+                <li>Etiketler ve etiketlere göre filtreleme</li>
+                <li>Kitapsız, grupsuz, bağımsız notlar.</li>
+                <li>Notlar arası ilişkiler.</li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+        <div>
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Tabula Hakkında</CardTitle>
+              <CardDescription>Kısa bir açıklama.</CardDescription>
+            </CardHeader>
+            <CardContent className="prose dark:prose-invert">
+              <p>
+                Basit ve markdown uyumlu not alma web uygulaması. Temel amacı, genellikle dijital not alma
+                uygulamalarında bulunmayan sütunlardan faydalanarak daha doğal bir not alma deneyimi sağlamaktır. Gerçek
+                hayatta &quot;yana doğru devam eden&quot; defterleri kullansak da, dijital not alma uygulamaları genelde
+                yalnızca aşağıya doğru devam ediyor. Bu nedenle, uygulamadaki sütunlar defter sayfaları benzeri bir
+                deneyim sunar.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Kullanım Kılavuzu</CardTitle>
+              <CardDescription>Buradan başlayın.</CardDescription>
+            </CardHeader>
+            <CardContent className="prose dark:prose-invert">
+              <ol>
+                <li>Öncelikle e-posta adresi, Google hesabı veya GitHub hesabınızı kullanarak bir hesap oluşturun.</li>
+                <li>
+                  Kütüphane sayfasında notlarınız için üst kategori niteliğinde &quot;kitaplar&quot; oluşturmanız
+                  gerekiyor.
+                </li>
+                <li>İsterseniz kitabınıza yapılacaklar listesi de ekleyebilirsiniz.</li>
+                <li>Kitapların içinde alt kategori niteliğinde gruplar oluşturmanız gerekiyor.</li>
+                <li>Her grup başlığının altında ilgili notlarınızı yazmaya başlayabilirsiniz.</li>
+              </ol>
+            </CardContent>
+          </Card>
+          <div className="flex gap-4 px-4">
+            <LinkButton
+              target="_blank"
+              href="https://github.com/ozanArslan2424"
+              size="lg"
+              variant="outline"
+              className="w-full border-2 bg-transparent"
+            >
+              Portföyüme göz atın.
+            </LinkButton>
+
+            <LinkButton href="/login" size="lg">
+              Hemen Başlayın
+            </LinkButton>
+          </div>
+        </div>
       </div>
     </main>
   );

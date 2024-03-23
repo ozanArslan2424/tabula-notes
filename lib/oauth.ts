@@ -1,7 +1,14 @@
-import { Google } from "arctic";
+import { GitHub, Google } from "arctic";
 
-const clientId = process.env.GOOGLE_CLIENT_ID;
-const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-const redirectUri = process.env.NEXT_PUBLIC_URL + "/api/oauth/google";
+const googleClientId = process.env.GOOGLE_CLIENT_ID;
+const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+const googleRedirectUri = process.env.NEXT_PUBLIC_URL + "/api/oauth/google";
 
-export const google = new Google(clientId!, clientSecret!, redirectUri);
+export const google = new Google(googleClientId!, googleClientSecret!, googleRedirectUri);
+
+const githubClientId = process.env.GITHUB_CLIENT_ID;
+const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+
+export const github = new GitHub(githubClientId!, githubClientSecret!, {
+  redirectURI: process.env.NEXT_PUBLIC_URL + "/api/oauth/github",
+});

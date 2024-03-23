@@ -28,7 +28,7 @@ export default async function BookPage({ params: { bookId } }: Props) {
 
   if (user) {
     return (
-      <div className="flex w-full flex-col md:flex-row">
+      <div className="flex w-full flex-col md:block">
         <Nav>
           <HomeLink />
           <CreateBookButton />
@@ -49,7 +49,7 @@ export default async function BookPage({ params: { bookId } }: Props) {
           )}
         </Nav>
 
-        <main className="w-full max-w-[1400px] py-2 pl-4 md:py-4 md:pl-8">
+        <main className="w-full py-2 pl-4 md:py-4 md:pl-8">
           <h1 className="mb-4 text-2xl font-semibold">
             <BookOpenTextIcon size={24} className="mr-2 inline-block" />
             {currentBook.title}

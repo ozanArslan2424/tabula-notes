@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { GoogleButton } from "./oauth-btns";
+import { GithubButton, GoogleButton } from "./oauth-btns";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -80,7 +80,7 @@ export const LoginForm = () => {
             <div className="h-0.5 w-full bg-accent"></div>
           </div>
           <GoogleButton />
-          {/* <GithubButton /> */}
+          <GithubButton />
         </form>
       </Form>
       <p className="mt-4 text-center text-muted-foreground">

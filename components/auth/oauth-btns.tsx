@@ -1,3 +1,4 @@
+import { createGithubAuthURL } from "@/lib/actions/github-auth";
 import { createGoogleAuthURL } from "@/lib/actions/google-auth";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
@@ -8,7 +9,7 @@ export const GoogleButton = () => {
     if (res.error) {
       toast.error(res.error);
     } else if (res.success && res.data) {
-      window.location.href = res.data.toString();
+      window.location.href = res.data;
     }
   };
 
@@ -34,10 +35,14 @@ const GoogleLogoBold = () => {
     </svg>
   );
 };
-
 export const GithubButton = () => {
   const onGithubLogin = async () => {
-    // TODO: Implement Github login
+    const res = await createGithubAuthURL();
+    if (res.error) {
+      toast.error(res.error);
+    } else if (res.success && res.data) {
+      window.location.href = res.data;
+    }
   };
 
   return (
