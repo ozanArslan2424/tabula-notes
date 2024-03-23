@@ -7,7 +7,7 @@ export default async function LandingPage() {
       <div className="prose mx-auto text-center dark:prose-invert">
         <h1>Tabula Notlar</h1>
       </div>
-      <div className="flex justify-center gap-8 px-24 pt-16">
+      <div className="flex flex-col-reverse justify-center gap-8 px-2 pt-8 md:flex-row md:px-24 md:pt-16">
         <div>
           <Card className="mb-8">
             <CardHeader>
@@ -81,7 +81,7 @@ export default async function LandingPage() {
               </ol>
             </CardContent>
           </Card>
-          <div className="flex gap-4 px-4">
+          <div className="flex flex-col gap-4 px-4 md:flex-row">
             <LinkButton
               target="_blank"
               href="https://github.com/ozanArslan2424"
