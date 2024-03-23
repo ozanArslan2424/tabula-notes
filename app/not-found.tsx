@@ -2,7 +2,7 @@ import { LinkButton } from "@/components/ui/link-button";
 
 export default function NotFound() {
   return (
-    <div className="grainy flex h-screen w-full flex-col items-center justify-center gap-4">
+    <div className="flex h-screen w-full flex-col items-center justify-center gap-4">
       <pre className="max-w-96 hyphens-auto text-wrap break-words rounded-sm bg-black px-8 py-4 text-gray-300">
         <span className="text-4xl font-bold text-foreground">404</span>
         <br />

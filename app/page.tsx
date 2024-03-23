@@ -7,7 +7,7 @@ export default async function LandingPage() {
       <div className="prose mx-auto text-center dark:prose-invert">
         <h1>Tabula Notlar</h1>
       </div>
-      <div className="flex justify-between gap-8 px-24 pt-16">
+      <div className="flex justify-center gap-8 px-24 pt-16">
         <div>
           <Card className="mb-8">
             <CardHeader>
@@ -92,7 +92,7 @@ export default async function LandingPage() {
               Portföyüme göz atın.
             </LinkButton>
 
-            <LinkButton href="/login" size="lg">
+            <LinkButton href="/login" size="lg" className="w-full">
               Hemen Başlayın
             </LinkButton>
           </div>
