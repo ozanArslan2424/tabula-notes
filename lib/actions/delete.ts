@@ -37,15 +37,7 @@ export const deleteGroup = async ({ groupId, bookId }: { groupId: number; bookId
   }
 };
 
-export const deleteNote = async ({
-  noteId,
-  groupId,
-  bookId,
-}: {
-  noteId: number;
-  groupId: number;
-  bookId: string;
-}) => {
+export const deleteNote = async ({ noteId, groupId, bookId }: { noteId: number; groupId: number; bookId: string }) => {
   try {
     await db.note.delete({
       where: {
@@ -77,5 +69,19 @@ export const deleteTask = async ({ taskId, bookId }: { taskId: number; bookId: s
     return { error: "Yapılacak silinemedi." };
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
+  }
+};
+
+export const deleteQuickNote = async (quickNoteId: number) => {
+  try {
+    await db.quickNote.delete({
+      where: {
+        id: quickNoteId,
+      },
+    });
+  } catch (error) {
+    console.error("fail to del quicknote", error);
+  } finally {
+    revalidatePath("/dash", "page");
   }
 };

@@ -26,3 +26,8 @@ export type NoteType = {
   id: number;
   content: string | null;
 };
+
+export type QuickNoteType = {
+  id: number;
+  content: string;
+};

@@ -1,16 +1,47 @@
-import { VerifyForm } from "@/components/auth/verify-form";
-import { getSession } from "@/lib/auth";
-import { redirect } from "next/navigation";
+"use client";
+import { VerifyEmail } from "@/lib/actions/auth.actions";
+import { useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
-export default async function VerifyPage() {
-  const { user } = await getSession();
+export default function VerifyPage() {
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
 
-  if (user) {
-    redirect("/dash");
-  }
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
+
+  const onVerify = useCallback(() => {
+    if (success || error) return;
+    if (!token) {
+      setError("Doğrulama kodu bulunamadı.");
+      return;
+    }
+
+    VerifyEmail(token)
+      .then((data) => {
+        if (data.error) {
+          setError(data.error);
+        }
+        if (data.success) {
+          setSuccess(data.success);
+        }
+      })
+      .catch(() => {
+        setError("Bir hata oluştu.");
+      });
+  }, [token, success, error]);
+
+  useEffect(() => {
+    onVerify();
+  }, [onVerify]);
+
   return (
-    <div className="w-max mx-auto mt-32">
-      <VerifyForm />
+    <div className="mx-auto mt-32 w-max">
+      <p>
+        {!success && !error && "Doğrulanıyor..."}
+        {success && "E-posta doğrulandı."}
+        {error && error}
+      </p>
     </div>
   );
 }

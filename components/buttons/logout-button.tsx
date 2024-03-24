@@ -1,4 +1,4 @@
-import { Logout } from "@/lib/actions/logout";
+import { Logout } from "@/lib/actions/auth.actions";
 import { Button } from "../ui/button";
 
 export const LogoutButton = () => {

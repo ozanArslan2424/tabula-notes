@@ -5,11 +5,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getAllBooks } from "@/lib/actions/read";
+import { getSession } from "@/lib/auth";
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 
 export const BookSelector = async ({ bookTitle }: { bookTitle: string }) => {
-  const books = await getAllBooks();
+  const { user } = await getSession();
+  const books = await getAllBooks(user?.id!);
 
   return (
     <DropdownMenu>

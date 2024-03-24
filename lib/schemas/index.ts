@@ -25,3 +25,7 @@ export const VerifySchema = z.object({
   email: z.string().email({ message: "Geçerli bir e-posta adresi giriniz." }),
   code: z.string().length(6, { message: "Doğrulama kodu 6 karakterden oluşmalıdır." }),
 });
+
+export const QuicknoteSchema = z.object({
+  content: z.string().min(1, { message: "Not içeriği boş olamaz." }),
+});

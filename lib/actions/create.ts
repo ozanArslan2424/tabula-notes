@@ -1,6 +1,6 @@
 "use server";
 import db from "@/lib/db";
-import { BookFormSchema } from "@/lib/schemas";
+import { BookFormSchema, QuicknoteSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
 import { getSession } from "../auth";
@@ -70,5 +70,21 @@ export async function createNewTask({ bookId, name }: { bookId: string; name: st
     console.error("Failed to create:", error);
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
+  }
+}
+
+export async function createQuicknote(values: z.infer<typeof QuicknoteSchema>) {
+  const { user } = await getSession();
+  try {
+    await db.quickNote.create({
+      data: {
+        content: values.content,
+        userId: user?.id!,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to create quicknote:", error);
+  } finally {
+    revalidatePath("/dash", "page");
   }
 }

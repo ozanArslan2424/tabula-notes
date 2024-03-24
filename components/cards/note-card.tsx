@@ -50,7 +50,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
 
   return (
     <Card className={`z-5 relative mt-2 flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
-      <div className="absolute bottom-0.5 right-2 flex flex-row items-center gap-2">
+      <div className="absolute right-2 top-0.5 flex flex-row items-center gap-2">
         <SavingButton noteId={note.id} markdown={markdown} />
         {!focused && <DownloadMarkdownButton noteId={note.id} markdown={markdown} />}
         {!focused && <DeleteNoteButton onClick={handleDeleteNote} />}

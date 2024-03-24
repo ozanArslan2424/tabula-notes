@@ -21,6 +21,7 @@ export default async function LandingPage() {
                 <li>Kitaplar üst kategoriler olarak, gruplar alt kategoriler olarak.</li>
                 <li>Kitaplar için isteğe bağlı açıklamalar.</li>
                 <li>Her kitap için isteğe bağlı görev listeleri (basit yapılacaklar listesi).</li>
+                <li>Kitapsız, grupsuz, bağımsız hızlı notlar.</li>
                 <li>Notları markdown olarak indir.</li>
                 <li>Grupları markdown olarak indir.</li>
                 <li>Kitapları markdown olarak indir.</li>
@@ -40,7 +41,6 @@ export default async function LandingPage() {
                 <li>USER ve ADMIN rolleri</li>
                 <li>Daha iyi Markdown desteği</li>
                 <li>Etiketler ve etiketlere göre filtreleme</li>
-                <li>Kitapsız, grupsuz, bağımsız notlar.</li>
                 <li>Notlar arası ilişkiler.</li>
               </ul>
             </CardContent>

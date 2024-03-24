@@ -4,7 +4,7 @@ import { Book } from "@prisma/client";
 import Link from "next/link";
 import { useMemo, useTransition } from "react";
 import { DeleteBookButton } from "../buttons/delete-button";
-import { DownloadBookButton } from "../buttons/dwnld-book";
+import { DownloadBookButton } from "../buttons/download-button";
 import { LoadingIcon } from "../ui/custom-loading";
 
 type BookCardProps = {
@@ -37,7 +37,7 @@ export const BookCard = ({ book, organizing }: BookCardProps) => {
             </div>
           )}
           <Link href={`/dash/${book.id}`} key={book.id}>
-            <div className="min-h-[140px] w-[360px] rounded-md border bg-card/30 p-4 transition-all sm:hover:shadow dark:sm:hover:border-primary/30">
+            <div className="min-h-[140px] w-[360px] rounded-md border bg-card/30 p-4 transition-all sm:hover:border-primary/60 sm:hover:shadow">
               <p className="mb-2 text-xs text-muted-foreground">{createdAtString}</p>
               <h2 className="line-clamp-2 hyphens-auto text-wrap break-words text-xl font-semibold capitalize">
                 {book.title}

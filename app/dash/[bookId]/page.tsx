@@ -1,16 +1,16 @@
-import { HomeLink } from "@/components/buttons/action-btns";
 import { BookSelector } from "@/components/buttons/book-select";
-import { BookSettings } from "@/components/buttons/book-settings";
-import { CreateBookButton } from "@/components/buttons/create-book";
-import { NewGroupButton } from "@/components/buttons/create-group";
-import { NewNoteButton } from "@/components/buttons/new-note";
+import { NewNoteButton } from "@/components/buttons/new-note-button";
 import { NoteGroupTitleCard } from "@/components/cards/group-card";
 import { NoteCard } from "@/components/cards/note-card";
 import { TodoCard } from "@/components/cards/todo-card";
+import { CreateBookButton } from "@/components/forms/book-form";
+import { BookSettings } from "@/components/forms/book-settings-form";
+import { NewGroupButton } from "@/components/forms/group-form";
 import { Nav } from "@/components/layout/side-menu";
+import { LinkButton } from "@/components/ui/link-button";
 import { getBookContents } from "@/lib/actions/read";
 import { getSession } from "@/lib/auth";
-import { BookOpenTextIcon, CalendarIcon, TextIcon } from "lucide-react";
+import { BookOpenTextIcon, CalendarIcon, HomeIcon, TextIcon } from "lucide-react";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -28,25 +28,29 @@ export default async function BookPage({ params: { bookId } }: Props) {
 
   if (user) {
     return (
-      <div className="flex w-full flex-col md:block">
+      <div className="flex w-full flex-col md:flex-row">
         <Nav>
-          <HomeLink />
-          <CreateBookButton />
+          <LinkButton
+            className="w-full justify-start space-x-3 bg-background text-foreground"
+            size="sm"
+            variant="outline"
+            href="/dash"
+          >
+            <HomeIcon size={14} className="shrink-0" />
+            <span>Kütüphane</span>
+          </LinkButton>
+          <CreateBookButton width="w-full" />
           <BookSettings currentBook={currentBook} />
           <BookSelector bookTitle={currentBook.title} />
-          <div className="hidden min-h-8 items-center gap-2 rounded-md border border-input bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
+          <div className="flex min-h-8 items-center gap-2 rounded-md border border-input bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground shadow-sm">
             <TextIcon size={14} className="shrink-0" />
             <p className="hyphens-auto text-wrap break-words">{currentBook.description}</p>
           </div>
-          <div className="hidden h-8 w-max items-center gap-2 rounded-md border border-input bg-muted px-3 text-xs font-semibold text-muted-foreground shadow-sm sm:flex">
+          <div className="flex h-8 w-max items-center gap-2 rounded-md border border-input bg-muted px-3 text-xs font-semibold text-muted-foreground shadow-sm">
             <CalendarIcon size={14} className="shrink-0" />
             {currentBook.createdAt.toLocaleDateString()}
           </div>
-          {currentBook.hasTasks && (
-            <div className="hidden sm:block">
-              <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />
-            </div>
-          )}
+          {currentBook.hasTasks && <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />}
         </Nav>
 
         <main className="w-full py-2 pl-4 md:py-4 md:pl-8">

@@ -1,6 +1,6 @@
 "use client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Login } from "@/lib/actions/login";
+import { Login } from "@/lib/actions/auth.actions";
 import { LoginSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -9,9 +9,9 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
+import { GithubButton, GoogleButton } from "../buttons/oauth-buttons";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { GithubButton, GoogleButton } from "./oauth-btns";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();

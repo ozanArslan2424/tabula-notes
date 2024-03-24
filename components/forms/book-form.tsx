@@ -15,7 +15,7 @@ import { LoadingIcon2 } from "../ui/custom-loading";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 
-export const CreateBookButton = () => {
+export const CreateBookButton = ({ width }: { width: string }) => {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -47,7 +47,11 @@ export const CreateBookButton = () => {
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="outline" className="w-full justify-start space-x-3 bg-background text-foreground">
+        <Button
+          size="sm"
+          variant="outline"
+          className={`${width} justify-start space-x-3 bg-background text-foreground`}
+        >
           <PlusCircleIcon size={14} className="shrink-0" />
           <span>Kitap Oluştur</span>
         </Button>

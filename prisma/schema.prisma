@@ -46,6 +46,7 @@ model User {
   sessions       Session[]
   registerTokens RegisterToken[]
   books          Book[]
+  quicknotes     QuickNote[]
 }
 
 model RegisterToken {
@@ -79,6 +80,13 @@ model Task {
   createdAt DateTime @default(now())
   Book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
   bookId    String
+}
+
+model QuickNote {
+  id      Int    @id @default(autoincrement())
+  content String
+  User    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String
 }
 
 model Group {

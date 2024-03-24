@@ -1,7 +1,6 @@
 "use client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { sendToken } from "@/lib/actions/mail";
-import { Register } from "@/lib/actions/register";
+import { Register, sendToken } from "@/lib/actions/auth.actions";
 import { RegisterSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -9,9 +8,9 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
+import { GithubButton, GoogleButton } from "../buttons/oauth-buttons";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { GithubButton, GoogleButton } from "./oauth-btns";
 
 export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();

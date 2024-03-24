@@ -1,5 +1,4 @@
-import { createGithubAuthURL } from "@/lib/actions/github-auth";
-import { createGoogleAuthURL } from "@/lib/actions/google-auth";
+import { createGithubAuthURL, createGoogleAuthURL } from "@/lib/actions/auth.actions";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 

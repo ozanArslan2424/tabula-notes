@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/auth/login-form";
+import { LoginForm } from "@/components/forms/login-form";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
@@ -9,7 +9,7 @@ export default async function LoginPage() {
     redirect("/dash");
   }
   return (
-    <div className="w-max mx-auto mt-32">
+    <div className="mx-auto mt-32 w-max">
       <LoginForm />
     </div>
   );

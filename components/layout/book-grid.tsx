@@ -1,12 +1,11 @@
 "use client";
+import { CreateBookButton } from "@/components/forms/book-form";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Book } from "@prisma/client";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, Trash2Icon } from "lucide-react";
 import { useState } from "react";
-import { OrganizeBooksButton, SettingsLink } from "../buttons/action-btns";
-import { CreateBookButton } from "../buttons/create-book";
 import { BookCard } from "../cards/book-card";
-import { Nav } from "./side-menu";
 
 type Props = { books: Book[] | undefined };
 
@@ -15,9 +14,19 @@ export const BookCardsGrid = ({ books }: Props) => {
   const [organizing, setOrganizing] = useState(false);
 
   return (
-    <div className="flex flex-col md:flex-row">
-      <Nav>
-        <div className="relative hidden sm:block">
+    <>
+      <div className="mb-4 flex w-full flex-wrap justify-center gap-2 md:justify-normal">
+        <Button
+          size="sm"
+          variant="outline"
+          className="w-max justify-start space-x-3 bg-background text-foreground"
+          onClick={() => setOrganizing(!organizing)}
+        >
+          <Trash2Icon size={14} className="shrink-0" />
+          <span>Kitapları düzenle</span>
+        </Button>
+        <CreateBookButton width="w-max" />
+        <div className="relative row-start-2 md:row-auto">
           <SearchIcon size={14} className="absolute left-3 top-2" />
           <Input
             onChange={(e) => setSearchValue(e.target.value)}
@@ -25,33 +34,24 @@ export const BookCardsGrid = ({ books }: Props) => {
             type="text"
             name="search"
             placeholder="Kitapları filtrele"
-            className="h-8 border border-input bg-background pl-9 text-xs capitalize text-foreground shadow-sm transition-all"
+            className="h-8 w-max border border-input bg-background pl-9 text-xs capitalize text-foreground shadow-sm transition-all md:min-w-60"
           />
         </div>
-        <SettingsLink />
-        <CreateBookButton />
-      </Nav>
-      <main className="max-w-screen w-full px-4 py-4 md:px-8">
-        <h1 className="mb-4 text-center text-2xl font-semibold md:text-left">Kütüphane</h1>
-        <div className="mx-auto mb-4 w-max sm:mx-0">
-          <OrganizeBooksButton onClick={() => setOrganizing(!organizing)} />
-        </div>
+      </div>
 
-        {books?.length === 0 && (
-          <div className="flex items-center justify-center rounded-lg border bg-card p-4 shadow">
-            <p className="text-muted-foreground">Henüz hiç kitap eklenmemiş.</p>
-          </div>
-        )}
-        {books !== undefined && (
-          <div className="flex w-full flex-wrap justify-center gap-4 md:justify-normal">
-            {books
-              .filter((book) => book.title.toLowerCase().indexOf(searchValue.toLowerCase()) > -1)
-              .map((book) => (
-                <BookCard key={book.id} book={book} organizing={organizing} />
-              ))}
-          </div>
-        )}
-      </main>
-    </div>
+      {books?.length !== 0 && books !== undefined ? (
+        <div className="flex w-full flex-wrap justify-center gap-4 md:justify-normal">
+          {books
+            .filter((book) => book.title.toLowerCase().indexOf(searchValue.toLowerCase()) > -1)
+            .map((book) => (
+              <BookCard key={book.id} book={book} organizing={organizing} />
+            ))}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center rounded-lg border bg-card p-4 shadow">
+          <p className="text-muted-foreground">Henüz hiç kitap eklenmemiş.</p>
+        </div>
+      )}
+    </>
   );
 };

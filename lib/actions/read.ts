@@ -1,21 +1,45 @@
 "use server";
 import db from "@/lib/db";
-import { getSession } from "../auth";
 
-export async function getAllBooks() {
-  const { user } = await getSession();
-  if (user && user.id) {
-    const books = await db.book.findMany({
+export const getUserByEmail = async (email: string) => {
+  try {
+    const user = await db.user.findUnique({
       where: {
-        userId: user.id,
-      },
-      include: {
-        groups: true,
-        tasks: true,
+        email,
       },
     });
-    return books;
+
+    return user;
+  } catch {
+    return null;
   }
+};
+
+export const getUserById = async (id: string) => {
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return user;
+  } catch {
+    return null;
+  }
+};
+
+export async function getAllBooks(userId: string) {
+  const books = await db.book.findMany({
+    where: {
+      userId: userId,
+    },
+    include: {
+      groups: true,
+      tasks: true,
+    },
+  });
+  return books;
 }
 
 export async function getBookContents(bookId: string) {
@@ -53,4 +77,13 @@ export async function getBookContents(bookId: string) {
     },
   });
   return book;
+}
+
+export async function getQuickNotes(userId: string) {
+  const quicknotes = await db.quickNote.findMany({
+    where: {
+      userId: userId,
+    },
+  });
+  return quicknotes;
 }
