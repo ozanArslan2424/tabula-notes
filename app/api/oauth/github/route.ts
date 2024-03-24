@@ -1,6 +1,5 @@
-import { lucia } from "@/lib/auth";
+import { github, lucia } from "@/lib/auth";
 import db from "@/lib/db";
-import { github } from "@/lib/oauth";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 

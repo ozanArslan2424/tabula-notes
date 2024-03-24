@@ -1,13 +1,11 @@
 "use server";
-import { google } from "@/lib/oauth";
 import { generateCodeVerifier, generateState } from "arctic";
 import * as argon2 from "argon2";
 import { generateId } from "lucia";
 import { cookies } from "next/headers";
 import * as z from "zod";
-import { getSession, lucia } from "../auth";
+import { getSession, github, google, lucia } from "../auth";
 import db from "../db";
-import { github } from "../oauth";
 import { LoginSchema, RegisterSchema } from "../schemas";
 
 var nodemailer = require("nodemailer");
