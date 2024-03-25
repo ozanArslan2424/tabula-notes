@@ -25,8 +25,8 @@ export const BookCardsGrid = ({ books }: Props) => {
           <Trash2Icon size={14} className="shrink-0" />
           <span>Kitapları düzenle</span>
         </Button>
-        <CreateBookButton width="w-max" />
-        <div className="relative row-start-2 md:row-auto">
+        <CreateBookButton />
+        <div className="relative">
           <SearchIcon size={14} className="absolute left-3 top-2" />
           <Input
             onChange={(e) => setSearchValue(e.target.value)}

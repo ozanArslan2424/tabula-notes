@@ -32,38 +32,34 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex w-full items-center justify-between rounded-lg bg-card p-2 text-card-foreground shadow">
-        <p className="text-md px-2 font-semibold">Yapılacaklar</p>
-      </div>
-      <div className="rounded-lg border bg-card p-2 text-card-foreground shadow">
-        <form className="mb-4 flex items-center gap-2" onSubmit={handleTodoSubmit}>
-          <Input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            type="text"
-            name="todo"
-            id="todo"
-            placeholder="Yapılacak ekle"
-            className="h-7 w-full bg-accent text-accent-foreground"
-          />
-          <Button type="submit" size="sm_icon" variant="custom_submit">
-            <span className="sr-only">Yapılacak ekle</span>
-            <PlusCircleIcon size={14} />
-          </Button>
-        </form>
-        <div className="flex max-h-[480px] flex-col gap-1 overflow-y-scroll">
-          {tasks.length !== 0 &&
-            tasks.map((task) => {
-              return <TaskItem key={task.id} task={task} bookId={bookId} />;
-            })}
+    <div className="mx-2 mb-4 flex w-max items-center gap-2 rounded-lg border bg-card p-2 text-card-foreground shadow md:mx-4">
+      <h2 className="text-md px-2 font-semibold">Yapılacaklar</h2>
+      <form className="flex items-center gap-2" onSubmit={handleTodoSubmit}>
+        <Input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          type="text"
+          name="todo"
+          id="todo"
+          placeholder="Yapılacak ekle"
+          className="h-7 w-full bg-accent text-accent-foreground"
+        />
+        <Button type="submit" size="sm_icon" variant="custom_submit">
+          <span className="sr-only">Yapılacak ekle</span>
+          <PlusCircleIcon size={14} />
+        </Button>
+      </form>
+      <div className="flex max-h-[480px] flex-col gap-1 overflow-y-scroll">
+        {tasks.length !== 0 &&
+          tasks.map((task) => {
+            return <TaskItem key={task.id} task={task} bookId={bookId} />;
+          })}
 
-          {isPending && (
-            <div className="mx-auto">
-              <LoadingIcon2 />
-            </div>
-          )}
-        </div>
+        {isPending && (
+          <div className="mx-auto">
+            <LoadingIcon2 />
+          </div>
+        )}
       </div>
     </div>
   );
