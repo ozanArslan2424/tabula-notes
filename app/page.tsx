@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
 
-export default async function LandingPage() {
+export default function LandingPage() {
   return (
     <main className="w-full px-2 py-16 md:px-4">
       <div className="prose mx-auto text-center dark:prose-invert">

@@ -1,4 +1,5 @@
 import { BookCardsGrid } from "@/components/book/book-grid";
+import { Header } from "@/components/header";
 import { QuickNoteCard } from "@/components/quick-note/quick-note-card";
 import { QuickNoteForm } from "@/components/quick-note/quick-note-form";
 import { getAllBooks, getQuickNotes } from "@/lib/actions/read";
@@ -15,6 +16,7 @@ export default async function DashPage() {
 
   return (
     <div className="flex min-h-[100dvh] w-full flex-col justify-between">
+      <Header user={user} />
       <main className="w-full px-4 py-8 md:mx-auto md:w-[1150px]">
         <h1 className="mb-4 text-center text-2xl font-semibold md:text-start">Hızlı Notlar</h1>
         <QuickNoteForm />
