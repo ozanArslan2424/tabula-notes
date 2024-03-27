@@ -1,5 +1,3 @@
-import { OurFileRouter } from "@/app/api/uploadthing/core";
-import { generateUploadButton, generateUploadDropzone } from "@uploadthing/react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -14,9 +12,6 @@ export const getWordCount = (input: string) => {
 export const getCharacterCount = (input: string) => {
   return input.length;
 };
-
-export const UploadButton = generateUploadButton<OurFileRouter>();
-export const UploadDropzone = generateUploadDropzone<OurFileRouter>();
 
 export function toSnakeCase(input: string): string {
   // Replace non-alphanumeric characters with spaces

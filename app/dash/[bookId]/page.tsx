@@ -5,6 +5,7 @@ import { NewGroupButton, NewNoteButton, NotesButtons } from "@/components/note/n
 import { TodoCard } from "@/components/todo/todo-card";
 import { getBookContents } from "@/lib/actions/read";
 import { getSession } from "@/lib/auth";
+import { toSnakeCase } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -30,8 +31,11 @@ export default async function BookPage({ params: { bookId } }: Props) {
           .sort((a, b) => a.id - b.id)
           .map((group) => {
             const notes = group.notes;
+            const groupIdSnake = toSnakeCase(group.title);
+
             return (
               <div
+                id={groupIdSnake}
                 key={group.id}
                 className="flex h-full w-[360px] shrink-0 flex-col gap-2 overflow-y-scroll sm:w-[576px]"
               >

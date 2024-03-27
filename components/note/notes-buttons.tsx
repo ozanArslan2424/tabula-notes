@@ -42,12 +42,12 @@ export const NotesButtons = ({ currentBook }: { currentBook: BookType }) => {
       <CreateBookButton />
       <BookSettings currentBook={currentBook} />
       <Select name="redirect" onValueChange={(value) => handleSelect(value)}>
-        <SelectTrigger className="h-8 w-max">
-          <SelectValue placeholder="Gruba git" />
+        <SelectTrigger className="h-8 w-max text-xs">
+          <SelectValue className="text-xs" placeholder="Gruba git" />
         </SelectTrigger>
         <SelectContent>
           {currentBook.groups.map((group) => (
-            <SelectItem key={group.id} value={group.title} onClick={(e) => e.preventDefault()}>
+            <SelectItem className="text-xs" key={group.id} value={group.title} onClick={(e) => e.preventDefault()}>
               {group.title}
             </SelectItem>
           ))}

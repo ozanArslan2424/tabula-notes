@@ -1,11 +1,8 @@
-import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import { Toaster } from "sonner";
-import { extractRouterConfig } from "uploadthing/server";
-import { ourFileRouter } from "./api/uploadthing/core";
 import "./globals.css";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
@@ -41,10 +38,9 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="tr">
       <body className={montserrat.className}>
         <ThemeProvider attribute="class">
-          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-          <Header />
           {children}
           <Toaster />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>

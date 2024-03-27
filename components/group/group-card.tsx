@@ -2,7 +2,6 @@
 import { deleteGroup } from "@/lib/actions/delete";
 import { updateGroupTitle } from "@/lib/actions/update";
 import { GroupType } from "@/lib/types";
-import { toSnakeCase } from "@/lib/utils";
 import { CheckCircle2Icon, PencilLineIcon, XCircleIcon } from "lucide-react";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -67,10 +66,8 @@ export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
     });
   };
 
-  const groupIdSnake = toSnakeCase(group.title);
-
   return (
-    <div id={groupIdSnake} className="sticky top-0 z-10 flex min-h-12 w-full items-center border bg-accent px-4 shadow">
+    <div className="sticky top-0 z-10 flex min-h-12 w-full items-center border bg-accent px-4 shadow">
       {editing ? (
         <form onSubmit={handleSubmit} onReset={() => setEditing(false)} className="flex items-center gap-2">
           <Input
