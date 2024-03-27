@@ -31,7 +31,7 @@ export const BookCardsGrid = ({ books }: Props) => {
           <Input
             onChange={(e) => setSearchValue(e.target.value)}
             value={searchValue}
-            type="text"
+            type="search"
             name="search"
             placeholder="Kitapları filtrele"
             className="h-8 w-max border border-input bg-background pl-9 text-xs capitalize text-foreground shadow-sm transition-all md:min-w-60"

@@ -17,3 +17,11 @@ export const getCharacterCount = (input: string) => {
 
 export const UploadButton = generateUploadButton<OurFileRouter>();
 export const UploadDropzone = generateUploadDropzone<OurFileRouter>();
+
+export function toSnakeCase(input: string): string {
+  // Replace non-alphanumeric characters with spaces
+  const words = input.replace(/[^a-zA-Z0-9]/g, " ").split(/\s+/);
+
+  // Convert each word to lowercase and join with underscores
+  return words.map((word) => word.toLowerCase()).join("_");
+}
