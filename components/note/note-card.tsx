@@ -7,9 +7,9 @@ import ReactMarkdown from "react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
-import { DeleteNoteButton } from "../buttons/delete-button";
-import { DownloadMarkdownButton } from "../buttons/download-button";
-import { SavingButton } from "../buttons/saving-button";
+import { DeleteNoteButton } from "./delete-button";
+import { DownloadNoteButton } from "./download-button";
+import { SavingButton } from "./saving";
 
 type Props = {
   bookId?: string;
@@ -52,7 +52,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
     <Card className={`z-5 relative mt-2 flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
       <div className="absolute right-2 top-0.5 flex flex-row items-center gap-2">
         <SavingButton noteId={note.id} markdown={markdown} />
-        {!focused && <DownloadMarkdownButton noteId={note.id} markdown={markdown} />}
+        {!focused && <DownloadNoteButton noteId={note.id} markdown={markdown} />}
         {!focused && <DeleteNoteButton onClick={handleDeleteNote} />}
       </div>
       <CardContent className="rounded-b-lg px-4 py-2">

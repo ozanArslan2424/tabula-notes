@@ -1,20 +1,18 @@
-import { Header } from "@/components/layout/header";
-import { ThemeProvider } from "@/components/layout/theme-provider";
+import { Header } from "@/components/header";
+import { ThemeProvider } from "@/components/theme-provider";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import type { Metadata } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { Toaster } from "sonner";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Tabula Notlar",
-  description:
-    "Tabula Notlar, daha organik bir deneyim sunma amacıyla oluşturulmuş bir not alma uygulamasıdır.",
+  description: "Tabula Notlar, daha organik bir deneyim sunma amacıyla oluşturulmuş bir not alma uygulamasıdır.",
   icons: {
     icon: [{ url: "../public/favicon/favicon.ico" }],
     apple: [

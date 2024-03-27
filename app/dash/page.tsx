@@ -1,6 +1,6 @@
-import { QuickNoteCard } from "@/components/cards/quick-note-card";
-import { QuickNoteForm } from "@/components/forms/quick-note-form";
-import { BookCardsGrid } from "@/components/layout/book-grid";
+import { BookCardsGrid } from "@/components/book/book-grid";
+import { QuickNoteCard } from "@/components/quick-note/quick-note-card";
+import { QuickNoteForm } from "@/components/quick-note/quick-note-form";
 import { getAllBooks, getQuickNotes } from "@/lib/actions/read";
 import { getSession } from "@/lib/auth";
 import Link from "next/link";

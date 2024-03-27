@@ -29,7 +29,3 @@ export const VerifySchema = z.object({
 export const QuicknoteSchema = z.object({
   content: z.string().min(1, { message: "Not içeriği boş olamaz." }),
 });
-
-export const SearchSchema = z.object({
-  search: z.string(),
-});

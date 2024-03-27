@@ -6,11 +6,11 @@ import { toSnakeCase } from "@/lib/utils";
 import { CheckCircle2Icon, PencilLineIcon, XCircleIcon } from "lucide-react";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { DeleteGroupButton } from "../buttons/delete-button";
-import { DownloadGroupButton } from "../buttons/download-button";
 import { Button } from "../ui/button";
 import { LoadingIcon } from "../ui/custom-loading";
 import { Input } from "../ui/input";
+import { DeleteGroupButton } from "./delete-button";
+import { DownloadGroupButton } from "./download-button";
 
 type NoteGroupCardProps = {
   group: GroupType;

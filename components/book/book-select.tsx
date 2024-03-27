@@ -21,12 +21,6 @@ export const BookSelector = async ({ bookTitle }: { bookTitle: string }) => {
           <h1 className="text-2xl font-semibold tracking-tight">{bookTitle}</h1>
         </div>
       </DropdownMenuTrigger>
-      {/* <DropdownMenuTrigger className="flex h-8 w-full items-center justify-center rounded-md border border-input bg-background px-3 shadow-sm">
-        <p className="text-xs font-semibold capitalize">
-          <span className="text-muted-foreground">Seçili kitap: </span> {bookTitle}
-        </p>
-        <ChevronDown size={14} className="custom-rotate ml-auto shrink-0 transition-all" />
-      </DropdownMenuTrigger> */}
       <DropdownMenuContent>
         {books &&
           books.map((book) => {

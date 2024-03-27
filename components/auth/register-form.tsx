@@ -8,9 +8,9 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { GithubButton, GoogleButton } from "../buttons/oauth-buttons";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { GithubButton, GoogleButton } from "./oauth-buttons";
 
 export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();

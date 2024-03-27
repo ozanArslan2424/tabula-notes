@@ -1,6 +1,6 @@
 import { getSession } from "@/lib/auth";
-import { ThemeToggle } from "../buttons/switch-theme";
-import { UserButton } from "../buttons/user-button";
+import { UserButton } from "./auth/user-button";
+import { ThemeToggle } from "./switch-theme";
 
 export const Header = async () => {
   const { user } = await getSession();

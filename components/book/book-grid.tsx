@@ -1,11 +1,11 @@
 "use client";
-import { CreateBookButton } from "@/components/forms/book-form";
+import { CreateBookButton } from "@/components/book/book-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Book } from "@prisma/client";
 import { SearchIcon, Trash2Icon } from "lucide-react";
 import { useState } from "react";
-import { BookCard } from "../cards/book-card";
+import { BookCard } from "./book-card";
 
 type Props = { books: Book[] | undefined };
 

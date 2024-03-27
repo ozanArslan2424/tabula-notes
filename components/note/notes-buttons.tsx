@@ -1,6 +1,6 @@
 "use client";
-import { CreateBookButton } from "@/components/forms/book-form";
-import { BookSettings } from "@/components/forms/book-settings-form";
+import { CreateBookButton } from "@/components/book/book-form";
+import { BookSettings } from "@/components/book/book-settings-form";
 import { Button } from "@/components/ui/button";
 import { LoadingIcon } from "@/components/ui/custom-loading";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";

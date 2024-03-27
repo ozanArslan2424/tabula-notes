@@ -1,8 +1,8 @@
-import { BookSelector } from "@/components/buttons/book-select";
-import { NoteGroupTitleCard } from "@/components/cards/group-card";
-import { NoteCard } from "@/components/cards/note-card";
-import { TodoCard } from "@/components/cards/todo-card";
-import { NewGroupButton, NewNoteButton, NotesButtons } from "@/components/layout/notes-buttons";
+import { BookSelector } from "@/components/book/book-select";
+import { NoteGroupTitleCard } from "@/components/group/group-card";
+import { NoteCard } from "@/components/note/note-card";
+import { NewGroupButton, NewNoteButton, NotesButtons } from "@/components/note/notes-buttons";
+import { TodoCard } from "@/components/todo/todo-card";
 import { getBookContents } from "@/lib/actions/read";
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";

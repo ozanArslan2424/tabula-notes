@@ -3,9 +3,8 @@ import { deleteBook } from "@/lib/actions/delete";
 import { Book } from "@prisma/client";
 import Link from "next/link";
 import { useMemo, useTransition } from "react";
-import { DeleteBookButton } from "../buttons/delete-button";
-import { DownloadBookButton } from "../buttons/download-button";
 import { LoadingIcon } from "../ui/custom-loading";
+import { DeleteBookButton } from "./delete-button";
 
 type BookCardProps = {
   book: Book;
@@ -32,7 +31,7 @@ export const BookCard = ({ book, organizing }: BookCardProps) => {
         <div className="relative min-h-[140px] w-max">
           {organizing && (
             <div className="absolute right-4 top-4 flex items-center gap-2 ">
-              <DownloadBookButton bookId={book.id} />
+              {/* <DownloadBookButton bookId={book.id} /> */}
               <DeleteBookButton onClick={handleDelete} />
             </div>
           )}
