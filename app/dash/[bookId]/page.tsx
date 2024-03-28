@@ -23,12 +23,12 @@ export default async function BookPage({ params: { bookId } }: Props) {
   if (!currentBook) return null;
 
   return (
-    <div className="flex max-h-[100dvh] w-full flex-col items-center md:items-start">
+    <div className="flex h-[100dvh] max-h-[100dvh] w-full flex-col items-start">
       <Header user={user} />
       <BookSelector bookTitle={currentBook.title} />
       {currentBook.hasTasks && <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />}
       <NotesButtons currentBook={currentBook} />
-      <main className="flex h-[calc(100dvh-64px)] w-full max-w-[100vw] gap-2 overflow-x-scroll pl-2 pr-56 md:pl-4">
+      <main className="flex w-full max-w-[100vw] gap-2 overflow-x-scroll pl-2 pr-56 md:pl-4">
         {currentBook.groups
           .sort((a, b) => a.id - b.id)
           .map((group) => {

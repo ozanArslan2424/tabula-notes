@@ -32,7 +32,6 @@ export const NotesButtons = ({ currentBook }: { currentBook: BookType }) => {
     <nav className="mb-4 mt-2 flex flex-wrap justify-start gap-2 px-2 md:px-4">
       <LinkButton
         className="w-max justify-start space-x-3 bg-background text-foreground"
-        size="sm"
         variant="outline"
         href="/dash"
       >
@@ -40,24 +39,24 @@ export const NotesButtons = ({ currentBook }: { currentBook: BookType }) => {
         <span className="hidden sm:inline">Kütüphane</span>
       </LinkButton>
       <CreateBookButton />
-      <BookSettings currentBook={currentBook} />
+      <BookSettings mode="full" book={currentBook} />
       <Select name="redirect" onValueChange={(value) => handleSelect(value)}>
-        <SelectTrigger className="h-8 w-max text-xs">
-          <SelectValue className="text-xs" placeholder="Gruba git" />
+        <SelectTrigger className="h-9 w-max text-sm">
+          <SelectValue placeholder="Gruba git" />
         </SelectTrigger>
         <SelectContent>
-          {currentBook.groups.map((group) => (
-            <SelectItem className="text-xs" key={group.id} value={group.title} onClick={(e) => e.preventDefault()}>
+          {currentBook.groups?.map((group) => (
+            <SelectItem key={group.id} value={group.title} onClick={(e) => e.preventDefault()}>
               {group.title}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-      <div className="flex h-8 w-max items-center gap-2 rounded-md border border-input px-3 text-xs font-semibold text-muted-foreground shadow-sm">
+      <div className="flex h-9 w-max items-center gap-2 rounded-md border border-input px-3 text-sm font-semibold text-muted-foreground shadow-sm">
         <CalendarIcon size={14} className="shrink-0" />
         {currentBook.createdAt.toLocaleDateString()}
       </div>
-      <div className="flex min-h-8 max-w-64 items-center gap-2 rounded-md border border-input px-3 py-1 text-xs font-semibold text-muted-foreground shadow-sm">
+      <div className="flex min-h-9 max-w-64 items-center gap-2 rounded-md border border-input px-3 py-1 text-sm font-semibold text-muted-foreground shadow-sm">
         <TextIcon size={14} className="shrink-0" />
         <p className="truncate">{currentBook.description}</p>
       </div>

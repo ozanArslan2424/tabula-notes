@@ -14,6 +14,16 @@ export async function createBook(values: z.infer<typeof BookFormSchema>) {
         description: values.description,
         hasTasks: values.hasTasks,
         userId: user?.id!,
+        groups: {
+          create: {
+            title: new Date().toLocaleDateString(),
+            notes: {
+              create: {
+                content: "",
+              },
+            },
+          },
+        },
       },
     });
     return { success: "Kitap başarıyla oluşturuldu.", id: book.id };
@@ -29,6 +39,11 @@ export async function createNewGroup({ title, bookId }: { title: string; bookId:
       data: {
         title: title,
         bookId: bookId,
+        notes: {
+          create: {
+            content: "",
+          },
+        },
       },
     });
     return { success: "Grup başarıyla oluşturuldu" };

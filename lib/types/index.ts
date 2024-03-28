@@ -5,8 +5,8 @@ export type BookType = {
   hasTasks?: boolean;
   createdAt: Date;
   updatedAt: Date;
-  groups: GroupType[];
-  tasks: TaskType[];
+  groups?: GroupType[];
+  tasks?: TaskType[];
 };
 
 export type TaskType = {

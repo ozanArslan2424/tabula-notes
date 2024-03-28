@@ -17,16 +17,21 @@ export default async function DashPage() {
   return (
     <div className="flex min-h-[100dvh] w-full flex-col justify-between">
       <Header user={user} />
-      <main className="w-full px-4 py-8 md:mx-auto md:w-[1150px]">
-        <h1 className="mb-4 text-center text-2xl font-semibold md:text-start">Hızlı Notlar</h1>
-        <QuickNoteForm />
-        <div className="mb-8 flex w-full flex-wrap items-start gap-2">
-          {quickNotes && quickNotes.map((note) => <QuickNoteCard key={note.id} note={note} />)}
-        </div>
-
-        <h1 className="mb-4 text-center text-2xl font-semibold md:text-start">Kütüphane</h1>
-        <BookCardsGrid books={books} />
-      </main>
+      <div className="flex w-full flex-col justify-center px-8 py-16 md:flex-row md:items-start">
+        <aside className="mb-8 flex flex-col items-center gap-4 md:items-start">
+          <h1 className="text-center text-2xl font-semibold md:text-start">Hızlı Notlar</h1>
+          <QuickNoteForm />
+          <div className="flex w-full flex-col items-center gap-2">
+            {quickNotes && quickNotes.map((note) => <QuickNoteCard key={note.id} note={note} />)}
+          </div>
+        </aside>
+        <main className="md:mx-auto md:w-[1150px]">
+          <div>
+            <h1 className="mb-4 text-center text-2xl font-semibold md:text-start">Kütüphane</h1>
+            <BookCardsGrid books={books} />
+          </div>
+        </main>
+      </div>
       <footer className="py-2">
         <p className="text-center text-xs text-muted-foreground">
           <Link href="https://github.com/ozanArslan2424">Ozan Arslan</Link> © 2024

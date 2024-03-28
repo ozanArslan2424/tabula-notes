@@ -11,30 +11,28 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Trash2Icon } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../ui/button";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
 
 type Props = {
   onClick: () => void;
 };
 
-export const DeleteBookButton = ({ onClick }: { onClick: () => void }) => {
+export const DeleteBookButton = ({ onClick }: Props) => {
   const [open, setOpen] = useState(false);
 
   return (
     <AlertDialog open={open} onOpenChange={() => setOpen(!open)}>
       <AlertDialogTrigger asChild>
-        <Button
-          size="sm_icon"
-          variant="ghost"
-          className="sm:hover:bg-destructive sm:hover:text-destructive-foreground"
+        <DropdownMenuItem
           onClick={(e) => {
             e.preventDefault();
-            e.stopPropagation();
             setOpen(true);
           }}
+          className="flex items-center gap-2 hover:bg-destructive hover:text-destructive-foreground"
         >
-          <Trash2Icon size={14} />
-        </Button>
+          <Trash2Icon size={14} className="shrink-0" />
+          Sil
+        </DropdownMenuItem>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -1,5 +1,19 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { LoadingIcon2 } from "@/components/ui/custom-loading";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { deleteBook } from "@/lib/actions/delete";
 import { updateBookSettings } from "@/lib/actions/update";
 import { BookFormSchema } from "@/lib/schemas";
@@ -11,13 +25,9 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
-import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
-import { LoadingIcon2 } from "../ui/custom-loading";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
-import { Input } from "../ui/input";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
 
-export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
+export const BookSettings = ({ book, mode }: { book: BookType; mode: "full" | "compact" }) => {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -26,15 +36,15 @@ export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
   const form = useForm<z.infer<typeof BookFormSchema>>({
     resolver: zodResolver(BookFormSchema),
     defaultValues: {
-      title: currentBook.title,
-      description: currentBook.description || "",
-      hasTasks: currentBook.hasTasks,
+      title: book.title,
+      description: book.description || "",
+      hasTasks: book.hasTasks,
     },
   });
 
   const handleSubmit = (values: z.infer<typeof BookFormSchema>) => {
     startTransition(() => {
-      updateBookSettings(currentBook.id, values).then((data) => {
+      updateBookSettings(book.id, values).then((data) => {
         if (data?.error) {
           toast.error(data?.error);
         }
@@ -47,12 +57,28 @@ export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
   };
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
-      <DialogTrigger asChild>
-        <Button className="w-max justify-start space-x-3 bg-background text-foreground" size="sm" variant="outline">
-          <Settings2Icon size={14} className="shrink-0" />
-          <span className="hidden sm:inline">Kitap Ayarları</span>
-        </Button>
-      </DialogTrigger>
+      {mode === "full" && (
+        <DialogTrigger asChild>
+          <Button className="w-max justify-start space-x-3 bg-background text-foreground" variant="outline">
+            <Settings2Icon size={14} className="shrink-0" />
+            <span className="hidden sm:inline">Kitabı düzenle</span>
+          </Button>
+        </DialogTrigger>
+      )}
+      {mode === "compact" && (
+        <DialogTrigger asChild>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen(true);
+            }}
+            className="flex items-center gap-2"
+          >
+            <Settings2Icon size={14} className="shrink-0" />
+            Düzenle
+          </DropdownMenuItem>
+        </DialogTrigger>
+      )}
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Kitap Ayarları</DialogTitle>
@@ -60,7 +86,7 @@ export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex w-full flex-col gap-2 p-4">
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="flex w-full flex-col gap-4 p-4">
             <FormField
               control={form.control}
               name="title"
@@ -113,29 +139,35 @@ export const BookSettings = ({ currentBook }: { currentBook: BookType }) => {
               )}
             />
 
-            <div className="flex justify-end gap-2">
-              <Button size="sm" variant="custom_destructive" onClick={() => setOpen(false)}>
-                Vazgeç
-              </Button>
-              <Button size="sm" disabled={isPending} type="submit">
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button type="reset" variant="secondary">
+                  Vazgeç
+                </Button>
+              </DialogClose>
+
+              <Button disabled={isPending} type="submit">
                 {isPending ? <LoadingIcon2 /> : "Kaydet"}
               </Button>
-            </div>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              className="w-max sm:hover:bg-destructive"
-              onClick={() => {
-                startTransition(() => {
-                  deleteBook(currentBook.id!).then(() => {
-                    router.push("/dash");
+            </DialogFooter>
+            <div className="mt-4 rounded-md border border-dashed border-destructive/50 bg-destructive/5 p-4">
+              <p className="text-destructive">Dikkat!</p>
+              <p className="text-sm">Kitabı silmek için aşağıdaki butona tıklayın. Bu işlem geri alınamaz.</p>
+              <Button
+                type="button"
+                variant="destructive"
+                className="mt-4"
+                onClick={() => {
+                  startTransition(() => {
+                    deleteBook(book.id!).then(() => {
+                      router.push("/dash");
+                    });
                   });
-                });
-              }}
-            >
-              {isPending ? <LoadingIcon2 /> : "Kitabı Sil"}
-            </Button>
+                }}
+              >
+                {isPending ? <LoadingIcon2 /> : "Kitabı Sil"}
+              </Button>
+            </div>
           </form>
         </Form>
       </DialogContent>

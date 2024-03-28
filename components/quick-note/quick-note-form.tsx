@@ -23,31 +23,29 @@ export const QuickNoteForm = () => {
   };
 
   return (
-    <div className="mx-auto flex w-full flex-col items-center md:mx-0 md:items-start">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="mb-4 flex min-w-60 items-center gap-2">
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    {...field}
-                    className="h-8 w-max bg-background text-foreground"
-                    placeholder="Hızlıca bir şeyler yazın..."
-                    type="text"
-                    autoComplete="off"
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <Button type="submit" size="sm_icon" variant="outline" className="bg-background text-foreground">
-            <PlusCircleIcon size={14} className="shrink-0" />
-          </Button>
-        </form>
-      </Form>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="flex items-center gap-2">
+        <FormField
+          control={form.control}
+          name="content"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input
+                  {...field}
+                  className="h-9 w-max bg-background text-foreground"
+                  placeholder="Hızlıca bir şeyler yazın..."
+                  type="text"
+                  autoComplete="off"
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <Button type="submit" size="icon" variant="outline" className="bg-background text-foreground">
+          <PlusCircleIcon size={14} className="shrink-0" />
+        </Button>
+      </form>
+    </Form>
   );
 };
