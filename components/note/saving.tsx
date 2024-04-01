@@ -45,3 +45,11 @@ export const SavingButton = ({ noteId, markdown }: { noteId: number; markdown: s
     </Button>
   );
 };
+
+export const SaveButton = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <Button variant="default" size="sm_icon" onClick={onClick}>
+      <SaveIcon size={16} />
+    </Button>
+  );
+};

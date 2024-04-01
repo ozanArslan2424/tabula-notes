@@ -52,11 +52,11 @@ export const NotesButtons = ({ currentBook }: { currentBook: BookType }) => {
           ))}
         </SelectContent>
       </Select>
-      <div className="flex h-9 w-max items-center gap-2 rounded-md border border-input px-3 text-sm font-semibold text-muted-foreground shadow-sm">
+      <div className="hidden h-9 w-max items-center gap-2 rounded-md border border-input px-3 text-sm font-semibold text-muted-foreground shadow-sm md:flex">
         <CalendarIcon size={14} className="shrink-0" />
         {currentBook.createdAt.toLocaleDateString()}
       </div>
-      <div className="flex min-h-9 max-w-64 items-center gap-2 rounded-md border border-input px-3 py-1 text-sm font-semibold text-muted-foreground shadow-sm">
+      <div className="hidden min-h-9 max-w-64 items-center gap-2 rounded-md border border-input px-3 py-1 text-sm font-semibold text-muted-foreground shadow-sm md:flex">
         <TextIcon size={14} className="shrink-0" />
         <p className="truncate">{currentBook.description}</p>
       </div>
