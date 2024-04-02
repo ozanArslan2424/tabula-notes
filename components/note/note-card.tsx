@@ -30,6 +30,11 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
     e.target.value = temp_value;
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setMarkdown(value);
+  };
+
   const handleSave = () => {
     setFocused(false);
     updateNote(note.id, markdown).then((data) => {
@@ -43,14 +48,10 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    e.preventDefault();
-    if (e.metaKey && e.key === "s") handleSave();
-    if (e.ctrlKey && e.key === "s") handleSave();
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setMarkdown(value);
+    if ((e.metaKey || e.ctrlKey) && e.key === "s") {
+      e.preventDefault();
+      handleSave();
+    }
   };
 
   const handleDeleteNote = () => {
