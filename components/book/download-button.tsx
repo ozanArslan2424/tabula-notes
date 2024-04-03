@@ -49,7 +49,7 @@ export const DownloadBookButton = ({ bookId }: { bookId: string }) => {
         <AlertDialogFooter>
           <form className="space-x-2" action={downloadMarkdownFile}>
             <AlertDialogCancel>Vazgeç</AlertDialogCancel>
-            <AlertDialogAction type="submit" className="sm:hover:bg-success sm:hover:text-success-foreground">
+            <AlertDialogAction type="submit" className="hover:bg-success hover:text-success-foreground">
               İndir
             </AlertDialogAction>
           </form>

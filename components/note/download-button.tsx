@@ -39,10 +39,7 @@ export const DownloadNoteButton = ({ markdown, noteId }: { markdown: string; not
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={downloadMarkdownFile}
-            className="sm:hover:bg-success sm:hover:text-success-foreground"
-          >
+          <AlertDialogAction onClick={downloadMarkdownFile} className="hover:bg-success hover:text-success-foreground">
             İndir
           </AlertDialogAction>
         </AlertDialogFooter>

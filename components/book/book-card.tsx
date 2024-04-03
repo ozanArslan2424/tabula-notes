@@ -46,7 +46,7 @@ export const BookCard = ({ book }: BookCardProps) => {
             </DropdownMenu>
           </div>
           <Link href={`/dash/${book.id}`} key={book.id}>
-            <div className="min-h-[140px] w-[360px] rounded-md border bg-card/30 p-4 transition-all sm:hover:border-primary/60 sm:hover:shadow">
+            <div className="min-h-[140px] w-[360px] rounded-md border bg-card/30 p-4 transition-all hover:border-primary/60 hover:shadow active:border-primary/60 active:shadow">
               <p className="mb-2 text-xs text-muted-foreground">{createdAtString}</p>
               <h2 className="line-clamp-2 hyphens-auto text-wrap break-words text-xl font-semibold capitalize">
                 {book.title}

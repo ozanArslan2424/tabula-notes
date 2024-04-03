@@ -20,7 +20,7 @@ export const DeleteNoteButton = ({ onClick }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="sm_icon" variant="ghost" className="sm:hover:text-destructive">
+        <Button size="sm_icon" variant="ghost" className="hover:text-destructive">
           <Trash2Icon size={14} />
         </Button>
       </AlertDialogTrigger>
@@ -33,7 +33,7 @@ export const DeleteNoteButton = ({ onClick }: Props) => {
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
             onClick={onClick}
-            className="bg-destructive text-destructive-foreground sm:hover:text-destructive"
+            className="bg-destructive text-destructive-foreground hover:text-destructive"
           >
             Sil
           </AlertDialogAction>

@@ -17,7 +17,7 @@ export default async function DashPage() {
   return (
     <div className="flex min-h-[100dvh] w-full flex-col justify-between">
       <Header user={user} />
-      <div className="flex w-full flex-col justify-center px-8 py-16 md:flex-row md:items-start">
+      <div className="flex w-full flex-col justify-center gap-8 px-8 py-16 md:flex-row md:items-start">
         <aside className="mb-8 flex flex-col items-center gap-4 md:items-start">
           <h1 className="text-center text-2xl font-semibold md:text-start">Hızlı Notlar</h1>
           <QuickNoteForm />

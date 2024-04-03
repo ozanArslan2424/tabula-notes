@@ -43,7 +43,7 @@ export const DeleteBookButton = ({ onClick }: Props) => {
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
             onClick={onClick}
-            className="bg-destructive text-destructive-foreground sm:hover:text-destructive"
+            className="bg-destructive text-destructive-foreground hover:text-destructive"
           >
             Sil
           </AlertDialogAction>

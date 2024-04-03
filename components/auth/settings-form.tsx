@@ -37,7 +37,7 @@
 //   };
 
 //   const buttonDefaultStyling =
-//     "ut-button:border ut-button:border-input ut-button:bg-secondary ut-button:text-secondary-foreground ut-button:shadow-sm ut-button:sm:hover:bg-accent ut-button:sm:hover:text-accent-foreground ut-button:inline-flex ut-button:items-center ut-button:justify-center ut-button:whitespace-nowrap ut-button:rounded-md ut-button:text-sm ut-button:font-medium ut-button:transition-colors ut-button:focus-visible:outline-none ut-button:focus-visible:ring-1 ut-button:focus-visible:ring-ring ut-button:disabled:pointer-events-none ut-button:disabled:opacity-50 ut-button:h-9 ut-button:px-4 ut-button:py-2";
+//     "ut-button:border ut-button:border-input ut-button:bg-secondary ut-button:text-secondary-foreground ut-button:shadow-sm ut-button:hover:bg-accent ut-button:hover:text-accent-foreground ut-button:inline-flex ut-button:items-center ut-button:justify-center ut-button:whitespace-nowrap ut-button:rounded-md ut-button:text-sm ut-button:font-medium ut-button:transition-colors ut-button:focus-visible:outline-none ut-button:focus-visible:ring-1 ut-button:focus-visible:ring-ring ut-button:disabled:pointer-events-none ut-button:disabled:opacity-50 ut-button:h-9 ut-button:px-4 ut-button:py-2";
 
 //   return (
 //     <div>

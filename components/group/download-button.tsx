@@ -48,10 +48,7 @@ export const DownloadGroupButton = async ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
-          <AlertDialogAction
-            onClick={downloadMarkdownFile}
-            className="sm:hover:bg-success sm:hover:text-success-foreground"
-          >
+          <AlertDialogAction onClick={downloadMarkdownFile} className="hover:bg-success hover:text-success-foreground">
             İndir
           </AlertDialogAction>
         </AlertDialogFooter>

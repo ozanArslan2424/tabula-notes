@@ -3,7 +3,7 @@ import { LinkButton } from "@/components/ui/link-button";
 
 export default function LandingPage() {
   return (
-    <main className="w-full px-2 py-16 md:px-4">
+    <main className="w-full px-2 py-8 md:px-4 md:py-16">
       <div className="prose mx-auto text-center dark:prose-invert">
         <h1>Tabula Notlar</h1>
       </div>
