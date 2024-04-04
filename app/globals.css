@@ -93,10 +93,6 @@
   background: url(https://grainy-gradients.vercel.app/noise.svg);
 }
 
-button[data-state="open"] .custom-rotate {
-  transform: rotate(180deg);
-}
-
 button[data-state="checked"] .custom-checked {
   text-decoration: line-through;
 }

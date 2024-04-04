@@ -3,8 +3,8 @@ import { deleteQuickNote } from "@/lib/actions/delete";
 import { QuickNoteType } from "@/lib/types";
 import { Trash2Icon } from "lucide-react";
 import { useTransition } from "react";
+import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
-import { LoadingIcon } from "../ui/custom-loading";
 
 export const QuickNoteCard = ({ note }: { note: QuickNoteType }) => {
   const [isPending, startTransition] = useTransition();

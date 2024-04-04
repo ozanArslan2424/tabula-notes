@@ -9,7 +9,7 @@ export default async function RegisterPage() {
     redirect("/dash");
   }
   return (
-    <div className="mx-auto mt-32 w-max">
+    <div className="mx-auto w-max">
       <RegisterForm />
     </div>
   );

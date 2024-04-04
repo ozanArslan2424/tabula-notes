@@ -10,9 +10,9 @@ import ReactMarkdown from "react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
-import { LoadingIcon } from "../ui/custom-loading";
+import { LoadingIcon } from "../custom-loading";
+import { SaveButton } from "../saving";
 import { DeleteNoteButton } from "./delete-button";
-import { SaveButton } from "./saving";
 
 type Props = {
   bookId?: string;
@@ -23,9 +23,8 @@ type Props = {
 export const NoteCard = ({ bookId, groupId, note }: Props) => {
   const [focused, setFocused] = useState(false);
   const [markdown, setMarkdown] = useState(note.content || "");
-  const [isSaved, setIsSaved] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [status, setStatus] = useState<"idle" | "success" | "fail">("idle");
 
   function moveCaretAtEnd(e: React.FocusEvent<HTMLTextAreaElement>) {
     var temp_value = e.target.value;
@@ -44,10 +43,10 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
       updateNote(note.id, markdown).then((data) => {
         if (data.error) {
           toast.error(data.error);
-          setHasError(true);
+          setStatus("fail");
         }
         if (data.success) {
-          setIsSaved(true);
+          setStatus("success");
         }
       });
     });
@@ -81,9 +80,11 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
   return (
     <Card className={`z-5 relative mt-2 flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
       <div className="absolute bottom-1 right-1">
-        {!focused && isPending && !isSaved && <LoadingIcon size={16} />}
-        {!focused && !isPending && isSaved && <CheckIcon size={16} strokeWidth={4} className="text-success/70" />}
-        {!focused && !isPending && hasError && (
+        {!focused && isPending && <LoadingIcon size={16} />}
+        {!focused && !isPending && status === "success" && (
+          <CheckIcon size={16} strokeWidth={4} className="text-success/70" />
+        )}
+        {!focused && !isPending && status === "fail" && (
           <XIcon size={32} strokeWidth={4} className="animate-pulse text-destructive" />
         )}
       </div>

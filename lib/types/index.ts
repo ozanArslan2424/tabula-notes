@@ -31,3 +31,17 @@ export type QuickNoteType = {
   id: number;
   content: string;
 };
+
+export type UserTableType = {
+  id: string;
+  email: string | null;
+  username: string | null;
+  image: string | null;
+  role: "USER" | "ADMIN";
+  _count: {
+    accounts: number;
+    sessions: number;
+    books: number;
+    quicknotes: number;
+  };
+};

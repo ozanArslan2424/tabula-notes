@@ -1,7 +1,7 @@
 "use client";
+import { LoadingIcon2 } from "@/components/custom-loading";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { LoadingIcon2 } from "@/components/ui/custom-loading";
 import {
   Dialog,
   DialogClose,

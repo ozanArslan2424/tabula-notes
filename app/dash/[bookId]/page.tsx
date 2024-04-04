@@ -1,8 +1,10 @@
 import { BookSelector } from "@/components/book/book-select";
+import { NewGroupButton } from "@/components/group/create-group";
 import { NoteGroupTitleCard } from "@/components/group/group-card";
 import { Header } from "@/components/header";
+import { NewNoteButton } from "@/components/note/create-note";
 import { NoteCard } from "@/components/note/note-card";
-import { NewGroupButton, NewNoteButton, NotesButtons } from "@/components/note/notes-buttons";
+import { NotesButtons } from "@/components/note/notes-buttons";
 import { TodoCard } from "@/components/todo/todo-card";
 import { getBookContents } from "@/lib/actions/read";
 import { getSession } from "@/lib/auth";
@@ -26,9 +28,10 @@ export default async function BookPage({ params: { bookId } }: Props) {
     <div className="flex h-[100dvh] max-h-[100dvh] w-full flex-col items-start">
       <Header user={user} />
       <BookSelector bookTitle={currentBook.title} />
-      {currentBook.hasTasks && <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />}
       <NotesButtons currentBook={currentBook} />
       <main className="flex w-full max-w-[100vw] gap-2 overflow-x-scroll pl-2 pr-56 md:pl-4">
+        {currentBook.hasTasks && <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />}
+
         {currentBook.groups
           .sort((a, b) => a.id - b.id)
           .map((group) => {

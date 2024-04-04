@@ -1,5 +1,5 @@
+import { LinkButton } from "@/components/link-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LinkButton } from "@/components/ui/link-button";
 
 export default function LandingPage() {
   return (

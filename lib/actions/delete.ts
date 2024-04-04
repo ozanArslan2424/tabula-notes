@@ -2,6 +2,28 @@
 import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
+export const deleteUser = async (userId: string) => {
+  try {
+    await db.user.delete({
+      where: {
+        id: userId,
+      },
+    });
+    await db.account.deleteMany({
+      where: {
+        userId: userId,
+      },
+    });
+    await db.session.deleteMany({
+      where: {
+        userId: userId,
+      },
+    });
+  } catch (error) {
+    console.error("fail to del user", error);
+  }
+};
+
 export const deleteBook = async (bookId: string) => {
   try {
     await db.book.delete({

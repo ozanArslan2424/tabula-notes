@@ -1,15 +1,12 @@
 "use client";
 import { createNewTask } from "@/lib/actions/create";
-import { deleteTask } from "@/lib/actions/delete";
-import { updateTask } from "@/lib/actions/update";
 import { TaskType } from "@/lib/types";
-import { PlusCircleIcon, Trash2Icon } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { PlusCircleIcon } from "lucide-react";
+import { useState, useTransition } from "react";
+import { LoadingIcon2 } from "../custom-loading";
 import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
-import { LoadingIcon2 } from "../ui/custom-loading";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { TaskItem } from "./task-item";
 
 type Props = {
   tasks: TaskType[];
@@ -32,7 +29,7 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
   };
 
   return (
-    <div className="mx-2 mb-4 flex w-max items-center gap-2 rounded-lg border bg-card p-2 text-card-foreground shadow md:mx-4">
+    <div className="mb-4 space-y-2 rounded-lg border bg-card px-2 py-2 text-card-foreground shadow">
       <h2 className="text-md px-2 font-semibold">Yapılacaklar</h2>
       <form className="flex items-center gap-2" onSubmit={handleTodoSubmit}>
         <Input
@@ -61,55 +58,6 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
           </div>
         )}
       </div>
-    </div>
-  );
-};
-
-const TaskItem = ({ task, bookId }: { task: TaskType; bookId: string }) => {
-  const [completed, setCompleted] = useState<boolean>(task.completed);
-  const [isPending, startTransition] = useTransition();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      updateTask({ taskId: task.id, completed: completed });
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [completed, task.id]);
-
-  const handleDeleteTask = (id: number) => {
-    startTransition(() => {
-      deleteTask({ taskId: id, bookId: bookId });
-    });
-  };
-
-  return (
-    <div className="flex items-center gap-2">
-      <div className="flex w-full items-center gap-2 rounded-sm px-2 hover:bg-accent">
-        <Checkbox
-          disabled={isPending}
-          id={task.name}
-          name={task.name}
-          className="peer"
-          checked={completed}
-          onCheckedChange={() => setCompleted(!completed)}
-        />
-        <Label
-          className="custom-checked w-full cursor-pointer py-2 transition-all peer-data-[state=checked]:text-muted-foreground peer-data-[state=checked]:line-through"
-          htmlFor={task.name}
-        >
-          {isPending ? <LoadingIcon2 /> : task.name}
-        </Label>
-      </div>
-      <Button
-        disabled={isPending}
-        size="sm_icon"
-        variant="ghost"
-        className="hover:text-destructive"
-        onClick={() => handleDeleteTask(task.id)}
-      >
-        <Trash2Icon size={14} />
-      </Button>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 "use client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Register, sendToken } from "@/lib/actions/auth.actions";
+import { Register } from "@/lib/actions/auth.actions";
+import { sendToken } from "@/lib/actions/mail.actions";
 import { RegisterSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";

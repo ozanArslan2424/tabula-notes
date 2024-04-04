@@ -1,4 +1,4 @@
-import { LinkButton } from "@/components/ui/link-button";
+import { LinkButton } from "@/components/link-button";
 
 export default function NotFound() {
   return (
@@ -15,7 +15,7 @@ export default function NotFound() {
           <li key={3}>Kitap başka hesaba ait olabilir.</li>
         </ul>
         <br />
-        <LinkButton className="w-full border-secondary" variant="outline" href="/dash">
+        <LinkButton className="w-full border-primary" variant="outline" href="/dash">
           &#x2190; Kütüphaneye dön
         </LinkButton>
       </pre>

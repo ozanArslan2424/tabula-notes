@@ -13,8 +13,8 @@ import { Logout } from "@/lib/actions/auth.actions";
 import { HomeIcon, LogOutIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { LoadingIcon } from "../ui/custom-loading";
-import { LinkButton } from "../ui/link-button";
+import { LoadingIcon } from "../custom-loading";
+import { LinkButton } from "../link-button";
 
 export const UserButton = ({
   user,

@@ -9,7 +9,7 @@ export default async function LoginPage() {
     redirect("/dash");
   }
   return (
-    <div className="mx-auto mt-32 w-max">
+    <div className="mx-auto w-max">
       <LoginForm />
     </div>
   );

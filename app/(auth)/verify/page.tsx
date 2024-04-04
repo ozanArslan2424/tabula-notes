@@ -1,5 +1,6 @@
 "use client";
 import { VerifyEmail } from "@/lib/actions/auth.actions";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
@@ -36,12 +37,17 @@ export default function VerifyPage() {
   }, [onVerify]);
 
   return (
-    <div className="mx-auto mt-32 w-max">
+    <div className="text-center">
       <p>
         {!success && !error && "Doğrulanıyor..."}
         {success && "E-posta doğrulandı."}
         {error && error}
       </p>
+      {success && (
+        <p>
+          Giriş yapmak için <Link href="/login">buraya tıklayın.</Link>
+        </p>
+      )}
     </div>
   );
 }

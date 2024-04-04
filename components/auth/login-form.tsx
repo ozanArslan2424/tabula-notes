@@ -1,20 +1,21 @@
 "use client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Login } from "@/lib/actions/auth.actions";
+import { sendRequested } from "@/lib/actions/mail.actions";
 import { LoginSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { GithubButton, GoogleButton } from "./oauth-buttons";
+import { Label } from "../ui/label";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
+  const [reqMail, setReqMail] = useState<string>("");
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -24,7 +25,7 @@ export const LoginForm = () => {
     },
   });
 
-  const handleSubmit = async (values: z.infer<typeof LoginSchema>) => {
+  const handleSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(async () => {
       await Login(values).then((data) => {
         if (data.error) {
@@ -38,10 +39,14 @@ export const LoginForm = () => {
     });
   };
 
+  const handleRegisterRequest = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await sendRequested(reqMail).then(() => toast.success("Davet kodu gönderildi."));
+  };
+
   return (
     <>
       <h1 className="mb-4 text-center text-3xl font-bold">Giriş Yap</h1>
-
       <Form {...form}>
         <form className="min-w-96 space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
           <FormField
@@ -73,22 +78,31 @@ export const LoginForm = () => {
           <Button className="w-full" type="submit" disabled={isPending}>
             {isPending ? "Giriş yapılıyor..." : "Giriş Yap"}
           </Button>
-
-          <div className="my-4 flex items-center gap-2">
-            <div className="h-0.5 w-full bg-accent"></div>
-            <p className="text-primary">veya</p>
-            <div className="h-0.5 w-full bg-accent"></div>
-          </div>
-          <GoogleButton />
-          <GithubButton />
         </form>
       </Form>
-      <p className="mt-4 text-center text-muted-foreground">
-        Hesabınız yoksa{" "}
-        <Link href="/register" className="underline hover:text-foreground">
-          kaydolun.
-        </Link>
-      </p>
+
+      <div className="my-4 flex items-center gap-2">
+        <div className="h-0.5 w-full bg-accent"></div>
+        <p className="text-primary">veya</p>
+        <div className="h-0.5 w-full bg-accent"></div>
+      </div>
+
+      <form onSubmit={handleRegisterRequest} className="space-y-4">
+        <Label htmlFor="new_email">Kaydolmak için başvur.</Label>
+        <Input
+          disabled={isPending}
+          id="new_email"
+          name="new_email"
+          type="email"
+          required
+          placeholder="E-Posta Adresi"
+          value={reqMail}
+          onChange={(e) => setReqMail(e.target.value)}
+        />
+        <Button variant="secondary" className="w-full" type="submit" disabled={isPending}>
+          Davet Kodu İste
+        </Button>
+      </form>
     </>
   );
 };
