@@ -1,7 +1,6 @@
 import { BookSelector } from "@/components/book/book-select";
 import { NewGroupButton } from "@/components/group/create-group";
 import { NoteGroupTitleCard } from "@/components/group/group-card";
-import { Header } from "@/components/header";
 import { NewNoteButton } from "@/components/note/create-note";
 import { NoteCard } from "@/components/note/note-card";
 import { NotesButtons } from "@/components/note/notes-buttons";
@@ -23,12 +22,14 @@ export default async function BookPage({ params: { bookId } }: Props) {
 
   const currentBook = await getBookContents(bookId);
   if (!currentBook) return null;
+  if (currentBook.userId !== user.id) redirect("/dash");
 
   return (
     <div className="flex h-[100dvh] max-h-[100dvh] w-full flex-col items-start">
-      <Header user={user} />
-      <BookSelector bookTitle={currentBook.title} />
-      <NotesButtons currentBook={currentBook} />
+      <nav className="flex items-center gap-2 px-4 py-2">
+        <BookSelector bookTitle={currentBook.title} currentBook={currentBook} />
+        <NotesButtons currentBook={currentBook} />
+      </nav>
       <main className="flex w-full max-w-[100vw] gap-2 overflow-x-scroll pl-2 pr-56 md:pl-4">
         {currentBook.hasTasks && <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />}
 

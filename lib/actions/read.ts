@@ -48,6 +48,7 @@ export async function getBookContents(bookId: string) {
       id: bookId,
     },
     select: {
+      userId: true,
       id: true,
       title: true,
       description: true,

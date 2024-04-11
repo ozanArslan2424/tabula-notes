@@ -13,7 +13,7 @@ export const Header = ({
   } | null;
 }) => {
   return (
-    <header className="absolute right-2 top-4 z-10 flex items-center gap-2 md:right-8">
+    <header className="absolute right-4 top-4 flex items-center gap-2">
       <ThemeToggle />
       <UserButton user={user} />
     </header>

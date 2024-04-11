@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Logout } from "@/lib/actions/auth.actions";
-import { HomeIcon, LogOutIcon, Settings2Icon } from "lucide-react";
+import { LogOutIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LoadingIcon } from "../custom-loading";
@@ -64,11 +64,6 @@ export const UserButton = ({
           </DropdownMenuLabel>
 
           <DropdownMenuSeparator />
-          <Link href="/dash">
-            <DropdownMenuItem>
-              <HomeIcon size={14} className="mr-2" /> Kütüphane
-            </DropdownMenuItem>
-          </Link>
           <Link href="/settings">
             <DropdownMenuItem>
               <Settings2Icon size={14} className="mr-2" /> Ayarlar

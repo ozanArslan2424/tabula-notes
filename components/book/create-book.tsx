@@ -23,8 +23,13 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
 
-export const CreateBookButton = () => {
+type Props = {
+  mode: "menu" | "default";
+};
+
+export const CreateBookButton = ({ mode }: Props) => {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -55,12 +60,24 @@ export const CreateBookButton = () => {
   };
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
-      <DialogTrigger asChild>
-        <Button variant="outline" className=" w-max justify-start space-x-3 bg-background text-foreground">
-          <PlusCircleIcon size={14} className="shrink-0" />
-          <span className="hidden sm:inline">Kitap Oluştur</span>
-        </Button>
-      </DialogTrigger>
+      {mode === "menu" && (
+        <DialogTrigger asChild>
+          <DropdownMenuItem className="gap-2 font-semibold">
+            <PlusCircleIcon size={18} className="shrink-0" />
+            <span>Yeni Kitap Oluştur</span>
+          </DropdownMenuItem>
+        </DialogTrigger>
+      )}
+
+      {mode === "default" && (
+        <DialogTrigger asChild>
+          <Button variant="outline" className="gap-2 bg-background">
+            <PlusCircleIcon size={18} className="shrink-0" />
+            <span>Yeni Kitap Oluştur</span>
+          </Button>
+        </DialogTrigger>
+      )}
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Yeni Kitap Oluştur</DialogTitle>

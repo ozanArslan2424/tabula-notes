@@ -1,3 +1,4 @@
+import { InviteRequestForm } from "@/components/auth/invite-request-form";
 import { LinkButton } from "@/components/link-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -9,45 +10,7 @@ export default function LandingPage() {
       </div>
       <div className="flex flex-col-reverse justify-center gap-8 px-2 pt-8 md:flex-row md:px-24 md:pt-16">
         <div>
-          <Card className="mb-8">
-            <CardHeader>
-              <CardTitle>Çoktan Gelmiş Özellikler</CardTitle>
-              <CardDescription>Şimdiden kullanabileceğiniz özellikler.</CardDescription>
-            </CardHeader>
-            <CardContent className="prose dark:prose-invert">
-              <ul>
-                <li>Kimlik doğrulaması ve Google ve GitHub girişleri.</li>
-                <li>Arama ile kitaplarınızın bir listesini içeren Kütüphane sayfası.</li>
-                <li>Kitaplar üst kategoriler olarak, gruplar alt kategoriler olarak.</li>
-                <li>Kitaplar için isteğe bağlı açıklamalar.</li>
-                <li>Her kitap için isteğe bağlı görev listeleri (basit yapılacaklar listesi).</li>
-                <li>Kitapsız, grupsuz, bağımsız hızlı notlar.</li>
-                <li>Notları markdown olarak indir.</li>
-                <li>Grupları markdown olarak indir.</li>
-                <li>Kitapları markdown olarak indir.</li>
-              </ul>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle>Gelecek Özellikler</CardTitle>
-              <CardDescription>Gelebilir de gelmeyebilir de...</CardDescription>
-            </CardHeader>
-            <CardContent className="prose dark:prose-invert">
-              <ul>
-                <li>Kitaplar yerine notlara özel yapılacaklar listeleri.</li>
-                <li>Hesap ayarları sayfası.</li>
-                <li>Profil fotoğrafı özelliği</li>
-                <li>USER ve ADMIN rolleri</li>
-                <li>Daha iyi Markdown desteği</li>
-                <li>Etiketler ve etiketlere göre filtreleme</li>
-                <li>Notlar arası ilişkiler.</li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-        <div>
-          <Card className="mb-8">
+          <Card className="mb-4">
             <CardHeader>
               <CardTitle>Tabula Hakkında</CardTitle>
               <CardDescription>Kısa bir açıklama.</CardDescription>
@@ -62,8 +25,10 @@ export default function LandingPage() {
               </p>
             </CardContent>
           </Card>
-
-          <Card className="mb-8">
+          <InviteRequestForm />
+        </div>
+        <div>
+          <Card className="mb-4">
             <CardHeader>
               <CardTitle>Kullanım Kılavuzu</CardTitle>
               <CardDescription>Buradan başlayın.</CardDescription>

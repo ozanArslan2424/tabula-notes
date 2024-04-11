@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { GithubButton, GoogleButton } from "./oauth-buttons";
 
 export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -94,13 +93,6 @@ export const RegisterForm = () => {
           <Button className="w-full" type="submit" disabled={isPending || success}>
             {isPending ? "Kaydolunuyor..." : "Kaydol"}
           </Button>
-          <div className="my-4 flex items-center gap-2">
-            <div className="h-0.5 w-full bg-accent"></div>
-            <p className="text-primary">veya</p>
-            <div className="h-0.5 w-full bg-accent"></div>
-          </div>
-          <GoogleButton />
-          <GithubButton />
         </form>
       </Form>
       <p className="mt-4 text-center text-muted-foreground">

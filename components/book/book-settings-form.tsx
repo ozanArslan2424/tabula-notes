@@ -59,10 +59,10 @@ export const BookSettings = ({ book, mode }: { book: BookType; mode: "full" | "c
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       {mode === "full" && (
         <DialogTrigger asChild>
-          <Button className="w-max justify-start space-x-3 bg-background text-foreground" variant="outline">
-            <Settings2Icon size={14} className="shrink-0" />
-            <span className="hidden sm:inline">Kitabı düzenle</span>
-          </Button>
+          <DropdownMenuItem className="gap-2 font-semibold">
+            <Settings2Icon size={18} className="shrink-0" />
+            <span>Kitap Ayarları</span>
+          </DropdownMenuItem>
         </DialogTrigger>
       )}
       {mode === "compact" && (

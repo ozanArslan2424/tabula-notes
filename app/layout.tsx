@@ -1,4 +1,6 @@
+import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
+import { getSession } from "@/lib/auth";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
@@ -12,15 +14,17 @@ export const metadata: Metadata = {
   description: "Tabula Notlar, daha organik bir deneyim sunma amacıyla oluşturulmuş bir not alma uygulamasıdır.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { user } = await getSession();
   return (
     <html suppressHydrationWarning lang="tr">
       <body className={montserrat.className}>
         <ThemeProvider attribute="class">
+          <Header user={user} />
           {children}
           <Toaster />
           <Analytics />

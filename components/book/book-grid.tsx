@@ -14,7 +14,7 @@ export const BookCardsGrid = ({ books }: Props) => {
   return (
     <>
       <div className="mb-4 flex w-full flex-wrap justify-center gap-2 md:justify-normal">
-        <CreateBookButton />
+        <CreateBookButton mode="default" />
         <div className="relative">
           <SearchIcon size={14} className="absolute left-3 top-2.5" />
           <Input
