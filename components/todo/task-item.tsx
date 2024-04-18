@@ -29,7 +29,7 @@ export const TaskItem = ({ task, bookId }: { task: TaskType; bookId: string }) =
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex w-full items-center gap-2 rounded-sm px-2 hover:bg-accent">
+      <div className="flex w-full items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent">
         <Checkbox
           disabled={isPending}
           id={task.name}

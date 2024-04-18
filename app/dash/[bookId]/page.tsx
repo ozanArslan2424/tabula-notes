@@ -1,9 +1,9 @@
 import { BookSelector } from "@/components/book/book-select";
 import { NewGroupButton } from "@/components/group/create-group";
+import { GoToGroup } from "@/components/group/go-to-group";
 import { NoteGroupTitleCard } from "@/components/group/group-card";
 import { NewNoteButton } from "@/components/note/create-note";
 import { NoteCard } from "@/components/note/note-card";
-import { NotesButtons } from "@/components/note/notes-buttons";
 import { TodoCard } from "@/components/todo/todo-card";
 import { getBookContents } from "@/lib/actions/read";
 import { getSession } from "@/lib/auth";
@@ -26,12 +26,14 @@ export default async function BookPage({ params: { bookId } }: Props) {
 
   return (
     <div className="flex h-[100dvh] max-h-[100dvh] w-full flex-col items-start">
-      <nav className="flex items-center gap-2 px-4 py-2">
+      <nav className="px-4 py-2">
         <BookSelector bookTitle={currentBook.title} currentBook={currentBook} />
-        <NotesButtons currentBook={currentBook} />
       </nav>
       <main className="flex w-full max-w-[100vw] gap-2 overflow-x-scroll pl-2 pr-56 md:pl-4">
-        {currentBook.hasTasks && <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />}
+        <div className="space-y-2">
+          {currentBook.hasTasks && <TodoCard tasks={currentBook.tasks} bookId={currentBook.id} />}
+          <GoToGroup currentBook={currentBook} />
+        </div>
 
         {currentBook.groups
           .sort((a, b) => a.id - b.id)

@@ -29,7 +29,7 @@ export const TodoCard = ({ tasks, bookId }: Props) => {
   };
 
   return (
-    <div className="mb-4 space-y-2 rounded-lg border bg-card px-2 py-2 text-card-foreground shadow">
+    <div className="mb-4 min-w-48 space-y-2 rounded-lg border bg-card px-2 py-2 text-card-foreground shadow">
       <h2 className="text-md px-2 font-semibold">Yapılacaklar</h2>
       <form className="flex items-center gap-2" onSubmit={handleTodoSubmit}>
         <Input

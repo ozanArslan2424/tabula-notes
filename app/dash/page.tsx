@@ -17,7 +17,7 @@ export default async function DashPage() {
     <div className="flex min-h-[100dvh] w-full flex-col justify-between">
       <div className="flex w-full flex-col justify-center gap-8 px-8 py-4 md:flex-row md:items-start">
         <aside className="mb-8 flex flex-col items-center gap-4 md:items-start">
-          <h1 className="text-center text-2xl font-semibold md:text-start">Hızlı Notlar</h1>
+          <h1 className="text-2xl font-semibold tracking-tight md:text-start">Hızlı Notlar</h1>
           <QuickNoteForm />
           <div className="flex w-full flex-col items-center gap-2">
             {quickNotes && quickNotes.map((note) => <QuickNoteCard key={note.id} note={note} />)}
@@ -25,7 +25,7 @@ export default async function DashPage() {
         </aside>
         <main className="md:mx-auto md:w-[1150px]">
           <div>
-            <h1 className="mb-4 text-center text-2xl font-semibold md:text-start">Kütüphane</h1>
+            <h1 className="mb-4 text-2xl font-semibold tracking-tight md:text-start">Kütüphane</h1>
             <BookCardsGrid books={books} />
           </div>
         </main>

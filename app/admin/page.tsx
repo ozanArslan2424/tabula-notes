@@ -1,4 +1,5 @@
 import { DeleteUser } from "@/components/admin/delete-user";
+import { AccessDenied } from "@/components/admin/errors";
 import { InviteForm } from "@/components/admin/invite-form";
 import { ChangeAdmin } from "@/components/admin/make-admin";
 import { BugReport } from "@/components/bug-report";
@@ -13,28 +14,14 @@ import { getBugs } from "@/lib/actions/read";
 import { resolveBug } from "@/lib/actions/update";
 import { getSession } from "@/lib/auth";
 import { BugReportType, UserTableType } from "@/lib/types";
-import { Command, TriangleAlert, User } from "lucide-react";
+import { Command, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function AdminPage() {
   const { user } = await getSession();
   if (user && user.role !== "ADMIN") {
-    return (
-      <div className="flex h-screen flex-col items-center justify-center gap-8">
-        <div className="flex flex-col items-center rounded-md bg-destructive p-8 text-destructive-foreground">
-          <TriangleAlert size={64} />
-          <p className="mt-12 text-2xl font-bold">Admin sayfasına erişiminiz yok!</p>
-        </div>
-        <LinkButton
-          className="w-max border-primary bg-transparent text-secondary-foreground"
-          variant="outline"
-          href="/dash"
-        >
-          &#x2190; Kütüphaneye dön
-        </LinkButton>
-      </div>
-    );
+    return <AccessDenied />;
   }
 
   if (user && user.role === "ADMIN") {
@@ -59,6 +46,9 @@ export default async function AdminPage() {
               </TabsTrigger>
             </TabsList>
           </nav>
+          <LinkButton href="/admin/test" className="h-7 bg-orange-500 font-semibold text-white hover:text-orange-500">
+            Test
+          </LinkButton>
           <div className="w-20"></div>
         </header>
 

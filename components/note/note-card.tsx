@@ -1,10 +1,10 @@
 "use client";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { deleteNote } from "@/lib/actions/delete";
 import { updateNote } from "@/lib/actions/update";
 import { NoteType } from "@/lib/types";
 import { getCharacterCount, getWordCount } from "@/lib/utils";
-import { CheckIcon, PencilLineIcon, SaveIcon, XIcon } from "lucide-react";
+import { CheckIcon, SaveIcon, XIcon } from "lucide-react";
 import { useState, useTransition } from "react";
 import ReactMarkdown from "react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
@@ -84,7 +84,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
   const wordCount = getWordCount(markdown);
 
   return (
-    <Card className={`z-5 relative mt-2 flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
+    <Card className={`z-5 relative flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
       <div className="absolute bottom-1 right-1">
         {!focused && isPending && <LoadingIcon size={16} />}
         {!focused && !isPending && status === "success" && (
@@ -94,8 +94,9 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
           <XIcon size={32} strokeWidth={4} className="animate-pulse text-destructive" />
         )}
       </div>
-      <div className="flex items-center justify-between p-1">
-        <p className="pl-2 text-sm italic text-muted-foreground">
+
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 py-2">
+        <p className="text-xs text-muted-foreground">
           {note.updatedAt
             ? note.updatedAt.toLocaleDateString("tr-TR", {
                 day: "2-digit",
@@ -112,14 +113,14 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
           <ActionButtons onCancel={() => setFocused(false)} onSave={handleSave} />
         ) : (
           <div className="flex items-center gap-1">
-            <Button size="sm_icon" variant="ghost" onClick={() => setFocused(true)}>
-              <PencilLineIcon size={14} />
+            <Button className="h-7 px-3 text-xs" variant="ghost" onClick={() => setFocused(true)}>
+              Düzenle
             </Button>
             <DeleteNoteButton onClick={handleDeleteNote} />
           </div>
         )}
-      </div>
-      <CardContent className="px-6 pb-3 pt-0">
+      </CardHeader>
+      <CardContent className="px-6 py-0">
         {focused ? (
           <TextareaAutosize
             className="h-full w-full resize-none appearance-none overflow-hidden border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
@@ -145,7 +146,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
         )}
       </CardContent>
       {focused && (
-        <CardFooter className="justify-between">
+        <CardFooter className="justify-between space-y-0 py-2">
           <pre className="text-xs text-muted-foreground">
             <span className="mr-1 rounded-sm bg-background px-1 py-0.5">{wordCount}</span>
             kelime /<span className="ml-2 mr-1 rounded-sm bg-background px-1 py-0.5">{characterCount}</span>
@@ -161,10 +162,10 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
 const ActionButtons = ({ onCancel, onSave }: { onCancel: () => void; onSave: () => void }) => {
   return (
     <div className="flex items-center gap-3">
-      <Button variant="ghost" className="h-7 border border-primary" size="sm" onClick={onCancel}>
+      <Button variant="ghost" className="h-7 px-3 text-xs hover:bg-background/70" onClick={onCancel}>
         Vazgeç
       </Button>
-      <Button variant="default" size="sm_icon" onClick={onSave}>
+      <Button variant="default" size="sm_icon" className="border-none" onClick={onSave}>
         <SaveIcon size={16} />
       </Button>
     </div>
