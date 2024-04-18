@@ -1,6 +1,6 @@
 "use server";
 import db from "@/lib/db";
-import { BookFormSchema, QuicknoteSchema } from "@/lib/schemas";
+import { BookFormSchema, BugSchema, QuicknoteSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
 import { getSession } from "../auth";
@@ -16,7 +16,11 @@ export async function createBook(values: z.infer<typeof BookFormSchema>) {
         userId: user?.id!,
         groups: {
           create: {
-            title: new Date().toLocaleDateString(),
+            title: new Date().toLocaleDateString("tr-TR", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            }),
             notes: {
               create: {
                 content: "",
@@ -101,5 +105,23 @@ export async function createQuicknote(values: z.infer<typeof QuicknoteSchema>) {
     console.error("Failed to create quicknote:", error);
   } finally {
     revalidatePath("/dash", "page");
+  }
+}
+
+export async function registerBug(values: z.infer<typeof BugSchema>, userId: string) {
+  try {
+    await db.bug.create({
+      data: {
+        subject: values.subject,
+        description: values.description,
+        userId,
+      },
+    });
+    return { success: "Hata başarıyla bildirildi." };
+  } catch (error) {
+    console.error("Failed to create bug:", error);
+    return { error: "Hata bildirilirken bir hata oluştu..." };
+  } finally {
+    revalidatePath("/admin", "page");
   }
 }

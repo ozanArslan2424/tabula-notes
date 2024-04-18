@@ -25,6 +25,8 @@ export type GroupType = {
 export type NoteType = {
   id: number;
   content: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type QuickNoteType = {
@@ -44,4 +46,13 @@ export type UserTableType = {
     books: number;
     quicknotes: number;
   };
+};
+
+export type BugReportType = {
+  id: number;
+  subject: string;
+  description: string;
+  userId: string;
+  createdAt: Date;
+  resolved: boolean;
 };

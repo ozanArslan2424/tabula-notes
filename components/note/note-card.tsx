@@ -4,14 +4,15 @@ import { deleteNote } from "@/lib/actions/delete";
 import { updateNote } from "@/lib/actions/update";
 import { NoteType } from "@/lib/types";
 import { getCharacterCount, getWordCount } from "@/lib/utils";
-import { CheckIcon, XIcon } from "lucide-react";
+import { CheckIcon, PencilLineIcon, SaveIcon, XIcon } from "lucide-react";
 import { useState, useTransition } from "react";
 import ReactMarkdown from "react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
+import { useDoubleTap } from "use-double-tap";
 import { LoadingIcon } from "../custom-loading";
-import { SaveButton } from "../saving";
+import { Button } from "../ui/button";
 import { DeleteNoteButton } from "./delete-button";
 
 type Props = {
@@ -25,6 +26,11 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
   const [markdown, setMarkdown] = useState(note.content || "");
   const [isPending, startTransition] = useTransition();
   const [status, setStatus] = useState<"idle" | "success" | "fail">("idle");
+
+  const doubleTap = useDoubleTap((event) => {
+    event.preventDefault();
+    setFocused(true);
+  });
 
   function moveCaretAtEnd(e: React.FocusEvent<HTMLTextAreaElement>) {
     var temp_value = e.target.value;
@@ -88,25 +94,48 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
           <XIcon size={32} strokeWidth={4} className="animate-pulse text-destructive" />
         )}
       </div>
-      <div className="absolute right-1 top-1">{!focused && <DeleteNoteButton onClick={handleDeleteNote} />}</div>
-      <CardContent className="px-6 py-3">
+      <div className="flex items-center justify-between p-1">
+        <p className="pl-2 text-sm italic text-muted-foreground">
+          {note.updatedAt
+            ? note.updatedAt.toLocaleDateString("tr-TR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })
+            : note.createdAt.toLocaleDateString("tr-TR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}
+        </p>
+        {focused ? (
+          <ActionButtons onCancel={() => setFocused(false)} onSave={handleSave} />
+        ) : (
+          <div className="flex items-center gap-1">
+            <Button size="sm_icon" variant="ghost" onClick={() => setFocused(true)}>
+              <PencilLineIcon size={14} />
+            </Button>
+            <DeleteNoteButton onClick={handleDeleteNote} />
+          </div>
+        )}
+      </div>
+      <CardContent className="px-6 pb-3 pt-0">
         {focused ? (
           <TextareaAutosize
-            className="h-full w-full resize-none appearance-none border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
+            className="h-full w-full resize-none appearance-none overflow-hidden border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
             autoFocus={focused}
             value={markdown}
             onKeyDown={handleKeyDown}
             onChange={handleChange}
             onFocus={moveCaretAtEnd}
-            // onBlur={() => setFocused(false)}
           />
         ) : (
-          <div onClick={() => setFocused(true)}>
+          <div {...doubleTap}>
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               className={
                 markdown
-                  ? "prose prose-sm w-full max-w-full dark:prose-invert prose-headings:m-0 prose-p:my-0 prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-ul:my-0 prose-table:m-0 prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"
+                  ? "prose prose-sm w-full max-w-full dark:prose-invert prose-p:mb-0 prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-ul:my-0 prose-table:m-0 prose-table:text-xs prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"
                   : "w-full italic text-muted-foreground/70"
               }
             >
@@ -122,9 +151,22 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
             kelime /<span className="ml-2 mr-1 rounded-sm bg-background px-1 py-0.5">{characterCount}</span>
             karakter
           </pre>
-          <SaveButton onClick={handleSave} />
+          <ActionButtons onCancel={() => setFocused(false)} onSave={handleSave} />
         </CardFooter>
       )}
     </Card>
+  );
+};
+
+const ActionButtons = ({ onCancel, onSave }: { onCancel: () => void; onSave: () => void }) => {
+  return (
+    <div className="flex items-center gap-3">
+      <Button variant="ghost" className="h-7 border border-primary" size="sm" onClick={onCancel}>
+        Vazgeç
+      </Button>
+      <Button variant="default" size="sm_icon" onClick={onSave}>
+        <SaveIcon size={16} />
+      </Button>
+    </div>
   );
 };

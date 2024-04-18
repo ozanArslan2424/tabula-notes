@@ -10,9 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Logout } from "@/lib/actions/auth.actions";
-import { LogOutIcon, Settings2Icon } from "lucide-react";
+import { HomeIcon, LogOutIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { BugReport } from "../bug-report";
 import { LoadingIcon } from "../custom-loading";
 import { LinkButton } from "../link-button";
 
@@ -64,6 +65,11 @@ export const UserButton = ({
           </DropdownMenuLabel>
 
           <DropdownMenuSeparator />
+          <Link href="/dash">
+            <DropdownMenuItem>
+              <HomeIcon size={14} className="mr-2" /> Kütüphane
+            </DropdownMenuItem>
+          </Link>
           <Link href="/settings">
             <DropdownMenuItem>
               <Settings2Icon size={14} className="mr-2" /> Ayarlar
@@ -72,6 +78,10 @@ export const UserButton = ({
           <DropdownMenuItem className="group" onClick={handleClick}>
             <LogOutIcon size={14} className="mr-2 group-hover:text-destructive" /> Çıkış Yap
           </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
+          <BugReport userId={user.id} />
         </DropdownMenuContent>
       </DropdownMenu>
     );

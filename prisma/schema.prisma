@@ -47,6 +47,7 @@ model User {
   registerTokens RegisterToken[]
   books          Book[]
   quicknotes     QuickNote[]
+  bugs           Bug[]
 }
 
 model RegisterToken {
@@ -105,4 +106,14 @@ model Note {
   updatedAt DateTime @updatedAt
   Group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
   groupId   Int
+}
+
+model Bug {
+  id          Int      @id @default(autoincrement())
+  subject     String
+  description String
+  createdAt   DateTime @default(now())
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  resolved    Boolean  @default(false)
 }

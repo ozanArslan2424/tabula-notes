@@ -69,6 +69,8 @@ export async function getBookContents(bookId: string) {
           title: true,
           notes: {
             select: {
+              createdAt: true,
+              updatedAt: true,
               id: true,
               content: true,
             },
@@ -87,4 +89,9 @@ export async function getQuickNotes(userId: string) {
     },
   });
   return quicknotes;
+}
+
+export async function getBugs() {
+  const bugs = await db.bug.findMany();
+  return bugs;
 }

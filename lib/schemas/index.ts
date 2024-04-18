@@ -29,3 +29,8 @@ export const VerifySchema = z.object({
 export const QuicknoteSchema = z.object({
   content: z.string().min(1, { message: "Not içeriği boş olamaz." }),
 });
+
+export const BugSchema = z.object({
+  subject: z.string().min(2, { message: "Konu en az 2 karakterden oluşmalıdır." }),
+  description: z.string().min(10, { message: "Açıklama en az 10 karakterden oluşmalıdır." }),
+});

@@ -15,7 +15,15 @@ type BookCardProps = {
 };
 
 export const BookCard = ({ book }: BookCardProps) => {
-  const createdAtString = useMemo(() => book.createdAt.toLocaleDateString(), [book.createdAt]);
+  const createdAtString = useMemo(
+    () =>
+      book.createdAt.toLocaleDateString("tr-TR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }),
+    [book.createdAt],
+  );
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = () => {

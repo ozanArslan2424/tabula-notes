@@ -70,3 +70,39 @@ export const sendRequested = async (email: string) => {
     }
   });
 };
+
+export const sendBugNotification = async (subject: string, description: string, userId: string) => {
+  var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_FROM,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+
+  var mailOptions = {
+    from: process.env.EMAIL_FROM,
+    to: process.env.EMAIL_USER,
+    subject: `Tabula Notlar Hata Bildirimi: ${subject}`,
+    text: `Hata: ${description}`,
+    html: `
+    <div style="margin-top: 24px">
+        <h1>Merhaba!</h1>
+        <p>Aşağıdaki hata Tabula Notlar'a bildirilmiştir.</p>
+        <p style="margin-top: 24px;">Konu:</p>
+        <p style="border: 1px solid red; border-radius: 2px; padding-block: 8px; padding-inline: 4px; font-size: large">${subject}</p>
+        <p >Açıklama:</p>
+        <p style="border: 1px solid red; border-radius: 2px; padding-block: 8px; padding-inline: 4px; font-size: large">${description}</p>
+        <p style="margin-top: 24px;">Bildiren Kullanıcı:</p>
+        <p style=" font-size: large">${userId}</p>
+    </div>
+  `,
+  };
+  transporter.sendMail(mailOptions, function (error: Error, info: any) {
+    if (error) {
+      throw new Error(error.message);
+    } else {
+      return true;
+    }
+  });
+};

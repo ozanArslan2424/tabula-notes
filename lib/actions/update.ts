@@ -28,6 +28,7 @@ export const updateNote = async (noteId: number, editorContent: string) => {
       },
       data: {
         content: editorContent,
+        updatedAt: new Date(),
       },
     });
     return { success: "note updated" };
@@ -72,5 +73,24 @@ export async function updateBookSettings(bookId: string, values: z.infer<typeof 
     return { error: "Kitap ayarları güncellenemedi." };
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
+  }
+}
+
+export async function resolveBug(bugId: number) {
+  try {
+    await db.bug.update({
+      where: {
+        id: bugId,
+      },
+      data: {
+        resolved: true,
+      },
+    });
+    return { success: "Bug resolved" };
+  } catch (error) {
+    console.error("Failed to resolve bug:", error);
+    return { error: "Bug could not be resolved." };
+  } finally {
+    revalidatePath("/admin", "page");
   }
 }

@@ -1,15 +1,18 @@
 import { DeleteUser } from "@/components/admin/delete-user";
 import { InviteForm } from "@/components/admin/invite-form";
 import { ChangeAdmin } from "@/components/admin/make-admin";
-import { UserButton } from "@/components/auth/user-button";
+import { BugReport } from "@/components/bug-report";
 import { LinkButton } from "@/components/link-button";
-import { ThemeToggle } from "@/components/switch-theme";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getAllUserInfo } from "@/lib/actions/admin.actions";
+import { deleteBug } from "@/lib/actions/delete";
+import { getBugs } from "@/lib/actions/read";
+import { resolveBug } from "@/lib/actions/update";
 import { getSession } from "@/lib/auth";
-import { UserTableType } from "@/lib/types";
+import { BugReportType, UserTableType } from "@/lib/types";
 import { Command, TriangleAlert, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,9 +39,10 @@ export default async function AdminPage() {
 
   if (user && user.role === "ADMIN") {
     const users: UserTableType[] = await getAllUserInfo();
+    const bugs: BugReportType[] = await getBugs();
     return (
       <Tabs defaultValue="users" className="min-h-screen">
-        <header className="flex h-14 w-full items-center justify-between border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex w-full items-center justify-between border-b bg-muted/40 px-4 py-8 lg:h-[60px] lg:px-6">
           <Link href="/" className="hidden items-center gap-2 font-semibold md:flex">
             <h1>Tabula Notlar</h1>
           </Link>
@@ -55,15 +59,71 @@ export default async function AdminPage() {
               </TabsTrigger>
             </TabsList>
           </nav>
-
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <UserButton user={user} />
-          </div>
+          <div className="w-20"></div>
         </header>
 
         <TabsContent value="users">
           <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+            <div className="flex items-center justify-between">
+              <h1 className="text-lg font-semibold md:text-2xl">Hatalar</h1>
+              <BugReport userId={user.id} />
+            </div>
+            <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed p-8 shadow-sm">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Subject</TableHead>
+                    <TableHead>Description</TableHead>
+                    <TableHead>Reported By</TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Delete</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {bugs.map((bug) => (
+                    <TableRow key={bug.id}>
+                      <TableCell>{bug.subject}</TableCell>
+                      <TableCell>{bug.description}</TableCell>
+                      <TableCell>{bug.userId}</TableCell>
+                      <TableCell>
+                        {bug.createdAt.toLocaleDateString("tr-TR", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        })}
+                      </TableCell>
+                      <TableCell>
+                        {bug.resolved ? (
+                          <span className="px-2 py-1.5 font-semibold text-success">Resolved</span>
+                        ) : (
+                          <form
+                            action={async () => {
+                              "use server";
+                              await resolveBug(bug.id);
+                            }}
+                          >
+                            <Button type="submit">Resolve</Button>
+                          </form>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <form
+                          action={async () => {
+                            "use server";
+                            await deleteBug(bug.id);
+                          }}
+                        >
+                          <Button variant="custom_destructive" type="submit">
+                            Delete
+                          </Button>
+                        </form>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
             <div className="flex items-center">
               <h1 className="text-lg font-semibold md:text-2xl">Kullanıcılar</h1>
             </div>

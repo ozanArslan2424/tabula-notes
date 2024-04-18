@@ -107,3 +107,17 @@ export const deleteQuickNote = async (quickNoteId: number) => {
     revalidatePath("/dash", "page");
   }
 };
+
+export const deleteBug = async (bugId: number) => {
+  try {
+    await db.bug.delete({
+      where: {
+        id: bugId,
+      },
+    });
+  } catch (error) {
+    console.error("fail to del bug", error);
+  } finally {
+    revalidatePath("/admin", "page");
+  }
+};
