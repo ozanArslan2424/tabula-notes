@@ -3,7 +3,6 @@ import { AccessDenied } from "@/components/admin/errors";
 import { InviteForm } from "@/components/admin/invite-form";
 import { ChangeAdmin } from "@/components/admin/make-admin";
 import { BugReport } from "@/components/bug-report";
-import { LinkButton } from "@/components/link-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -14,9 +13,10 @@ import { getBugs } from "@/lib/actions/read";
 import { resolveBug } from "@/lib/actions/update";
 import { getSession } from "@/lib/auth";
 import { BugReportType, UserTableType } from "@/lib/types";
-import { Command, User } from "lucide-react";
+import { Command, TestTube2Icon, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import AdminTestPage from "../../components/test-page";
 
 export default async function AdminPage() {
   const { user } = await getSession();
@@ -29,8 +29,8 @@ export default async function AdminPage() {
     const bugs: BugReportType[] = await getBugs();
     return (
       <Tabs defaultValue="users" className="min-h-screen">
-        <header className="flex w-full items-center justify-between border-b bg-muted/40 px-4 py-8 lg:h-[60px] lg:px-6">
-          <Link href="/" className="hidden items-center gap-2 font-semibold md:flex">
+        <header className="flex w-full flex-col gap-4 border-b bg-muted/40 px-4 py-4 sm:flex-row sm:items-center sm:py-8 lg:h-[60px] lg:px-6">
+          <Link href="/" className="font-semibold">
             <h1>Tabula Notlar</h1>
           </Link>
 
@@ -44,12 +44,12 @@ export default async function AdminPage() {
                 <Command className="mr-2 h-4 w-4" />
                 Komuta Merkezi
               </TabsTrigger>
+              <TabsTrigger value="test">
+                <TestTube2Icon className="mr-2 h-4 w-4" />
+                Test
+              </TabsTrigger>
             </TabsList>
           </nav>
-          <LinkButton href="/admin/test" className="h-7 bg-orange-500 font-semibold text-white hover:text-orange-500">
-            Test
-          </LinkButton>
-          <div className="w-20"></div>
         </header>
 
         <TabsContent value="users">
@@ -195,6 +195,9 @@ export default async function AdminPage() {
               </Card>
             </div>
           </main>
+        </TabsContent>
+        <TabsContent value="test">
+          <AdminTestPage />
         </TabsContent>
       </Tabs>
     );

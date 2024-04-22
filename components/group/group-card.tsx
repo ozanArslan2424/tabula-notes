@@ -11,11 +11,7 @@ import { Input } from "../ui/input";
 import { DeleteGroupButton } from "./delete-button";
 import { DownloadGroupButton } from "./download-button";
 
-type NoteGroupCardProps = {
-  group: GroupType;
-  bookId: string;
-};
-export const NoteGroupTitleCard = ({ group, bookId }: NoteGroupCardProps) => {
+export const NoteGroupTitleCard = ({ group, bookId }: { group: GroupType; bookId: string }) => {
   const [isPending, startTransition] = useTransition();
   const [titleState, setTitleState] = useState(group.title);
   const [error, setError] = useState(false);

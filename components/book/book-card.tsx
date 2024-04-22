@@ -10,11 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dr
 import { BookSettings } from "./book-settings-form";
 import { DeleteBookButton } from "./delete-button";
 
-type BookCardProps = {
-  book: Book;
-};
-
-export const BookCard = ({ book }: BookCardProps) => {
+export const BookCard = ({ book }: { book: Book }) => {
   const createdAtString = useMemo(
     () =>
       book.createdAt.toLocaleDateString("tr-TR", {

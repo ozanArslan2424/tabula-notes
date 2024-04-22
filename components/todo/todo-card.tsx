@@ -8,12 +8,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { TaskItem } from "./task-item";
 
-type Props = {
-  tasks: TaskType[];
-  bookId: string;
-};
-
-export const TodoCard = ({ tasks, bookId }: Props) => {
+export const TodoCard = ({ tasks, bookId }: { tasks: TaskType[]; bookId: string }) => {
   const [input, setInput] = useState<string>("");
   const [isPending, startTransition] = useTransition();
 

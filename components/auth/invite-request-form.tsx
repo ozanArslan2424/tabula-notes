@@ -5,9 +5,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-type Props = {};
-
-export const InviteRequestForm = (props: Props) => {
+export const InviteRequestForm = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const [reqMail, setReqMail] = useState<string>("");
 

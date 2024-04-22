@@ -10,13 +10,13 @@ import { getSession } from "@/lib/auth";
 import { toSnakeCase } from "@/lib/utils";
 import { redirect } from "next/navigation";
 
-type Props = {
+export default async function BookPage({
+  params: { bookId },
+}: {
   params: {
     bookId: string;
   };
-};
-
-export default async function BookPage({ params: { bookId } }: Props) {
+}) {
   const { user } = await getSession();
   if (!user) redirect("/login");
 

@@ -1,9 +1,7 @@
 import { TriangleAlert } from "lucide-react";
 import { LinkButton } from "../link-button";
 
-type Props = {};
-
-export const AccessDenied = (props: Props) => {
+export const AccessDenied = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-8">
       <div className="flex flex-col items-center rounded-md bg-destructive p-8 text-destructive-foreground">

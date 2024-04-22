@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Logout } from "@/lib/actions/auth.actions";
+import { UserType } from "@/lib/types";
 import { HomeIcon, LogOutIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -17,17 +18,7 @@ import { BugReport } from "../bug-report";
 import { LoadingIcon } from "../custom-loading";
 import { LinkButton } from "../link-button";
 
-export const UserButton = ({
-  user,
-}: {
-  user: {
-    id: string;
-    email: string;
-    username: string;
-    image: string;
-    role: string;
-  } | null;
-}) => {
+export const UserButton = ({ user }: { user: UserType }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -81,7 +72,7 @@ export const UserButton = ({
 
           <DropdownMenuSeparator />
 
-          <BugReport userId={user.id} />
+          <BugReport menuItem userId={user.id} />
         </DropdownMenuContent>
       </DropdownMenu>
     );

@@ -1,3 +1,11 @@
+export type UserType = {
+  id: string;
+  email: string;
+  username: string;
+  image: string;
+  role: string;
+} | null;
+
 export type BookType = {
   id: string;
   title: string;
