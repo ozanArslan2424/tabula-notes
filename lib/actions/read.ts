@@ -71,12 +71,13 @@ export async function getBookContents(bookId: string) {
         select: {
           id: true,
           title: true,
+          createdAt: true,
           notes: {
             select: {
-              createdAt: true,
-              updatedAt: true,
               id: true,
               content: true,
+              createdAt: true,
+              updatedAt: true,
             },
           },
         },

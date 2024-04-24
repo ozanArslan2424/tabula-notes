@@ -7,14 +7,15 @@ export type UserType = {
 } | null;
 
 export type BookType = {
+  userId: string;
   id: string;
   title: string;
   description: string | null;
   hasTasks?: boolean;
   createdAt: Date;
   updatedAt: Date;
-  groups?: GroupType[];
   tasks?: TaskType[];
+  groups?: GroupType[];
 };
 
 export type TaskType = {
