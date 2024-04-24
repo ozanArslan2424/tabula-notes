@@ -10,7 +10,11 @@ export const DeleteUser = ({ users }: { users: UserTableType[] }) => {
   const [success, setSuccess] = useState(false);
 
   const handleDeleteUser = () => {
-    deleteUser(userId!);
+    deleteUser(userId!).then((data) => {
+      if (data?.success) {
+        setSuccess(true);
+      }
+    });
   };
 
   return (

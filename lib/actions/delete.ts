@@ -2,7 +2,7 @@
 import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
-export const deleteUser = async (userId: string) => {
+export async function deleteUser(userId: string) {
   try {
     await db.user.delete({
       where: {
@@ -19,12 +19,13 @@ export const deleteUser = async (userId: string) => {
         userId: userId,
       },
     });
+    return { success: "Kullanıcı başarıyla silindi" };
   } catch (error) {
     console.error("fail to del user", error);
   }
-};
+}
 
-export const deleteBook = async (bookId: string) => {
+export async function deleteBook(bookId: string) {
   try {
     await db.book.delete({
       where: {
@@ -39,9 +40,9 @@ export const deleteBook = async (bookId: string) => {
   } finally {
     revalidatePath("/dash", "page");
   }
-};
+}
 
-export const deleteGroup = async ({ groupId, bookId }: { groupId: number; bookId: string }) => {
+export async function deleteGroup(groupId: number, bookId: string) {
   try {
     await db.group.delete({
       where: {
@@ -57,9 +58,9 @@ export const deleteGroup = async ({ groupId, bookId }: { groupId: number; bookId
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
   }
-};
+}
 
-export const deleteNote = async ({ noteId, groupId, bookId }: { noteId: number; groupId: number; bookId: string }) => {
+export async function deleteNote(noteId: number, groupId: number, bookId: string) {
   try {
     await db.note.delete({
       where: {
@@ -75,9 +76,9 @@ export const deleteNote = async ({ noteId, groupId, bookId }: { noteId: number; 
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
   }
-};
+}
 
-export const deleteTask = async ({ taskId, bookId }: { taskId: number; bookId: string }) => {
+export async function deleteTask(taskId: number, bookId: string) {
   try {
     await db.task.delete({
       where: {
@@ -92,9 +93,9 @@ export const deleteTask = async ({ taskId, bookId }: { taskId: number; bookId: s
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
   }
-};
+}
 
-export const deleteQuickNote = async (quickNoteId: number) => {
+export async function deleteQuickNote(quickNoteId: number) {
   try {
     await db.quickNote.delete({
       where: {
@@ -106,18 +107,4 @@ export const deleteQuickNote = async (quickNoteId: number) => {
   } finally {
     revalidatePath("/dash", "page");
   }
-};
-
-export const deleteBug = async (bugId: number) => {
-  try {
-    await db.bug.delete({
-      where: {
-        id: bugId,
-      },
-    });
-  } catch (error) {
-    console.error("fail to del bug", error);
-  } finally {
-    revalidatePath("/admin", "page");
-  }
-};
+}

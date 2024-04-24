@@ -27,6 +27,7 @@ export type TaskType = {
 export type GroupType = {
   id: number;
   title: string;
+  createdAt: Date;
   notes: NoteType[];
 };
 

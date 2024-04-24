@@ -1,7 +1,7 @@
 "use server";
 import db from "@/lib/db";
 
-export const getUserByEmail = async (email: string) => {
+export async function getUserByEmail(email: string) {
   try {
     const user = await db.user.findUnique({
       where: {
@@ -13,9 +13,9 @@ export const getUserByEmail = async (email: string) => {
   } catch {
     return null;
   }
-};
+}
 
-export const getUserById = async (id: string) => {
+export async function getUserById(id: string) {
   try {
     const user = await db.user.findUnique({
       where: {
@@ -27,7 +27,7 @@ export const getUserById = async (id: string) => {
   } catch {
     return null;
   }
-};
+}
 
 export async function getAllBooks(userId: string) {
   const books = await db.book.findMany({
@@ -35,7 +35,11 @@ export async function getAllBooks(userId: string) {
       userId: userId,
     },
     include: {
-      groups: true,
+      groups: {
+        include: {
+          notes: true,
+        },
+      },
       tasks: true,
     },
   });
@@ -89,9 +93,4 @@ export async function getQuickNotes(userId: string) {
     },
   });
   return quicknotes;
-}
-
-export async function getBugs() {
-  const bugs = await db.bug.findMany();
-  return bugs;
 }

@@ -38,8 +38,6 @@ model User {
   email          String?         @unique
   password       String?
   image          String?
-  googleId       String?         @unique
-  githubId       String?         @unique
   emailVerified  Boolean         @default(false)
   role           UserRole        @default(USER)
   accounts       Account[]

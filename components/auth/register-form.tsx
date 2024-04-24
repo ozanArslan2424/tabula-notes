@@ -1,10 +1,10 @@
 "use client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Register } from "@/lib/actions/auth.actions";
-import { sendToken } from "@/lib/actions/mail.actions";
+import { register } from "@/lib/actions/auth.actions";
 import { RegisterSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -12,14 +12,15 @@ import * as z from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-export const RegisterForm = () => {
+export const RegisterForm = ({ email }: { email: string }) => {
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState(false);
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
-      email: "",
+      email: email,
       username: "",
       password: "",
     },
@@ -27,30 +28,24 @@ export const RegisterForm = () => {
 
   const handleSubmit = (values: z.infer<typeof RegisterSchema>) => {
     startTransition(async () => {
-      await Register(values).then((data) => {
+      await register(values).then((data) => {
         if (data.error) {
           toast.error(data.error);
         }
-        if (data.token) {
+        if (data.success) {
           setSuccess(true);
-          sendToken(data.token.token, data.token.email);
-          toast.success("Kayıt başarılı. E-posta adresinizi kontrol edin.");
+          router.push("/dash");
         }
       });
     });
   };
 
   return (
-    <>
-      {success && (
-        <div className="mb-4 w-full rounded-md bg-emerald-500 p-4 text-center">
-          <p className="text-white">Kayıt başarılı. E-posta adresinizi kontrol edin.</p>
-          <p className="text-sm text-white">Bu sayfada daha fazla değişiklik yapamazsınız</p>
-        </div>
-      )}
-      <h1 className="mb-4 text-center text-3xl font-bold">Hesap Oluştur</h1>
+    <div className="max-w-96 text-left">
+      <h1 className="text-3xl font-bold">Hesap Oluştur</h1>
+      <p className="mb-4 text-muted-foreground">Hesabınızı oluşturmak için kullanıcı adı ve şifre belirleyin.</p>
       <Form {...form}>
-        <form className="min-w-96 space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
+        <form className="max-w-96 space-y-4 text-left" onSubmit={form.handleSubmit(handleSubmit)}>
           <FormField
             control={form.control}
             name="email"
@@ -58,7 +53,7 @@ export const RegisterForm = () => {
               <FormItem>
                 <FormLabel>E-posta Adresi</FormLabel>
                 <FormControl>
-                  <Input disabled={success} {...field} id="email" type="email" required placeholder="mail@mail.com" />
+                  <Input disabled {...field} id="email" type="email" required placeholder="mail@mail.com" />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -101,6 +96,6 @@ export const RegisterForm = () => {
           giriş yapın.
         </Link>
       </p>
-    </>
+    </div>
   );
 };

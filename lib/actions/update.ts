@@ -4,7 +4,7 @@ import { BookFormSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
 
-export const updateGroupTitle = async (groupId: number, title: string) => {
+export async function updateGroupTitle(groupId: number, title: string) {
   try {
     await db.group.update({
       where: {
@@ -18,9 +18,9 @@ export const updateGroupTitle = async (groupId: number, title: string) => {
   } catch (error) {
     console.error("Failed to change group title:", error);
   }
-};
+}
 
-export const updateNote = async (noteId: number, editorContent: string) => {
+export async function updateNote(noteId: number, editorContent: string) {
   try {
     await db.note.update({
       where: {
@@ -36,9 +36,9 @@ export const updateNote = async (noteId: number, editorContent: string) => {
     console.error("Failed to update:", error);
     return { error: "Bir şeyler yanlış gitti." };
   }
-};
+}
 
-export async function updateTask({ taskId, completed }: { taskId: number; completed: boolean }) {
+export async function updateTask(taskId: number, completed: boolean) {
   try {
     await db.task.update({
       where: {
@@ -73,24 +73,5 @@ export async function updateBookSettings(bookId: string, values: z.infer<typeof 
     return { error: "Kitap ayarları güncellenemedi." };
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
-  }
-}
-
-export async function resolveBug(bugId: number) {
-  try {
-    await db.bug.update({
-      where: {
-        id: bugId,
-      },
-      data: {
-        resolved: true,
-      },
-    });
-    return { success: "Bug resolved" };
-  } catch (error) {
-    console.error("Failed to resolve bug:", error);
-    return { error: "Bug could not be resolved." };
-  } finally {
-    revalidatePath("/admin", "page");
   }
 }

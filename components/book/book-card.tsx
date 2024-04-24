@@ -1,7 +1,7 @@
 "use client";
 import { deleteBook } from "@/lib/actions/delete";
-import { Book } from "@prisma/client";
-import { MoreVerticalIcon } from "lucide-react";
+import { BookType } from "@/lib/types";
+import { CheckSquareIcon, ComponentIcon, MoreVerticalIcon } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useTransition } from "react";
 import { LoadingIcon } from "../custom-loading";
@@ -10,7 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dr
 import { BookSettings } from "./book-settings-form";
 import { DeleteBookButton } from "./delete-button";
 
-export const BookCard = ({ book }: { book: Book }) => {
+export const BookCard = ({ book }: { book: BookType }) => {
   const createdAtString = useMemo(
     () =>
       book.createdAt.toLocaleDateString("tr-TR", {
@@ -35,7 +35,7 @@ export const BookCard = ({ book }: { book: Book }) => {
           <LoadingIcon />
         </div>
       ) : (
-        <div className="relative min-h-[140px] w-max">
+        <div className="relative h-full min-h-[140px] w-max">
           <div className="absolute right-4 top-4 z-10 flex items-center gap-2 ">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -56,6 +56,22 @@ export const BookCard = ({ book }: { book: Book }) => {
                 {book.title}
               </h2>
               <p className="text-muted-foreground">{book.description}</p>
+              <div className="flex items-center gap-2">
+                <div
+                  className={`mt-2 flex w-max items-center justify-center gap-2 rounded-sm ${book.hasTasks ? "bg-emerald-300" : "bg-muted"} px-2 py-1 text-black`}
+                >
+                  <CheckSquareIcon size={12} />
+                  <p className="text-xs">{book.tasks?.length}</p>
+                </div>
+                <div className="mt-2 flex w-max items-center justify-center gap-2 rounded-sm bg-primary px-2 py-1 text-primary-foreground">
+                  <ComponentIcon size={12} />
+                  <p className="text-xs">{book.groups?.length}</p>
+                </div>
+                {/* <div className="mt-2 flex w-max items-center justify-center gap-2 rounded-sm bg-primary px-2 py-1 text-primary-foreground">
+                  <ScrollIcon size={12} />
+                  <p className="text-xs">{book.groups?.length}</p>
+                </div> */}
+              </div>
             </div>
           </Link>
         </div>

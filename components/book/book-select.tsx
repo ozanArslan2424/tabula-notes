@@ -27,7 +27,7 @@ export const BookSelector = async ({ bookTitle, currentBook }: { bookTitle: stri
           <ChevronDownIcon size={24} className="group-data-[state=open]:rotate-180" />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent alignOffset={8} align="center">
         <Link href="/dash">
           <DropdownMenuItem className="gap-2 font-semibold">
             <HomeIcon size={18} className="shrink-0" />

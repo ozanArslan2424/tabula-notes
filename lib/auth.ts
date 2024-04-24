@@ -1,5 +1,4 @@
 import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
-import { GitHub, Google } from "arctic";
 import { Lucia } from "lucia";
 import { cookies } from "next/headers";
 import { cache } from "react";
@@ -24,7 +23,6 @@ export const lucia = new Lucia(adapter, {
       username: user.username,
       image: user.image,
       role: user.role,
-      githubId: user.githubId,
     };
   },
 });
@@ -65,22 +63,6 @@ declare module "lucia" {
       username: string;
       image: string;
       role: "USER" | "ADMIN";
-      githubId: string | null;
     };
   }
 }
-
-// OAUTH PROVIDERS
-
-const googleClientId = process.env.GOOGLE_CLIENT_ID;
-const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
-const googleRedirectUri = process.env.NEXT_PUBLIC_URL + "/api/oauth/google";
-
-export const google = new Google(googleClientId!, googleClientSecret!, googleRedirectUri);
-
-const githubClientId = process.env.GITHUB_CLIENT_ID;
-const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
-
-export const github = new GitHub(githubClientId!, githubClientSecret!, {
-  redirectURI: process.env.NEXT_PUBLIC_URL + "/api/oauth/github",
-});

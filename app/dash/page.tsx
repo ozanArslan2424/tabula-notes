@@ -27,6 +27,7 @@ export default async function DashPage() {
               {quickNotes && quickNotes.map((note) => <QuickNoteCard key={note.id} note={note} />)}
             </div>
           </aside>
+
           <main className="md:mx-auto md:w-[1150px]">
             <div>
               <h1 className="mb-4 text-2xl font-semibold tracking-tight md:text-start">Kütüphane</h1>

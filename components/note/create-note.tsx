@@ -10,10 +10,7 @@ export const NewNoteButton = ({ bookId, groupId }: { bookId: string; groupId: nu
 
   function handleClick() {
     startTransition(() => {
-      createNewNote({
-        bookId,
-        groupId,
-      });
+      createNewNote(bookId, groupId);
     });
   }
 

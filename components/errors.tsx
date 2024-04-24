@@ -1,5 +1,5 @@
 import { TriangleAlert } from "lucide-react";
-import { LinkButton } from "../link-button";
+import { LinkButton } from "./link-button";
 
 export const AccessDenied = () => {
   return (
@@ -59,6 +59,32 @@ export const BookNotFound = () => {
           &#x2190; Kütüphaneye dön
         </LinkButton>
       </pre>
+    </div>
+  );
+};
+
+type AlertProps = {
+  children: React.ReactNode;
+};
+
+export const WaitingMessage = (props: AlertProps) => {
+  return (
+    <div className="mb-4 w-full rounded-md bg-orange-500 p-4 text-center">
+      <p className="text-white">{props.children}</p>
+    </div>
+  );
+};
+export const SuccessMessage = (props: AlertProps) => {
+  return (
+    <div className="mb-4 w-full rounded-md bg-emerald-500 p-4 text-center">
+      <p className="text-white">{props.children}</p>
+    </div>
+  );
+};
+export const ErrorMessage = (props: AlertProps) => {
+  return (
+    <div className="mb-4 w-full rounded-md bg-red-500 p-4 text-center">
+      <p className="text-white">{props.children}</p>
     </div>
   );
 };

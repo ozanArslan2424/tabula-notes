@@ -1,7 +1,7 @@
 "use client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { registerBug } from "@/lib/actions/create";
-import { sendBugNotification } from "@/lib/actions/mail.actions";
+import { sendEmail } from "@/lib/actions/mail.actions";
 import { BugSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BugIcon } from "lucide-react";
@@ -47,9 +47,10 @@ export const BugReport = ({ userId, menuItem = false }: Props) => {
         toast.error(data?.error);
       }
       if (data?.success) {
-        if (menuItem) {
-          sendBugNotification(values.subject, values.description, userId);
-        }
+        sendEmail({
+          type: "bug",
+          content: values.description,
+        });
         toast.success(data?.success);
       }
     });

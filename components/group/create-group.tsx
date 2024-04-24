@@ -26,7 +26,7 @@ export const NewGroupButton = ({ bookId }: { bookId: string }) => {
   const handleSubmit = (values: z.infer<typeof GroupFormSchema>) => {
     setOpen(false);
     startTransition(() => {
-      createNewGroup({ ...values, bookId }).then((data) => {
+      createNewGroup(values.title, bookId).then((data) => {
         if (data?.error) {
           toast.error(data?.error);
         }
@@ -44,7 +44,7 @@ export const NewGroupButton = ({ bookId }: { bookId: string }) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="flex h-12 items-center gap-2 border bg-accent p-2 shadow"
+            className="flex h-12 items-center gap-2 rounded-md border bg-accent px-4 py-2 shadow"
           >
             <FormField
               control={form.control}
@@ -78,7 +78,7 @@ export const NewGroupButton = ({ bookId }: { bookId: string }) => {
         <Button
           variant="secondary"
           onClick={() => setOpen(true)}
-          className="aspect-square h-12 rounded-none border shadow"
+          className="aspect-square h-12 rounded-md border shadow"
           disabled={isPending}
         >
           {isPending ? <LoadingIcon size={14} /> : <PlusCircleIcon className="shrink-0" size={16} />}

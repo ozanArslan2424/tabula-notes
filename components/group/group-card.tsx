@@ -19,7 +19,7 @@ export const NoteGroupTitleCard = ({ group, bookId }: { group: GroupType; bookId
 
   const handleDeleteGroup = () => {
     startTransition(() => {
-      deleteGroup({ groupId: group.id, bookId }).then((data) => {
+      deleteGroup(group.id, bookId).then((data) => {
         if (data?.error) {
           toast.error(data?.error);
         }

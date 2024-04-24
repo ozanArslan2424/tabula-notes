@@ -1,5 +1,5 @@
 "use client";
-import { sendRequested } from "@/lib/actions/mail.actions";
+import { sendEmail } from "@/lib/actions/mail.actions";
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -11,7 +11,12 @@ export const InviteRequestForm = () => {
 
   const handleRegisterRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await sendRequested(reqMail).then(() => setSuccess(true));
+    await sendEmail({
+      type: "request",
+      email: reqMail,
+    }).then(() => {
+      setSuccess(true);
+    });
   };
 
   return success ? (

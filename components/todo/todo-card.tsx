@@ -9,18 +9,15 @@ import { Input } from "../ui/input";
 import { TaskItem } from "./task-item";
 
 export const TodoCard = ({ tasks, bookId }: { tasks: TaskType[]; bookId: string }) => {
-  const [input, setInput] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [isPending, startTransition] = useTransition();
 
   const handleTodoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     startTransition(() => {
-      createNewTask({
-        bookId: bookId,
-        name: input,
-      });
+      createNewTask(bookId, name);
     });
-    setInput("");
+    setName("");
   };
 
   return (
@@ -28,8 +25,8 @@ export const TodoCard = ({ tasks, bookId }: { tasks: TaskType[]; bookId: string 
       <h2 className="text-md px-2 font-semibold">Yapılacaklar</h2>
       <form className="flex items-center gap-2" onSubmit={handleTodoSubmit}>
         <Input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           type="text"
           name="todo"
           id="todo"

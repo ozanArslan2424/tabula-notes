@@ -66,11 +66,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
   };
 
   const handleDeleteNote = () => {
-    deleteNote({
-      noteId: note.id,
-      groupId: groupId,
-      bookId: bookId!,
-    }).then((data) => {
+    deleteNote(note.id, groupId, bookId!).then((data) => {
       if (data.error) {
         toast.error(data.error);
       } else {
@@ -136,8 +132,8 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
               remarkPlugins={[remarkGfm]}
               className={
                 markdown
-                  ? "prose prose-sm w-full max-w-full dark:prose-invert prose-p:mb-0 prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-ul:my-0 prose-table:m-0 prose-table:text-xs prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"
-                  : "w-full italic text-muted-foreground/70"
+                  ? "prose-xs prose w-full max-w-full pb-4 dark:prose-invert sm:prose-sm prose-p:mb-0 prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-ul:my-0 prose-table:m-0 prose-table:text-xs prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"
+                  : "w-full pb-4 italic text-muted-foreground/70"
               }
             >
               {markdown ? convertedMarkdown : "Not içeriği bulunmuyor. Düzenlemek için tıkla."}

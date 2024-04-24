@@ -15,15 +15,15 @@ export const TaskItem = ({ task, bookId }: { task: TaskType; bookId: string }) =
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      updateTask({ taskId: task.id, completed: completed });
+      updateTask(task.id, completed);
     }, 10000);
 
     return () => clearTimeout(timer);
   }, [completed, task.id]);
 
-  const handleDeleteTask = (id: number) => {
+  const handleDeleteTask = (taskId: number) => {
     startTransition(() => {
-      deleteTask({ taskId: id, bookId: bookId });
+      deleteTask(taskId, bookId);
     });
   };
 

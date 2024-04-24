@@ -1,14 +1,13 @@
 "use server";
-import { generateCodeVerifier, generateState } from "arctic";
 import * as argon2 from "argon2";
-import { generateId } from "lucia";
 import { cookies } from "next/headers";
 import * as z from "zod";
-import { getSession, github, google, lucia } from "../auth";
+import { getSession, lucia } from "../auth";
 import db from "../db";
-import { LoginSchema, RegisterSchema } from "../schemas";
+import { LoginSchema, RegisterSchema, SettingsSchema } from "../schemas";
+import { getUserByEmail } from "./read";
 
-export const VerifyEmail = async (token: string) => {
+export const verifyInvite = async (token: string) => {
   const existingToken = await db.registerToken.findUnique({
     where: {
       token,
@@ -60,13 +59,13 @@ export const VerifyEmail = async (token: string) => {
 
     cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
 
-    return { success: "E-posta doğrulandı." };
+    return { success: "E-posta doğrulandı.", email: existingToken.email };
   } catch {
     return { error: "Bir hata oluştu." };
   }
 };
 
-export const Register = async (values: z.infer<typeof RegisterSchema>) => {
+export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -76,39 +75,25 @@ export const Register = async (values: z.infer<typeof RegisterSchema>) => {
   const { username, email, password } = validatedFields.data;
 
   const hashedPassword = await argon2.hash(password);
-  const userId = generateId(15);
-  const randomRegisterToken = generateId(15);
-  const expires = new Date(new Date().getTime() + 3600 * 1000); // 1 hour
-
-  const token = await db.registerToken.create({
-    data: {
-      email: email,
-      expires: expires,
-      token: randomRegisterToken,
-    },
-  });
 
   try {
-    await db.user.create({
-      data: {
-        id: userId,
+    await db.user.update({
+      where: {
         email: email,
+      },
+      data: {
         username: username,
         password: hashedPassword,
-        registerTokens: {
-          connect: {
-            id: token.id,
-          },
-        },
       },
     });
-    return { token: token };
+
+    return { success: "Başarıyla kayıt oldunuz." };
   } catch {
     return { error: "Bir şeyler yanlış gitti. Lütfen tekrar deneyin." };
   }
 };
 
-export const Logout = async () => {
+export const logout = async () => {
   try {
     const { session } = await getSession();
 
@@ -126,7 +111,7 @@ export const Logout = async () => {
   }
 };
 
-export const Login = async (values: z.infer<typeof LoginSchema>) => {
+export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -168,55 +153,57 @@ export const Login = async (values: z.infer<typeof LoginSchema>) => {
   };
 };
 
-export const createGoogleAuthURL = async () => {
-  try {
-    const state = generateState();
-    const codeVerifier = generateCodeVerifier();
+export const changeSettings = async (values: z.infer<typeof SettingsSchema>) => {
+  const validatedFields = SettingsSchema.safeParse(values);
 
-    cookies().set("codeVerifier", codeVerifier, {
-      httpOnly: true,
-    });
-
-    cookies().set("state", state, {
-      httpOnly: true,
-    });
-
-    const authorizationURL = await google.createAuthorizationURL(state, codeVerifier, {
-      scopes: ["email", "profile"],
-    });
-
-    return {
-      success: true,
-      data: authorizationURL.toString(),
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      error: error.message,
-    };
+  if (!validatedFields.success) {
+    return { error: "Bir şeyler yanlış gitti. Lütfen tekrar deneyin." };
   }
-};
 
-export const createGithubAuthURL = async () => {
+  const { username, email, password, newPassword } = validatedFields.data;
+
+  const currentUser = await getSession();
+
+  const existingUser = await getUserByEmail(currentUser.user?.email!);
+
+  if (!existingUser) {
+    return { error: "Kullanıcı bulunamadı." };
+  }
+
+  const isValidPassword = await argon2.verify(existingUser.password!, password);
+
+  if (!isValidPassword) {
+    return { error: "E-posta veya şifre değerlerinden biri yanlış." };
+  }
+
   try {
-    const state = generateState();
+    if (newPassword) {
+      const hashedPassword = await argon2.hash(newPassword);
 
-    cookies().set("state", state, {
-      httpOnly: true,
+      await db.user.update({
+        where: {
+          id: currentUser.user?.id,
+        },
+        data: {
+          username: username,
+          email: email,
+          password: hashedPassword,
+        },
+      });
+    }
+
+    await db.user.update({
+      where: {
+        id: currentUser.user?.id,
+      },
+      data: {
+        username: username,
+        email: email,
+      },
     });
 
-    const authorizationURL = await github.createAuthorizationURL(state, {
-      scopes: ["user:email"],
-    });
-
-    return {
-      success: true,
-      data: authorizationURL.toString(),
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      error: error.message,
-    };
+    return { success: "Ayarlarınız değiştirildi." };
+  } catch {
+    return { error: "Bir şeyler yanlış gitti. Lütfen tekrar deneyin." };
   }
 };

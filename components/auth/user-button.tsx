@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Logout } from "@/lib/actions/auth.actions";
+import { logout } from "@/lib/actions/auth.actions";
 import { UserType } from "@/lib/types";
 import { HomeIcon, LogOutIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
@@ -24,7 +24,7 @@ export const UserButton = ({ user }: { user: UserType }) => {
   useEffect(() => setMounted(true), []);
 
   const handleClick = async () => {
-    await Logout();
+    await logout();
   };
 
   if (!mounted)

@@ -37,7 +37,7 @@ export async function createBook(values: z.infer<typeof BookFormSchema>) {
   }
 }
 
-export async function createNewGroup({ title, bookId }: { title: string; bookId: string }) {
+export async function createNewGroup(title: string, bookId: string) {
   try {
     await db.group.create({
       data: {
@@ -59,7 +59,7 @@ export async function createNewGroup({ title, bookId }: { title: string; bookId:
   }
 }
 
-export async function createNewNote({ bookId, groupId }: { bookId: string; groupId: number }) {
+export async function createNewNote(bookId: string, groupId: number) {
   try {
     const note_ids = await db.note.create({
       data: {
@@ -75,7 +75,7 @@ export async function createNewNote({ bookId, groupId }: { bookId: string; group
   }
 }
 
-export async function createNewTask({ bookId, name }: { bookId: string; name: string }) {
+export async function createNewTask(bookId: string, name: string) {
   try {
     const task_ids = await db.task.create({
       data: {

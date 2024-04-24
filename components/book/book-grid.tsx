@@ -1,12 +1,12 @@
 "use client";
 import { CreateBookButton } from "@/components/book/create-book";
 import { Input } from "@/components/ui/input";
-import { Book } from "@prisma/client";
+import { BookType } from "@/lib/types";
 import { SearchIcon } from "lucide-react";
 import { useState } from "react";
 import { BookCard } from "./book-card";
 
-type Props = { books: Book[] | undefined };
+type Props = { books: BookType[] | undefined };
 
 export const BookCardsGrid = ({ books }: Props) => {
   const [searchValue, setSearchValue] = useState("");

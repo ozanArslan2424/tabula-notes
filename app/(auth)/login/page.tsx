@@ -8,9 +8,5 @@ export default async function LoginPage() {
   if (user) {
     redirect("/dash");
   }
-  return (
-    <div className="mx-auto w-max">
-      <LoginForm />
-    </div>
-  );
+  return <LoginForm />;
 }

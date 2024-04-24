@@ -1,16 +1,13 @@
 import { DeleteUser } from "@/components/admin/delete-user";
-import { AccessDenied } from "@/components/admin/errors";
 import { InviteForm } from "@/components/admin/invite-form";
 import { ChangeAdmin } from "@/components/admin/make-admin";
 import { BugReport } from "@/components/bug-report";
+import { AccessDenied } from "@/components/errors";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getAllUserInfo } from "@/lib/actions/admin.actions";
-import { deleteBug } from "@/lib/actions/delete";
-import { getBugs } from "@/lib/actions/read";
-import { resolveBug } from "@/lib/actions/update";
+import { deleteBug, getAllUserInfo, getBugs, resolveBug } from "@/lib/actions/admin.actions";
 import { getSession } from "@/lib/auth";
 import { BugReportType, UserTableType } from "@/lib/types";
 import { Command, TestTube2Icon, User } from "lucide-react";

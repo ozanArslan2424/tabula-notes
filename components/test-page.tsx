@@ -1,4 +1,4 @@
-import { AccessDenied } from "@/components/admin/errors";
+import { AccessDenied } from "@/components/errors";
 import { GoToGroup } from "@/components/group/go-to-group";
 import { TodoCard } from "@/components/todo/todo-card";
 import { getAllBooks, getBookContents } from "@/lib/actions/read";
