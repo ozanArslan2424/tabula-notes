@@ -1,6 +1,5 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +15,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BugReport } from "../bug-report";
 import { LoadingIcon } from "../custom-loading";
-import { LinkButton } from "../link-button";
 
 export const UserButton = ({ user }: { user: UserType }) => {
   const [mounted, setMounted] = useState(false);
@@ -29,23 +27,29 @@ export const UserButton = ({ user }: { user: UserType }) => {
 
   if (!mounted)
     return (
-      <Button variant="outline" size="icon" disabled>
+      <button disabled>
         <LoadingIcon />
-      </Button>
+      </button>
     );
 
   if (mounted && !user) {
-    return <LinkButton href="/login">Giriş Yap</LinkButton>;
+    return (
+      <Link href="/login" className="btn">
+        Giriş Yap
+      </Link>
+    );
   }
 
   if (mounted && user) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Avatar className="h-9 w-9 cursor-pointer rounded-md border border-input bg-background p-0.5 shadow-sm">
-            <AvatarImage className="rounded-md" src={user?.image!} />
-            <AvatarFallback className="rounded-md">{user?.username ? user?.username[0] : user.email}</AvatarFallback>
-          </Avatar>
+          <button className="flex items-center gap-2">
+            <Avatar>
+              <AvatarImage src={user.image} alt={user.username} />
+              <AvatarFallback className="px-3">{user.username}</AvatarFallback>
+            </Avatar>
+          </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>

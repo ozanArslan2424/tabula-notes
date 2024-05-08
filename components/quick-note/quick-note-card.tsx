@@ -16,7 +16,7 @@ export const QuickNoteCard = ({ note }: { note: QuickNoteType }) => {
   };
 
   return (
-    <div className="group flex w-full items-center justify-between gap-2 rounded-md border py-1 pl-3 pr-1 shadow-sm">
+    <div className="group flex w-full items-center justify-between gap-2 rounded-md border py-1 pl-3 pr-1">
       <p className="hyphens-auto text-wrap break-words">{note.content}</p>
       <Button
         size="sm_icon"

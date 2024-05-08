@@ -1,5 +1,4 @@
 "use client";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { deleteNote } from "@/lib/actions/delete";
 import { updateNote } from "@/lib/actions/update";
 import { NoteType } from "@/lib/types";
@@ -9,6 +8,7 @@ import { useState, useTransition } from "react";
 import ReactMarkdown from "react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
 import remarkGfm from "remark-gfm";
+import { remarkMark } from "remark-mark-highlight";
 import { toast } from "sonner";
 import { useDoubleTap } from "use-double-tap";
 import { LoadingIcon } from "../custom-loading";
@@ -80,7 +80,9 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
   const wordCount = getWordCount(markdown);
 
   return (
-    <Card className={`z-5 relative flex w-full flex-col ${focused ? "bg-accent" : "bg-card"}`}>
+    <div
+      className={`z-5 relative flex w-full flex-col rounded-md border shadow-sm ${focused ? "bg-accent" : "bg-card"}`}
+    >
       <div className="absolute bottom-1 right-1">
         {!focused && isPending && <LoadingIcon size={16} />}
         {!focused && !isPending && status === "success" && (
@@ -91,7 +93,7 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
         )}
       </div>
 
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 py-2">
+      <div className="flex items-center justify-between px-4 py-2">
         <p className="text-xs text-muted-foreground">
           {note.updatedAt
             ? note.updatedAt.toLocaleDateString("tr-TR", {
@@ -115,11 +117,11 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
             <DeleteNoteButton onClick={handleDeleteNote} />
           </div>
         )}
-      </CardHeader>
-      <CardContent className="px-6 py-0">
+      </div>
+      <div className="px-6 py-0">
         {focused ? (
           <TextareaAutosize
-            className="h-full w-full resize-none appearance-none overflow-hidden border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
+            className="h-full w-full resize-none appearance-none overflow-hidden hyphens-auto text-wrap break-words border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
             autoFocus={focused}
             value={markdown}
             onKeyDown={handleKeyDown}
@@ -129,10 +131,10 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
         ) : (
           <div {...doubleTap}>
             <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
+              remarkPlugins={[remarkGfm, remarkMark]}
               className={
                 markdown
-                  ? "prose-xs prose w-full max-w-full pb-4 dark:prose-invert sm:prose-sm prose-p:mb-0 prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-ul:my-0 prose-table:m-0 prose-table:text-xs prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"
+                  ? "prose-xs prose w-full max-w-full pb-4 dark:prose-invert sm:prose-sm prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-em:text-yellow-600 prose-table:m-0 prose-table:text-xs prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"
                   : "w-full pb-4 italic text-muted-foreground/70"
               }
             >
@@ -140,18 +142,18 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
             </ReactMarkdown>
           </div>
         )}
-      </CardContent>
+      </div>
       {focused && (
-        <CardFooter className="justify-between space-y-0 py-2">
+        <div className="flex items-center justify-between space-y-0 px-4 py-2">
           <pre className="text-xs text-muted-foreground">
             <span className="mr-1 rounded-sm bg-background px-1 py-0.5">{wordCount}</span>
             kelime /<span className="ml-2 mr-1 rounded-sm bg-background px-1 py-0.5">{characterCount}</span>
             karakter
           </pre>
           <ActionButtons onCancel={() => setFocused(false)} onSave={handleSave} />
-        </CardFooter>
+        </div>
       )}
-    </Card>
+    </div>
   );
 };
 

@@ -69,6 +69,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.12",
     "prisma": "^5.11.0",
+    "remark-mark-highlight": "^0.1.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

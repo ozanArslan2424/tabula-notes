@@ -25,7 +25,7 @@ export default async function RootLayout({
       <body className={montserrat.className}>
         <ThemeProvider attribute="class">
           <Header user={user} />
-          {children}
+          <div className="h-full min-h-[calc(100dvh-48px)] w-full">{children}</div>
           <Toaster />
           <Analytics />
         </ThemeProvider>

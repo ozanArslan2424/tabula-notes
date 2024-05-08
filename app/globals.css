@@ -4,14 +4,13 @@
 
 @layer base {
   :root {
+    --mark-bg: rgba(226, 61, 113, 0.3);
+
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
-
-    /* --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%; */
 
     --popover: 0 0% 96.1%;
     --popover-foreground: 0 0% 9%;
@@ -51,9 +50,6 @@
 
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
-
-    /* --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%; */
 
     --popover: 0 0% 14.9%;
     --popover-foreground: 0 0% 98%;
@@ -95,14 +91,41 @@
       "rlig" 1,
       "calt" 1;
   }
+
+  .card {
+    @apply flex min-h-12 w-full items-center justify-between rounded-md border bg-card px-4 text-card-foreground shadow-sm;
+  }
+  .card.vertical {
+    @apply flex-col items-stretch justify-normal p-2;
+  }
+  .card.accent {
+    @apply bg-accent text-accent-foreground;
+  }
+  .card.primary {
+    @apply bg-primary text-primary-foreground;
+  }
+  .card.secondary {
+    @apply bg-secondary text-secondary-foreground;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md border px-3 py-0.5 shadow-sm;
+  }
+  .btn.btn-icon {
+    @apply aspect-square h-7 w-7 p-1;
+  }
+
+  button[data-state="checked"] .custom-checked {
+    @apply line-through;
+  }
+
+  mark {
+    @apply rounded-[0.2rem] bg-[var(--mark-bg)] px-2 py-0.5 dark:text-foreground;
+  }
 }
 
 .grainy {
   background: url(https://grainy-gradients.vercel.app/noise.svg);
-}
-
-button[data-state="checked"] .custom-checked {
-  text-decoration: line-through;
 }
 
 .prose-xs {

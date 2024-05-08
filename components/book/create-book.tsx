@@ -73,7 +73,7 @@ export const CreateBookButton = ({ mode }: Props) => {
         <DialogTrigger asChild>
           <Button variant="outline" className="gap-2 bg-background">
             <PlusCircleIcon size={18} className="shrink-0" />
-            <span>Yeni Kitap Oluştur</span>
+            <span>Yeni Kitap</span>
           </Button>
         </DialogTrigger>
       )}

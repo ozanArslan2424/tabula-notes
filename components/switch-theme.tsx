@@ -1,6 +1,5 @@
 "use client";
 import { LoadingIcon } from "@/components/custom-loading";
-import { Button } from "@/components/ui/button";
 import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -13,19 +12,14 @@ export const ThemeToggle = () => {
 
   if (!mounted)
     return (
-      <Button variant="outline" size="icon" disabled className="bg-background">
+      <button disabled>
         <LoadingIcon />
-      </Button>
+      </button>
     );
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
-      onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")}
-      className="bg-background"
-    >
+    <button onClick={() => setTheme(resolvedTheme === "light" ? "dark" : "light")} className="btn btn-icon">
       {resolvedTheme === "light" ? <MoonIcon size={14} /> : <SunIcon size={14} />}
-    </Button>
+    </button>
   );
 };

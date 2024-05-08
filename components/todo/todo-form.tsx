@@ -1,15 +1,18 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { createQuicknote } from "@/lib/actions/create";
+import { createNewTask } from "@/lib/actions/create";
 import { QuicknoteSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircleIcon } from "lucide-react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 
-export const QuickNoteForm = ({ className }: { className?: string }) => {
+export const TodoForm = ({ bookId, className }: { bookId: string; className: string }) => {
+  const [isPending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof QuicknoteSchema>>({
     resolver: zodResolver(QuicknoteSchema),
     defaultValues: {
@@ -19,7 +22,7 @@ export const QuickNoteForm = ({ className }: { className?: string }) => {
 
   const handleSubmit = (values: z.infer<typeof QuicknoteSchema>) => {
     form.reset();
-    createQuicknote(values);
+    createNewTask(bookId, values.content);
   };
 
   return (
@@ -34,16 +37,18 @@ export const QuickNoteForm = ({ className }: { className?: string }) => {
                 <Input
                   {...field}
                   className="h-9 bg-background text-foreground"
-                  placeholder="Hızlıca bir şeyler yazın..."
                   type="text"
                   autoComplete="off"
+                  name="todo"
+                  id="todo"
+                  placeholder="Yapılacak ekle"
                 />
               </FormControl>
             </FormItem>
           )}
         />
         <Button type="submit" size="icon" variant="outline" className="bg-background text-foreground">
-          <span className="sr-only">Hızlı not ekle</span>
+          <span className="sr-only">Yapılacak ekle</span>
           <PlusCircleIcon size={14} className="shrink-0" />
         </Button>
       </form>

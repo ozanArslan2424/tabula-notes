@@ -7,23 +7,31 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { getAllBooks } from "@/lib/actions/read";
-import { getSession } from "@/lib/auth";
 import { BookType } from "@/lib/types";
 import { BookOpenTextIcon, ChevronDownIcon, HomeIcon } from "lucide-react";
 import Link from "next/link";
 import { BookSettings } from "./book-settings-form";
 import { CreateBookButton } from "./create-book";
 
-export const BookSelector = async ({ bookTitle, currentBook }: { bookTitle: string; currentBook: BookType }) => {
-  const { user } = await getSession();
-  const books = await getAllBooks(user?.id!);
+export const BookSelector = async ({
+  userId,
+  bookTitle,
+  currentBook,
+}: {
+  userId: string;
+  bookTitle: string;
+  currentBook: BookType;
+}) => {
+  const books = await getAllBooks(userId);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="group flex w-max cursor-pointer items-center gap-2 rounded-sm px-4 py-2 hover:bg-accent/50">
-          <BookOpenTextIcon size={24} />
-          <h1 className="text-2xl font-semibold tracking-tight">{bookTitle}</h1>
+        <div className="card secondary group cursor-pointer data-[state=open]:bg-secondary/50">
+          <div className="flex items-center gap-2">
+            <BookOpenTextIcon size={24} />
+            <h1 className="text-2xl font-semibold capitalize tracking-tight">{bookTitle}</h1>
+          </div>
           <ChevronDownIcon size={24} className="group-data-[state=open]:rotate-180" />
         </div>
       </DropdownMenuTrigger>

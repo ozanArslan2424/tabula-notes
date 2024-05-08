@@ -13,9 +13,9 @@ export const BookCardsGrid = ({ books }: Props) => {
 
   return (
     <>
-      <div className="mb-4 flex w-full flex-wrap justify-center gap-2 md:justify-normal">
+      <div className="flex w-full gap-2 py-2 md:justify-normal">
         <CreateBookButton mode="default" />
-        <div className="relative">
+        <div className="relative w-full md:max-w-64">
           <SearchIcon size={14} className="absolute left-3 top-2.5" />
           <Input
             onChange={(e) => setSearchValue(e.target.value)}
@@ -23,7 +23,7 @@ export const BookCardsGrid = ({ books }: Props) => {
             type="search"
             name="search"
             placeholder="Kitapları filtrele"
-            className="w-max border border-input bg-background pl-9 text-xs capitalize text-foreground shadow-sm transition-all md:min-w-60"
+            className="border border-input bg-background pl-9 text-xs capitalize text-foreground transition-all"
           />
         </div>
       </div>

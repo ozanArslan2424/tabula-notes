@@ -1,9 +1,9 @@
-import { BookCardsGrid } from "@/components/book/book-grid";
+import { BookCard } from "@/components/book/book-card";
+import { CreateBookButton } from "@/components/book/create-book";
 import { QuickNoteCard } from "@/components/quick-note/quick-note-card";
 import { QuickNoteForm } from "@/components/quick-note/quick-note-form";
 import { getAllBooks, getQuickNotes } from "@/lib/actions/read";
 import { getSession } from "@/lib/auth";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function DashPage() {
@@ -11,36 +11,38 @@ export default async function DashPage() {
   if (!user) redirect("/login");
 
   const books = await getAllBooks(user.id);
-  const quickNotes = await getQuickNotes(user.id);
+  const qNotes = await getQuickNotes(user.id);
 
   return (
-    <div className="flex min-h-[100dvh] w-full flex-col justify-between">
-      <div>
-        <div className="prose px-8 py-4 dark:prose-invert">
-          <h1>Tabula Notlar</h1>
-        </div>
-        <div className="flex w-full flex-col justify-center gap-8 px-8 py-4 md:flex-row md:items-start">
-          <aside className="mb-8 flex flex-col items-center gap-4 md:items-start">
-            <h1 className="text-2xl font-semibold tracking-tight md:text-start">Hızlı Notlar</h1>
-            <QuickNoteForm />
-            <div className="flex w-full flex-col items-center gap-2">
-              {quickNotes && quickNotes.map((note) => <QuickNoteCard key={note.id} note={note} />)}
-            </div>
-          </aside>
+    <div className="flex-row items-start gap-12 px-6 md:flex md:pt-4">
+      <aside className="mb-8 space-y-2 text-center md:text-left">
+        <h1 className="text-2xl font-semibold tracking-tight">Hızlı Notlar</h1>
+        <QuickNoteForm className="flex w-full items-center gap-2 py-2" />
+        {qNotes.map((qNote) => (
+          <QuickNoteCard key={qNote.id} note={qNote} />
+        ))}
+      </aside>
 
-          <main className="md:mx-auto md:w-[1150px]">
-            <div>
-              <h1 className="mb-4 text-2xl font-semibold tracking-tight md:text-start">Kütüphane</h1>
-              <BookCardsGrid books={books} />
-            </div>
-          </main>
+      <main className="mb-8 space-y-2 text-center md:text-left">
+        <h1 className="text-2xl font-semibold tracking-tight">Kütüphane</h1>
+        <div className="py-2">
+          <CreateBookButton mode="default" />
         </div>
-      </div>
-      <footer className="py-2">
-        <p className="text-center text-xs text-muted-foreground">
-          <Link href="https://github.com/ozanArslan2424">Ozan Arslan</Link> © 2024
-        </p>
-      </footer>
+        {/* <BookCardsGrid books={books} /> */}
+        <div className="flex w-full flex-wrap justify-center gap-4 md:justify-normal">
+          {books.length !== 0 ? (
+            books.map((book) => <BookCard key={book.id} book={book} />)
+          ) : (
+            <p className="text-muted-foreground">Henüz hiç kitap eklenmemiş.</p>
+          )}
+        </div>
+      </main>
     </div>
+
+    // <footer>
+    //   <p className="text-center text-xs text-muted-foreground">
+    //     <Link href="https://ozanarslan.vercel.app">Ozan Arslan</Link> © 2024
+    //   </p>
+    // </footer>
   );
 }

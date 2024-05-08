@@ -1,6 +1,6 @@
 import { AccessDenied } from "@/components/errors";
 import { GoToGroup } from "@/components/group/go-to-group";
-import { TodoCard } from "@/components/todo/todo-card";
+import { TodoCard } from "@/components/todo/todo-item";
 import { getAllBooks, getBookContents } from "@/lib/actions/read";
 import { getSession } from "@/lib/auth";
 import { BookType } from "@/lib/types";
