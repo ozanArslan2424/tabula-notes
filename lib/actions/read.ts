@@ -46,7 +46,44 @@ export async function getAllBooks(userId: string) {
   return books;
 }
 
-export async function getBookContents(bookId: string) {
+export async function getBookList(userId: string) {
+  const books = await db.book.findMany({
+    where: {
+      userId: userId,
+    },
+    select: {
+      id: true,
+      title: true,
+    },
+  });
+  return books;
+}
+
+export async function getAllBookInfo(userId: string) {
+  const books = await db.book.findMany({
+    where: {
+      userId: userId,
+    },
+    select: {
+      id: true,
+      userId: true,
+      title: true,
+      description: true,
+      createdAt: true,
+      updatedAt: true,
+      hasTasks: true,
+      _count: {
+        select: {
+          groups: true,
+          tasks: true,
+        },
+      },
+    },
+  });
+  return books;
+}
+
+export async function getBookContent(bookId: string) {
   const book = await db.book.findFirst({
     where: {
       id: bookId,

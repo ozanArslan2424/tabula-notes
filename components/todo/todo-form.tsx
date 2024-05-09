@@ -5,14 +5,11 @@ import { createNewTask } from "@/lib/actions/create";
 import { QuicknoteSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircleIcon } from "lucide-react";
-import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 
-export const TodoForm = ({ bookId, className }: { bookId: string; className: string }) => {
-  const [isPending, startTransition] = useTransition();
-
+export const TodoForm = ({ bookId }: { bookId: string }) => {
   const form = useForm<z.infer<typeof QuicknoteSchema>>({
     resolver: zodResolver(QuicknoteSchema),
     defaultValues: {
@@ -27,7 +24,7 @@ export const TodoForm = ({ bookId, className }: { bookId: string; className: str
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className={className}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="flex w-full items-center gap-2 py-2">
         <FormField
           control={form.control}
           name="content"

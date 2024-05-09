@@ -1,5 +1,5 @@
 "use client";
-import { getBookContents } from "@/lib/actions/read";
+import { getBookContent } from "@/lib/actions/read";
 import { DownloadIcon } from "lucide-react";
 import {
   AlertDialog,
@@ -16,7 +16,7 @@ import { Button } from "../ui/button";
 
 export const DownloadBookButton = ({ bookId }: { bookId: string }) => {
   const downloadMarkdownFile = async () => {
-    const book = await getBookContents(bookId);
+    const book = await getBookContent(bookId);
 
     const markdown = `${book?.groups
       .map((group) => {

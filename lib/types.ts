@@ -18,6 +18,20 @@ export type BookType = {
   groups?: GroupType[];
 };
 
+export type BookInfoType = {
+  id: string;
+  userId: string;
+  title: string;
+  description: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  hasTasks: boolean;
+  _count: {
+    groups: number;
+    tasks: number;
+  };
+};
+
 export type TaskType = {
   id: number;
   name: string;

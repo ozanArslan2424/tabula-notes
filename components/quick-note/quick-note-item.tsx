@@ -6,7 +6,7 @@ import { useTransition } from "react";
 import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
 
-export const QuickNoteCard = ({ note }: { note: QuickNoteType }) => {
+export const QuickNoteItem = ({ note }: { note: QuickNoteType }) => {
   const [isPending, startTransition] = useTransition();
 
   const handleDeleteQNote = (noteId: number) => {

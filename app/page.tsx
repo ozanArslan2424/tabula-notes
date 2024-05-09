@@ -29,7 +29,7 @@ export default function LandingPage() {
         <div className="flex flex-col gap-4 px-4 md:flex-row">
           <LinkButton
             target="_blank"
-            href="https://github.com/ozanArslan2424"
+            href="https://ozanarslan.vercel.app"
             size="lg"
             variant="outline"
             className="w-full border-2 bg-transparent"
