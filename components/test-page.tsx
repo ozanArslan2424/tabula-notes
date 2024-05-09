@@ -1,6 +1,6 @@
 import { AccessDenied } from "@/components/errors";
 import { GoToGroup } from "@/components/group/go-to-group";
-import { TodoCard } from "@/components/todo/todo-item";
+
 import { getAllBooks, getBookContents } from "@/lib/actions/read";
 import { getSession } from "@/lib/auth";
 import { BookType } from "@/lib/types";
@@ -20,7 +20,6 @@ export default async function AdminTestPage() {
         <p className="text-lg text-secondary-foreground">This is a test page.</p>
         <TestArea>
           <div className="flex justify-center gap-8">
-            {book.tasks && <TodoCard bookId={book.id} tasks={book.tasks} />}
             <GoToGroup currentBook={book} />
           </div>
         </TestArea>

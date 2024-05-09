@@ -8,7 +8,9 @@ import { redirect } from "next/navigation";
 
 export default async function SettingsPage() {
   const { user } = await getSession();
+
   if (!user) redirect("/login");
+
   return (
     <>
       {user.role === "ADMIN" && (
