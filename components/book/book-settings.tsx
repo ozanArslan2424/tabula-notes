@@ -17,9 +17,7 @@ import { Input } from "@/components/ui/input";
 import { deleteBook } from "@/lib/actions/delete";
 import { updateBookSettings } from "@/lib/actions/update";
 import { BookFormSchema } from "@/lib/schemas";
-import { BookType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Settings2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -27,7 +25,15 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { DropdownMenuItem } from "../ui/dropdown-menu";
 
-export const BookSettings = ({ book, mode }: { book: BookType; mode: "full" | "compact" }) => {
+type Props = {
+  bookId: string;
+  bookTitle: string;
+  bookDescription: string | null;
+  bookHasTasks: boolean;
+  children: React.ReactNode;
+};
+
+export default function BookSettings({ bookId, bookTitle, bookDescription, bookHasTasks, children }: Props) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -36,15 +42,15 @@ export const BookSettings = ({ book, mode }: { book: BookType; mode: "full" | "c
   const form = useForm<z.infer<typeof BookFormSchema>>({
     resolver: zodResolver(BookFormSchema),
     defaultValues: {
-      title: book.title,
-      description: book.description || "",
-      hasTasks: book.hasTasks,
+      title: bookTitle,
+      description: bookDescription || "",
+      hasTasks: bookHasTasks,
     },
   });
 
   const handleSubmit = (values: z.infer<typeof BookFormSchema>) => {
     startTransition(() => {
-      updateBookSettings(book.id, values).then((data) => {
+      updateBookSettings(bookId, values).then((data) => {
         if (data?.error) {
           toast.error(data?.error);
         }
@@ -57,28 +63,18 @@ export const BookSettings = ({ book, mode }: { book: BookType; mode: "full" | "c
   };
   return (
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
-      {mode === "full" && (
-        <DialogTrigger asChild>
-          <DropdownMenuItem className="gap-2 font-semibold">
-            <Settings2Icon size={18} className="shrink-0" />
-            <span>Kitap Ayarları</span>
-          </DropdownMenuItem>
-        </DialogTrigger>
-      )}
-      {mode === "compact" && (
-        <DialogTrigger asChild>
-          <DropdownMenuItem
-            onClick={(e) => {
-              e.preventDefault();
-              setOpen(true);
-            }}
-            className="flex items-center gap-2"
-          >
-            <Settings2Icon size={14} className="shrink-0" />
-            Düzenle
-          </DropdownMenuItem>
-        </DialogTrigger>
-      )}
+      <DialogTrigger asChild>
+        <DropdownMenuItem
+          onClick={(e) => {
+            e.preventDefault();
+            setOpen(true);
+          }}
+          className="flex items-center gap-2"
+        >
+          {children}
+        </DropdownMenuItem>
+      </DialogTrigger>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Kitap Ayarları</DialogTitle>
@@ -159,7 +155,7 @@ export const BookSettings = ({ book, mode }: { book: BookType; mode: "full" | "c
                 className="mt-4"
                 onClick={() => {
                   startTransition(() => {
-                    deleteBook(book.id!).then(() => {
+                    deleteBook(bookId!).then(() => {
                       router.push("/dash");
                     });
                   });
@@ -173,4 +169,4 @@ export const BookSettings = ({ book, mode }: { book: BookType; mode: "full" | "c
       </DialogContent>
     </Dialog>
   );
-};
+}

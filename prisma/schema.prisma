@@ -43,9 +43,11 @@ model User {
   accounts       Account[]
   sessions       Session[]
   registerTokens RegisterToken[]
-  books          Book[]
-  quicknotes     QuickNote[]
   bugs           Bug[]
+
+  books      Book[]
+  quicknotes QuickNote[]
+  tasks      Task[]
 }
 
 model RegisterToken {
@@ -59,53 +61,6 @@ model RegisterToken {
   @@unique([email, token])
 }
 
-model Book {
-  id          String   @id @default(uuid())
-  title       String
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  hasTasks    Boolean  @default(false)
-  groups      Group[]
-  tasks       Task[]
-  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String
-}
-
-model Task {
-  id        Int      @id @default(autoincrement())
-  name      String
-  completed Boolean  @default(false)
-  createdAt DateTime @default(now())
-  Book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  bookId    String
-}
-
-model QuickNote {
-  id      Int    @id @default(autoincrement())
-  content String
-  User    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String
-}
-
-model Group {
-  id        Int      @id @default(autoincrement())
-  title     String
-  createdAt DateTime @default(now())
-  notes     Note[]
-  Book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  bookId    String
-}
-
-model Note {
-  id        Int      @id @default(autoincrement())
-  content   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  groupId   Int
-}
-
 model Bug {
   id          Int      @id @default(autoincrement())
   subject     String
@@ -114,4 +69,53 @@ model Bug {
   User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   resolved    Boolean  @default(false)
+}
+
+//--------------------------------------------------------------------//
+
+model Book {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  hasTasks    Boolean  @default(false)
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  notes Note[]
+  tasks Task[]
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  name      String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  Book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId String
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+}
+
+model QuickNote {
+  id      Int    @id @default(autoincrement())
+  content String
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  bookId String
 }

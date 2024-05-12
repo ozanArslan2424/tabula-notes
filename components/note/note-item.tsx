@@ -1,5 +1,4 @@
 "use client";
-import { deleteNote } from "@/lib/actions/delete";
 import { updateNote } from "@/lib/actions/update";
 import { NoteType } from "@/lib/types";
 import { getCharacterCount, getWordCount } from "@/lib/utils";
@@ -9,26 +8,25 @@ import ReactMarkdown from "react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
 import remarkGfm from "remark-gfm";
 import { remarkMark } from "remark-mark-highlight";
-import { toast } from "sonner";
 import { useDoubleTap } from "use-double-tap";
 import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
-import { DeleteNoteButton } from "./delete-button";
+import DeleteNoteButton from "./delete-note";
+import DownloadNoteButton from "./download-note";
+import NoteTitle from "./note-title";
 
 type Props = {
-  bookId?: string;
-  groupId: number;
   note: NoteType;
 };
 
-export const NoteCard = ({ bookId, groupId, note }: Props) => {
+export default function NoteItem({ note }: Props) {
   const [focused, setFocused] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "fail">("idle");
   const [markdown, setMarkdown] = useState(note.content || "");
   const [isPending, startTransition] = useTransition();
-  const [status, setStatus] = useState<"idle" | "success" | "fail">("idle");
 
-  const doubleTap = useDoubleTap((event) => {
-    event.preventDefault();
+  const doubleTap = useDoubleTap((e) => {
+    e.preventDefault();
     setFocused(true);
   });
 
@@ -38,22 +36,11 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
     e.target.value = temp_value;
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setMarkdown(value);
-  };
-
   const handleSave = () => {
     setFocused(false);
     startTransition(() => {
       updateNote(note.id, markdown).then((data) => {
-        if (data.error) {
-          toast.error(data.error);
-          setStatus("fail");
-        }
-        if (data.success) {
-          setStatus("success");
-        }
+        setStatus(data.success ? "success" : "fail");
       });
     });
   };
@@ -65,107 +52,81 @@ export const NoteCard = ({ bookId, groupId, note }: Props) => {
     }
   };
 
-  const handleDeleteNote = () => {
-    deleteNote(note.id, groupId, bookId!).then((data) => {
-      if (data.error) {
-        toast.error(data.error);
-      } else {
-        toast.success(data.success);
-      }
-    });
-  };
-
   const convertedMarkdown = markdown.replace(/(?:\r\n|\r|\n)/g, "  \n");
   const characterCount = getCharacterCount(markdown);
   const wordCount = getWordCount(markdown);
 
   return (
-    <div
-      className={`z-5 relative flex w-full flex-col rounded-md border shadow-sm ${focused ? "bg-accent" : "bg-card"}`}
-    >
-      <div className="absolute bottom-1 right-1">
-        {!focused && isPending && <LoadingIcon size={16} />}
-        {!focused && !isPending && status === "success" && (
-          <CheckIcon size={16} strokeWidth={4} className="text-success/70" />
-        )}
-        {!focused && !isPending && status === "fail" && (
-          <XIcon size={32} strokeWidth={4} className="animate-pulse text-destructive" />
-        )}
+    <div className="grid h-full grid-flow-row grid-cols-1 grid-rows-[61px_auto]">
+      <div className="sticky top-0 z-10 flex h-[61px] items-center justify-between border-b border-primary/10 bg-background px-6">
+        <div className="flex items-center gap-2">
+          <NoteTitle noteTitle={note.title} noteId={note.id} />
+        </div>
+
+        <div className="flex items-center gap-2">
+          {!focused &&
+            (isPending ? (
+              <LoadingIcon size={16} />
+            ) : status === "success" ? (
+              <CheckIcon size={16} strokeWidth={4} className="text-success/70" />
+            ) : (
+              status === "fail" && <XIcon size={32} strokeWidth={4} className="animate-pulse text-destructive" />
+            ))}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setFocused(!focused)}
+            className={focused ? "border border-primary/10 hover:bg-primary/10" : "border border-transparent"}
+          >
+            {focused ? "Vazgeç" : "Yazıyı Düzenle"}
+          </Button>
+
+          {!focused && <DownloadNoteButton note={note} />}
+          {!focused && <DeleteNoteButton note={note} bookId={note.bookId} />}
+
+          {focused && (
+            <Button
+              variant="outline"
+              size="sm_icon"
+              onClick={handleSave}
+              className="border-primary/10 hover:bg-primary/10"
+            >
+              <SaveIcon size={16} />
+            </Button>
+          )}
+        </div>
       </div>
 
-      <div className="flex items-center justify-between px-4 py-2">
-        <p className="text-xs text-muted-foreground">
-          {note.updatedAt
-            ? note.updatedAt.toLocaleDateString("tr-TR", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              })
-            : note.createdAt.toLocaleDateString("tr-TR", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              })}
-        </p>
-        {focused ? (
-          <ActionButtons onCancel={() => setFocused(false)} onSave={handleSave} />
-        ) : (
-          <div className="flex items-center gap-1">
-            <Button className="h-7 px-3 text-xs" variant="ghost" onClick={() => setFocused(true)}>
-              Düzenle
-            </Button>
-            <DeleteNoteButton onClick={handleDeleteNote} />
-          </div>
-        )}
-      </div>
-      <div className="px-6 py-0">
-        {focused ? (
-          <TextareaAutosize
-            className="h-full w-full resize-none appearance-none overflow-hidden hyphens-auto text-wrap break-words border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
-            autoFocus={focused}
-            value={markdown}
-            onKeyDown={handleKeyDown}
-            onChange={handleChange}
-            onFocus={moveCaretAtEnd}
-          />
-        ) : (
-          <div {...doubleTap}>
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm, remarkMark]}
-              className={
-                markdown
-                  ? "prose-xs prose w-full max-w-full pb-4 dark:prose-invert sm:prose-sm prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-em:text-yellow-600 prose-table:m-0 prose-table:text-xs prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"
-                  : "w-full pb-4 italic text-muted-foreground/70"
-              }
-            >
-              {markdown ? convertedMarkdown : "Not içeriği bulunmuyor. Düzenlemek için tıkla."}
-            </ReactMarkdown>
-          </div>
-        )}
-      </div>
-      {focused && (
-        <div className="flex items-center justify-between space-y-0 px-4 py-2">
-          <pre className="text-xs text-muted-foreground">
-            <span className="mr-1 rounded-sm bg-background px-1 py-0.5">{wordCount}</span>
+      {focused ? (
+        <div className="relative bg-accent px-8 py-4">
+          <pre className="absolute bottom-2 right-6 text-xs text-muted-foreground">
+            <span className="mr-1 rounded-sm bg-background px-1 py-0.5">{wordCount ? wordCount : "0"}</span>
             kelime /<span className="ml-2 mr-1 rounded-sm bg-background px-1 py-0.5">{characterCount}</span>
             karakter
           </pre>
-          <ActionButtons onCancel={() => setFocused(false)} onSave={handleSave} />
+          <TextareaAutosize
+            className="w-full resize-none appearance-none overflow-hidden hyphens-auto text-wrap break-words border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
+            autoFocus={focused}
+            value={markdown}
+            onKeyDown={handleKeyDown}
+            onChange={(e) => setMarkdown(e.target.value)}
+            onFocus={moveCaretAtEnd}
+          />
         </div>
+      ) : (
+        <article {...doubleTap} className="bg-background px-8 py-4">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm, remarkMark]}
+            className={
+              markdown
+                ? "prose-xs prose w-full max-w-full pb-4 dark:prose-invert sm:prose-sm prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-em:text-yellow-600 prose-table:m-0 prose-table:text-xs prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"
+                : "w-full pb-4 italic text-muted-foreground/70"
+            }
+          >
+            {markdown ? convertedMarkdown : "Not içeriği bulunmuyor. Düzenlemek için çift tıkla."}
+          </ReactMarkdown>
+        </article>
       )}
     </div>
   );
-};
-
-const ActionButtons = ({ onCancel, onSave }: { onCancel: () => void; onSave: () => void }) => {
-  return (
-    <div className="flex items-center gap-3">
-      <Button variant="ghost" className="h-7 px-3 text-xs hover:bg-background/70" onClick={onCancel}>
-        Vazgeç
-      </Button>
-      <Button variant="default" size="sm_icon" className="border-none" onClick={onSave}>
-        <SaveIcon size={16} />
-      </Button>
-    </div>
-  );
-};
+}

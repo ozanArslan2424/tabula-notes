@@ -14,8 +14,9 @@ export async function getAllUserInfo() {
       _count: {
         select: {
           books: true,
-          accounts: true,
+          tasks: true,
           quicknotes: true,
+          accounts: true,
           sessions: true,
         },
       },

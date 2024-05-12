@@ -1,3 +1,4 @@
+"use client";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,19 +10,32 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { deleteNote } from "@/lib/actions/delete";
+import { NoteType } from "@/lib/types";
 import { Trash2Icon } from "lucide-react";
+import { useTransition } from "react";
+import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
 
 type Props = {
-  onClick: () => void;
+  note: NoteType;
+  bookId: string;
 };
 
-export const DeleteNoteButton = ({ onClick }: Props) => {
+export default function DeleteNoteButton({ note, bookId }: Props) {
+  const [isPending, startTransition] = useTransition();
+
+  const handleDeleteNote = () => {
+    startTransition(() => {
+      deleteNote(note.id, bookId);
+    });
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="sm_icon" variant="ghost" className="hover:text-destructive">
-          <Trash2Icon size={14} />
+        <Button size="sm_icon" variant="outline" className="hover:text-destructive">
+          {isPending ? <LoadingIcon /> : <Trash2Icon size={14} />}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -32,7 +46,7 @@ export const DeleteNoteButton = ({ onClick }: Props) => {
         <AlertDialogFooter>
           <AlertDialogCancel>Vazgeç</AlertDialogCancel>
           <AlertDialogAction
-            onClick={onClick}
+            onClick={handleDeleteNote}
             className="bg-destructive text-destructive-foreground hover:text-destructive"
           >
             Sil
@@ -41,4 +55,4 @@ export const DeleteNoteButton = ({ onClick }: Props) => {
       </AlertDialogContent>
     </AlertDialog>
   );
-};
+}

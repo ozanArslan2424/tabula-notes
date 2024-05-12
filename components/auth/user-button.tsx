@@ -16,12 +16,12 @@ import { useEffect, useState } from "react";
 import { BugReport } from "../bug-report";
 import { LoadingIcon } from "../custom-loading";
 
-export const UserButton = ({ user }: { user: UserType }) => {
+export default function UserButton({ user }: { user: UserType }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
 
-  const handleClick = async () => {
+  const handleLogout = async () => {
     await logout();
   };
 
@@ -44,7 +44,7 @@ export const UserButton = ({ user }: { user: UserType }) => {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-2">
+          <button className="flex items-center gap-2 rounded-md bg-primary/10 transition-colors hover:bg-primary/20">
             <Avatar>
               <AvatarImage src={user.image} alt={user.username} />
               <AvatarFallback className="px-3">{user.username}</AvatarFallback>
@@ -53,24 +53,25 @@ export const UserButton = ({ user }: { user: UserType }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>
-            <div>
-              <p className="text-base">{user?.username}</p>
-              <p className="text-xs font-normal text-muted-foreground">{user?.email}</p>
-            </div>
+            <p className="text-base">{user?.username}</p>
+            <p className="text-xs font-normal text-muted-foreground">{user?.email}</p>
           </DropdownMenuLabel>
 
           <DropdownMenuSeparator />
+
           <Link href="/dash">
             <DropdownMenuItem>
               <HomeIcon size={14} className="mr-2" /> Kütüphane
             </DropdownMenuItem>
           </Link>
+
           <Link href="/settings">
             <DropdownMenuItem>
               <Settings2Icon size={14} className="mr-2" /> Ayarlar
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem className="group" onClick={handleClick}>
+
+          <DropdownMenuItem className="group" onClick={handleLogout}>
             <LogOutIcon size={14} className="mr-2 group-hover:text-destructive" /> Çıkış Yap
           </DropdownMenuItem>
 
@@ -81,4 +82,4 @@ export const UserButton = ({ user }: { user: UserType }) => {
       </DropdownMenu>
     );
   }
-};
+}

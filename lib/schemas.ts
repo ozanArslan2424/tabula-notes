@@ -6,7 +6,7 @@ export const BookFormSchema = z.object({
   hasTasks: z.boolean(),
 });
 
-export const GroupFormSchema = z.object({
+export const NoteFormSchema = z.object({
   title: z.string().min(2, { message: "Grup adı en az 2 karakterden oluşmalıdır." }),
 });
 
@@ -27,7 +27,7 @@ export const VerifySchema = z.object({
 });
 
 export const QuicknoteSchema = z.object({
-  content: z.string().min(1, { message: "Not içeriği boş olamaz." }),
+  name: z.string().min(1, { message: "Not içeriği boş olamaz." }),
 });
 
 export const BugSchema = z.object({

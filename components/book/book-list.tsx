@@ -1,14 +1,16 @@
 "use client";
 import { BookInfoType } from "@/lib/types";
 import { useMemo } from "react";
-import { BookItem } from "./book-item";
-import { CreateBookButton } from "./create-book";
+import BatchCreate from "../create/batch";
+import BookItem from "./book-item";
+import CreateBookButton from "./create-book";
 
 type Props = {
   books: BookInfoType[];
+  userId: string;
 };
 
-export default function BookList({ books }: Props) {
+export default function BookList({ books, userId }: Props) {
   const booksMemo = useMemo(
     () =>
       books.map((book) => {
@@ -21,8 +23,11 @@ export default function BookList({ books }: Props) {
   return (
     <>
       <h1 className="pb-2 text-2xl font-semibold tracking-tight">Kütüphane</h1>
-      <CreateBookButton mode="default" />
-      <div className="flex h-full w-full flex-wrap items-stretch justify-center gap-4 pt-2 md:justify-normal">
+      <div className="flex items-center gap-2">
+        <CreateBookButton mode="default" />
+        <BatchCreate userId={userId} />
+      </div>
+      <div className="flex h-full w-full flex-wrap justify-center gap-4 pt-2 md:justify-normal">
         {booksMemo.length !== 0 ? (
           booksMemo
             .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())

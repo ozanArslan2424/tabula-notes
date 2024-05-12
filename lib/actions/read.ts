@@ -29,23 +29,6 @@ export async function getUserById(id: string) {
   }
 }
 
-export async function getAllBooks(userId: string) {
-  const books = await db.book.findMany({
-    where: {
-      userId: userId,
-    },
-    include: {
-      groups: {
-        include: {
-          notes: true,
-        },
-      },
-      tasks: true,
-    },
-  });
-  return books;
-}
-
 export async function getBookList(userId: string) {
   const books = await db.book.findMany({
     where: {
@@ -74,7 +57,7 @@ export async function getAllBookInfo(userId: string) {
       hasTasks: true,
       _count: {
         select: {
-          groups: true,
+          notes: true,
           tasks: true,
         },
       },
@@ -102,21 +85,16 @@ export async function getBookContent(bookId: string) {
           name: true,
           completed: true,
           bookId: true,
+          userId: true,
         },
       },
-      groups: {
+      notes: {
         select: {
           id: true,
           title: true,
+          content: true,
           createdAt: true,
-          notes: {
-            select: {
-              id: true,
-              content: true,
-              createdAt: true,
-              updatedAt: true,
-            },
-          },
+          bookId: true,
         },
       },
     },

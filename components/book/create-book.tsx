@@ -29,7 +29,7 @@ type Props = {
   mode: "menu" | "default";
 };
 
-export const CreateBookButton = ({ mode }: Props) => {
+export default function CreateBookButton({ mode }: Props) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -62,7 +62,13 @@ export const CreateBookButton = ({ mode }: Props) => {
     <Dialog open={open} onOpenChange={() => setOpen(!open)}>
       {mode === "menu" && (
         <DialogTrigger asChild>
-          <DropdownMenuItem className="gap-2 font-semibold">
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.preventDefault();
+              setOpen(true);
+            }}
+            className="gap-2 font-semibold"
+          >
             <PlusCircleIcon size={18} className="shrink-0" />
             <span>Yeni Kitap Oluştur</span>
           </DropdownMenuItem>
@@ -154,4 +160,4 @@ export const CreateBookButton = ({ mode }: Props) => {
       </DialogContent>
     </Dialog>
   );
-};
+}

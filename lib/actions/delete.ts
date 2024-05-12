@@ -42,30 +42,11 @@ export async function deleteBook(bookId: string) {
   }
 }
 
-export async function deleteGroup(groupId: number, bookId: string) {
-  try {
-    await db.group.delete({
-      where: {
-        id: groupId,
-        bookId: bookId,
-      },
-    });
-
-    return { success: "Grup başarıyla silindi" };
-  } catch (error) {
-    console.error("fail to del group", error);
-    return { error: "Grup silinemedi." };
-  } finally {
-    revalidatePath(`/dash/${bookId}`, "page");
-  }
-}
-
-export async function deleteNote(noteId: number, groupId: number, bookId: string) {
+export async function deleteNote(noteId: number, bookId: string) {
   try {
     await db.note.delete({
       where: {
         id: noteId,
-        groupId: groupId,
       },
     });
 

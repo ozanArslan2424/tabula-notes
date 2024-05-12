@@ -8,34 +8,31 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { BookType } from "@/lib/types";
-import { BookOpenTextIcon, ChevronDownIcon, HomeIcon } from "lucide-react";
+import { BookOpenTextIcon, ChevronDownIcon, HomeIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
-import { BookSettings } from "./book-settings-form";
-import { CreateBookButton } from "./create-book";
+import BookSettings from "./book-settings";
+import CreateBookButton from "./create-book";
 
-export const BookSelector = async ({
+export default function BookSelector({
   bookList,
   currentBook,
 }: {
   bookList: { id: string; title: string }[];
   currentBook: BookType;
-}) => {
+}) {
   const bookListMemo = useMemo(() => {
     return bookList.filter((book) => book.id !== currentBook.id);
   }, [bookList, currentBook]);
 
   const currentBookMemo = useMemo(() => {
-    return {
-      ...currentBook,
-    };
+    return { ...currentBook };
   }, [currentBook]);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        {/* <div className="card secondary group cursor-pointer data-[state=open]:bg-secondary/50"> */}
-        <div className="group flex min-h-12 cursor-pointer items-center justify-between px-2">
+        <div className="group flex min-h-[60px] cursor-pointer items-center justify-between border-b border-primary/10 px-6 py-4 hover:bg-accent/50">
           <div className="flex items-center gap-2">
             <BookOpenTextIcon size={24} />
             <h1 className="text-xl font-semibold capitalize tracking-tight">{currentBookMemo.title}</h1>
@@ -50,7 +47,17 @@ export const BookSelector = async ({
             <span>Kütüphane</span>
           </DropdownMenuItem>
         </Link>
-        <BookSettings book={currentBookMemo} mode="full" />
+        <BookSettings
+          bookId={currentBookMemo.id}
+          bookTitle={currentBookMemo.title}
+          bookDescription={currentBookMemo.description}
+          bookHasTasks={currentBookMemo.hasTasks}
+        >
+          <div className="flex items-center gap-2">
+            <Settings2Icon size={18} className="shrink-0" />
+            <span>Kitap Ayarları</span>
+          </div>
+        </BookSettings>
         <CreateBookButton mode="menu" />
 
         <DropdownMenuSeparator />
@@ -67,4 +74,4 @@ export const BookSelector = async ({
       </DropdownMenuContent>
     </DropdownMenu>
   );
-};
+}

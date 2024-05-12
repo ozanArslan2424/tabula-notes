@@ -1,4 +1,5 @@
 "use client";
+import { NoteType } from "@/lib/types";
 import { DownloadIcon } from "lucide-react";
 import {
   AlertDialog,
@@ -13,12 +14,18 @@ import {
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 
-export const DownloadNoteButton = ({ markdown, noteId }: { markdown: string; noteId: number }) => {
+type Props = {
+  note: NoteType;
+};
+
+export default function DownloadNoteButton({ note }: Props) {
+  const markdown = `# ${note.title} \n\n---\n\n ${note.content}`;
+
   const downloadMarkdownFile = () => {
     const link = document.createElement("a");
     const file = new Blob([markdown], { type: "text/plain" });
     link.href = URL.createObjectURL(file);
-    link.download = `${noteId}.md`;
+    link.download = `${note.title}.md`;
     link.click();
     URL.revokeObjectURL(link.href);
   };
@@ -26,13 +33,13 @@ export const DownloadNoteButton = ({ markdown, noteId }: { markdown: string; not
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="sm_icon" variant="ghost">
+        <Button size="sm_icon" variant="outline">
           <DownloadIcon size={14} />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Not indirilecek.</AlertDialogTitle>
+          <AlertDialogTitle className="capitalize">{note.title} adlı not indirilecek.</AlertDialogTitle>
           <AlertDialogDescription>
             Bu notu bilgisayarına <code>.md</code> dosyası olarak indirmek istediğine emin misin?
           </AlertDialogDescription>
@@ -46,4 +53,4 @@ export const DownloadNoteButton = ({ markdown, noteId }: { markdown: string; not
       </AlertDialogContent>
     </AlertDialog>
   );
-};
+}

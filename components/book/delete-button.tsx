@@ -17,7 +17,7 @@ type Props = {
   onClick: () => void;
 };
 
-export const DeleteBookButton = ({ onClick }: Props) => {
+export default function DeleteBookButton({ onClick }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -51,4 +51,4 @@ export const DeleteBookButton = ({ onClick }: Props) => {
       </AlertDialogContent>
     </AlertDialog>
   );
-};
+}

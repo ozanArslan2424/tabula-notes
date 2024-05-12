@@ -24,6 +24,7 @@ export default async function AdminPage() {
   if (user && user.role === "ADMIN") {
     const users: UserTableType[] = await getAllUserInfo();
     const bugs: BugReportType[] = await getBugs();
+
     return (
       <Tabs defaultValue="users" className="min-h-screen">
         <header className="flex w-full flex-col gap-4 border-b bg-muted/40 px-4 py-4 sm:flex-row sm:items-center sm:py-8 lg:h-[60px] lg:px-6">
@@ -126,6 +127,7 @@ export default async function AdminPage() {
                     <TableHead>Book Count</TableHead>
                     <TableHead>Account Count</TableHead>
                     <TableHead>Quicknote Count</TableHead>
+                    <TableHead>Tasks Count</TableHead>
                     <TableHead>Session Count</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -142,6 +144,7 @@ export default async function AdminPage() {
                       <TableCell>{user._count.books}</TableCell>
                       <TableCell>{user._count.accounts}</TableCell>
                       <TableCell>{user._count.quicknotes}</TableCell>
+                      <TableCell>{user._count.tasks}</TableCell>
                       <TableCell>{user._count.sessions}</TableCell>
                     </TableRow>
                   ))}

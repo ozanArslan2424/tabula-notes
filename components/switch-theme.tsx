@@ -4,7 +4,7 @@ import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-export const ThemeToggle = () => {
+export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const { setTheme, resolvedTheme } = useTheme();
 
@@ -22,4 +22,4 @@ export const ThemeToggle = () => {
       {resolvedTheme === "light" ? <MoonIcon size={14} /> : <SunIcon size={14} />}
     </button>
   );
-};
+}

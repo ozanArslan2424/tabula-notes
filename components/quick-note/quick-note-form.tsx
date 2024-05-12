@@ -9,11 +9,11 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 
-export const QuickNoteForm = ({ className }: { className?: string }) => {
+export default function QuickNoteForm({ className }: { className?: string }) {
   const form = useForm<z.infer<typeof QuicknoteSchema>>({
     resolver: zodResolver(QuicknoteSchema),
     defaultValues: {
-      content: "",
+      name: "",
     },
   });
 
@@ -27,7 +27,7 @@ export const QuickNoteForm = ({ className }: { className?: string }) => {
       <form onSubmit={form.handleSubmit(handleSubmit)} className={className}>
         <FormField
           control={form.control}
-          name="content"
+          name="name"
           render={({ field }) => (
             <FormItem className="w-full min-w-max">
               <FormControl>
@@ -49,4 +49,4 @@ export const QuickNoteForm = ({ className }: { className?: string }) => {
       </form>
     </Form>
   );
-};
+}

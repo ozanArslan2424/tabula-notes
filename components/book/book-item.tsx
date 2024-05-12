@@ -1,14 +1,14 @@
 "use client";
 import { deleteBook } from "@/lib/actions/delete";
 import { BookInfoType } from "@/lib/types";
-import { CheckSquareIcon, ComponentIcon, MoreVerticalIcon } from "lucide-react";
+import { CheckSquareIcon, MoreVerticalIcon, NotebookTextIcon, Settings2Icon } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useTransition } from "react";
 import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
-import { BookSettings } from "./book-settings-form";
-import { DeleteBookButton } from "./delete-button";
+import BookSettings from "./book-settings";
+import DeleteBookButton from "./delete-button";
 
 export type BookInfoProps = {
   id: string;
@@ -22,7 +22,7 @@ export type BookInfoProps = {
   };
 };
 
-export const BookItem = ({ book }: { book: BookInfoType }) => {
+export default function BookItem({ book }: { book: BookInfoType }) {
   const [isPending, startTransition] = useTransition();
 
   const bookInfo = useMemo(
@@ -43,7 +43,7 @@ export const BookItem = ({ book }: { book: BookInfoType }) => {
 
   const handleDelete = () => {
     startTransition(() => {
-      deleteBook(bookInfo.id!);
+      deleteBook(book.id);
     });
   };
 
@@ -64,7 +64,17 @@ export const BookItem = ({ book }: { book: BookInfoType }) => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <BookSettings mode="compact" book={book} />
+            <BookSettings
+              bookId={book.id}
+              bookTitle={book.title}
+              bookDescription={book.description}
+              bookHasTasks={book.hasTasks}
+            >
+              <div className="flex items-center gap-2">
+                <Settings2Icon size={14} className="shrink-0" />
+                <span>Düzenle</span>
+              </div>
+            </BookSettings>
             <DeleteBookButton onClick={handleDelete} />
           </DropdownMenuContent>
         </DropdownMenu>
@@ -85,13 +95,13 @@ export const BookItem = ({ book }: { book: BookInfoType }) => {
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="mt-2 flex w-max items-center justify-center gap-2 rounded-sm bg-primary px-2 py-1 text-primary-foreground">
-            <ComponentIcon size={12} />
-            <p className="text-xs">{bookInfo._count.groups}</p>
+          <div className="mt-2 flex w-max items-center justify-center gap-2 rounded-sm border border-primary/50 px-2 py-1 text-foreground">
+            <NotebookTextIcon size={14} />
+            <p className="text-xs">{bookInfo._count.notes}</p>
           </div>
           {bookInfo.hasTasks && (
             <div className="mt-2 flex w-max items-center justify-center gap-2 rounded-sm bg-emerald-300 px-2 py-1 text-black">
-              <CheckSquareIcon size={12} />
+              <CheckSquareIcon size={14} />
               <p className="text-xs">{bookInfo._count.tasks}</p>
             </div>
           )}
@@ -99,4 +109,4 @@ export const BookItem = ({ book }: { book: BookInfoType }) => {
       </Link>
     </div>
   );
-};
+}

@@ -1,6 +1,6 @@
 "use server";
 import db from "@/lib/db";
-import { BookFormSchema, BugSchema, QuicknoteSchema } from "@/lib/schemas";
+import { BookFormSchema, BugSchema, NoteFormSchema, QuicknoteSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
 import { getSession } from "../auth";
@@ -14,18 +14,13 @@ export async function createBook(values: z.infer<typeof BookFormSchema>) {
         description: values.description,
         hasTasks: values.hasTasks,
         userId: user?.id!,
-        groups: {
+        notes: {
           create: {
             title: new Date().toLocaleDateString("tr-TR", {
               day: "2-digit",
               month: "2-digit",
               year: "numeric",
             }),
-            notes: {
-              create: {
-                content: "",
-              },
-            },
           },
         },
       },
@@ -37,48 +32,28 @@ export async function createBook(values: z.infer<typeof BookFormSchema>) {
   }
 }
 
-export async function createNewGroup(title: string, bookId: string) {
+export async function createNewNote(values: z.infer<typeof NoteFormSchema>, bookId: string) {
   try {
-    await db.group.create({
+    await db.note.create({
       data: {
-        title: title,
+        title: values.title,
         bookId: bookId,
-        notes: {
-          create: {
-            content: "",
-          },
-        },
       },
     });
-    return { success: "Grup başarıyla oluşturuldu" };
+
+    return { success: "Not başarıyla oluşturuldu." };
   } catch (error) {
-    console.error("Failed to create:", error);
-    return { error: "Beklenmeyen bir sorun çıktı." };
+    return { error: "Not oluşturulamadı." };
   } finally {
     revalidatePath(`/dash/${bookId}`, "page");
   }
 }
 
-export async function createNewNote(bookId: string, groupId: number) {
-  try {
-    const note_ids = await db.note.create({
-      data: {
-        groupId: groupId,
-      },
-    });
-
-    return note_ids.id;
-  } catch (error) {
-    console.error("Failed to create:", error);
-  } finally {
-    revalidatePath(`/dash/${bookId}`, "page");
-  }
-}
-
-export async function createNewTask(bookId: string, name: string) {
+export async function createNewTask(userId: string, bookId: string, name: string) {
   try {
     const task_ids = await db.task.create({
       data: {
+        userId: userId,
         bookId: bookId,
         name: name,
       },
@@ -97,7 +72,7 @@ export async function createQuicknote(values: z.infer<typeof QuicknoteSchema>) {
   try {
     await db.quickNote.create({
       data: {
-        content: values.content,
+        content: values.name,
         userId: user?.id!,
       },
     });

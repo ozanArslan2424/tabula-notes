@@ -1,51 +1,37 @@
 "use client";
-import { GroupType } from "@/lib/types";
+import { NoteType } from "@/lib/types";
 import { toSnakeCase } from "@/lib/utils";
 import { useMemo } from "react";
-import { NoteGroupTitleCard } from "../group/group-card";
-import { NewNoteButton } from "./create-note";
-import { NoteCard } from "./note-item";
+import NoteItem from "./note-item";
 
 type Props = {
-  bookId: string;
-  groups: GroupType[];
+  notes: NoteType[];
 };
 
-export default function NoteList({ bookId, groups }: Props) {
-  const groupsMemo = useMemo(
+export default function NoteList({ notes }: Props) {
+  const notesMemo = useMemo(
     () =>
-      groups.map((group) => {
+      notes.map((note) => {
         return {
-          ...group,
+          ...note,
         };
       }),
-    [groups],
+    [notes],
   );
 
   return (
     <>
-      {groupsMemo
-        .sort((a, b) => a.id - b.id)
-        .map((group) => {
-          const notes = group.notes;
-          const groupIdSnake = toSnakeCase(group.title);
-
+      {notesMemo
+        .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+        .map((note) => {
           return (
-            <div
-              id={groupIdSnake}
-              key={group.id}
-              className="flex h-full w-[360px] shrink-0 flex-col gap-2 overflow-y-scroll sm:w-[576px]"
+            <section
+              id={toSnakeCase(note.title)}
+              key={note.id}
+              className="h-full w-screen shrink-0 snap-start overflow-y-scroll border-b border-r border-primary/10 shadow-sm md:w-[48vw]"
             >
-              <NoteGroupTitleCard group={group} bookId={bookId} />
-              {notes
-                .sort((a, b) => a.id - b.id)
-                .map((note) => (
-                  <NoteCard key={note.id} bookId={bookId} groupId={group.id} note={note} />
-                ))}
-              <div className="flex w-full items-center justify-center pb-12">
-                <NewNoteButton groupId={group.id} bookId={bookId} />
-              </div>
-            </div>
+              <NoteItem key={note.id} note={note} />
+            </section>
           );
         })}
     </>

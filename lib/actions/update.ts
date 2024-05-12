@@ -4,19 +4,20 @@ import { BookFormSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import * as z from "zod";
 
-export async function updateGroupTitle(groupId: number, title: string) {
+export async function updateNoteTitle(noteId: number, newTitle: string) {
   try {
-    await db.group.update({
+    await db.note.update({
       where: {
-        id: groupId,
+        id: noteId,
       },
       data: {
-        title,
+        title: newTitle,
       },
     });
-    return { success: "Grup ismi değiştirildi." };
+    return { success: "Not başlığı güncellendi." };
   } catch (error) {
-    console.error("Failed to change group title:", error);
+    console.error("Failed to update note title:", error);
+    return { error: "Not başlığı güncellenemedi." };
   }
 }
 

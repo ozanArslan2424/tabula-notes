@@ -9,17 +9,17 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Form, FormControl, FormField, FormItem } from "../ui/form";
 
-export const TodoForm = ({ bookId }: { bookId: string }) => {
+export default function TodoForm({ bookId, userId }: { bookId: string; userId: string }) {
   const form = useForm<z.infer<typeof QuicknoteSchema>>({
     resolver: zodResolver(QuicknoteSchema),
     defaultValues: {
-      content: "",
+      name: "",
     },
   });
 
   const handleSubmit = (values: z.infer<typeof QuicknoteSchema>) => {
     form.reset();
-    createNewTask(bookId, values.content);
+    createNewTask(userId, bookId, values.name);
   };
 
   return (
@@ -27,7 +27,7 @@ export const TodoForm = ({ bookId }: { bookId: string }) => {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="flex w-full items-center gap-2 py-2">
         <FormField
           control={form.control}
-          name="content"
+          name="name"
           render={({ field }) => (
             <FormItem className="w-full min-w-max">
               <FormControl>
@@ -51,4 +51,4 @@ export const TodoForm = ({ bookId }: { bookId: string }) => {
       </form>
     </Form>
   );
-};
+}

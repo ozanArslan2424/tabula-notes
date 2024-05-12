@@ -1,10 +1,10 @@
 "use client";
-import { TodoItem } from "@/components/todo/todo-item";
+import TodoItem from "@/components/todo/todo-item";
 import { TaskType } from "@/lib/types";
 import { useMemo } from "react";
-import { TodoForm } from "./todo-form";
+import TodoForm from "./todo-form";
 
-export default function TodoList({ tasks, bookId }: { tasks: TaskType[]; bookId: string }) {
+export default function TodoList({ tasks, bookId, userId }: { tasks: TaskType[]; bookId: string; userId: string }) {
   const tasksMemo = useMemo(
     () =>
       tasks.map((task) => {
@@ -15,11 +15,11 @@ export default function TodoList({ tasks, bookId }: { tasks: TaskType[]; bookId:
     [tasks],
   );
   return (
-    <>
-      <TodoForm bookId={bookId} />
+    <div className="flex flex-col gap-1 px-4 py-2">
+      <TodoForm bookId={bookId} userId={userId} />
       {tasksMemo.map((task) => (
         <TodoItem key={task.id} task={task} bookId={bookId} />
       ))}
-    </>
+    </div>
   );
 }

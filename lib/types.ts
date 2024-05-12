@@ -7,15 +7,15 @@ export type UserType = {
 } | null;
 
 export type BookType = {
-  userId: string;
   id: string;
   title: string;
   description: string | null;
-  hasTasks?: boolean;
   createdAt: Date;
   updatedAt: Date;
+  hasTasks: boolean;
+  notes: NoteType[];
   tasks?: TaskType[];
-  groups?: GroupType[];
+  userId: string;
 };
 
 export type BookInfoType = {
@@ -27,7 +27,7 @@ export type BookInfoType = {
   updatedAt: Date;
   hasTasks: boolean;
   _count: {
-    groups: number;
+    notes: number;
     tasks: number;
   };
 };
@@ -37,38 +37,35 @@ export type TaskType = {
   name: string;
   completed: boolean;
   bookId: string;
-};
-
-export type GroupType = {
-  id: number;
-  title: string;
-  createdAt: Date;
-  notes: NoteType[];
+  userId: string;
 };
 
 export type NoteType = {
   id: number;
+  title: string;
   content: string | null;
   createdAt: Date;
-  updatedAt: Date;
+  bookId: string;
 };
 
 export type QuickNoteType = {
   id: number;
   content: string;
+  userId: string;
 };
 
 export type UserTableType = {
   id: string;
-  email: string | null;
   username: string | null;
+  email: string | null;
   image: string | null;
   role: "USER" | "ADMIN";
   _count: {
+    books: number;
+    tasks: number;
+    quicknotes: number;
     accounts: number;
     sessions: number;
-    books: number;
-    quicknotes: number;
   };
 };
 
@@ -76,7 +73,7 @@ export type BugReportType = {
   id: number;
   subject: string;
   description: string;
-  userId: string;
   createdAt: Date;
   resolved: boolean;
+  userId: string;
 };

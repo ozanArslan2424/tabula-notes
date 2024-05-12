@@ -8,7 +8,7 @@ import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 
-export const TodoItem = ({ task, bookId }: { task: TaskType; bookId: string }) => {
+export default function TodoItem({ task, bookId }: { task: TaskType; bookId: string }) {
   const [completed, setCompleted] = useState<boolean>(task.completed);
   const [isPending, startTransition] = useTransition();
 
@@ -53,4 +53,4 @@ export const TodoItem = ({ task, bookId }: { task: TaskType; bookId: string }) =
       </Button>
     </div>
   );
-};
+}
