@@ -15,7 +15,7 @@ export default function TodoList({ tasks, bookId, userId }: { tasks: TaskType[];
     [tasks],
   );
   return (
-    <div className="flex flex-col gap-1 px-4 py-2">
+    <div className="flex flex-col gap-1 p-2">
       <TodoForm bookId={bookId} userId={userId} />
       {tasksMemo.map((task) => (
         <TodoItem key={task.id} task={task} bookId={bookId} />
