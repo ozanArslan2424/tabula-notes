@@ -1,7 +1,7 @@
 "use client";
 import { updateNote } from "@/lib/actions/update";
 import { NoteType } from "@/lib/types";
-import { getCharacterCount, getWordCount } from "@/lib/utils";
+import { cn, getCharacterCount, getWordCount } from "@/lib/utils";
 import { CheckIcon, SaveIcon, XIcon } from "lucide-react";
 import { useState, useTransition } from "react";
 import ReactMarkdown from "react-markdown";
@@ -57,11 +57,10 @@ export default function NoteItem({ note }: Props) {
   const wordCount = getWordCount(markdown);
 
   return (
-    <div className="grid h-full grid-flow-row grid-cols-1 grid-rows-[61px_auto]">
+    // <div className="grid h-full grid-flow-row grid-cols-1 grid-rows-[61px_auto]">
+    <>
       <div className="sticky top-0 z-10 flex h-[61px] items-center justify-between border-b border-primary/10 bg-background px-6">
-        <div className="flex items-center gap-2">
-          <NoteTitle noteTitle={note.title} noteId={note.id} />
-        </div>
+        <NoteTitle noteTitle={note.title} noteId={note.id} />
 
         <div className="flex items-center gap-2">
           {!focused &&
@@ -97,13 +96,8 @@ export default function NoteItem({ note }: Props) {
         </div>
       </div>
 
-      {focused ? (
-        <div className="relative bg-accent px-8 py-4">
-          <pre className="absolute bottom-2 right-6 text-xs text-muted-foreground">
-            <span className="mr-1 rounded-sm bg-background px-1 py-0.5">{wordCount ? wordCount : "0"}</span>
-            kelime /<span className="ml-2 mr-1 rounded-sm bg-background px-1 py-0.5">{characterCount}</span>
-            karakter
-          </pre>
+      <article className={cn("max-h-screen px-8 py-4", focused ? "bg-accent" : "bg-background")}>
+        {focused ? (
           <TextareaAutosize
             className="w-full resize-none appearance-none overflow-hidden hyphens-auto text-wrap break-words border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
             autoFocus={focused}
@@ -112,10 +106,9 @@ export default function NoteItem({ note }: Props) {
             onChange={(e) => setMarkdown(e.target.value)}
             onFocus={moveCaretAtEnd}
           />
-        </div>
-      ) : (
-        <article {...doubleTap} className="bg-background px-8 py-4">
+        ) : (
           <ReactMarkdown
+            {...doubleTap}
             remarkPlugins={[remarkGfm, remarkMark]}
             className={
               markdown
@@ -125,8 +118,16 @@ export default function NoteItem({ note }: Props) {
           >
             {markdown ? convertedMarkdown : "Not içeriği bulunmuyor. Düzenlemek için çift tıkla."}
           </ReactMarkdown>
-        </article>
-      )}
-    </div>
+        )}
+      </article>
+    </>
   );
+}
+
+{
+  /* <pre className="absolute bottom-2 right-6 text-xs text-muted-foreground">
+            <span className="mr-1 rounded-sm bg-background px-1 py-0.5">{wordCount ? wordCount : "0"}</span>
+            kelime /<span className="ml-2 mr-1 rounded-sm bg-background px-1 py-0.5">{characterCount}</span>
+            karakter
+          </pre> */
 }

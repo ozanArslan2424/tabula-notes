@@ -25,17 +25,13 @@ export default function BookSelector({
     return bookList.filter((book) => book.id !== currentBook.id);
   }, [bookList, currentBook]);
 
-  const currentBookMemo = useMemo(() => {
-    return { ...currentBook };
-  }, [currentBook]);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="group flex min-h-[60px] cursor-pointer items-center justify-between border-b border-primary/10 px-6 py-4 hover:bg-accent/50">
+        <div className="group flex min-h-[60px] cursor-pointer items-center justify-between border-b border-primary/10 px-6 py-4 hover:bg-accent/50 data-[state=open]:bg-accent/50">
           <div className="flex items-center gap-2">
             <BookOpenTextIcon size={24} />
-            <h1 className="text-xl font-semibold capitalize tracking-tight">{currentBookMemo.title}</h1>
+            <h1 className="text-xl font-semibold capitalize tracking-tight">{currentBook.title}</h1>
           </div>
           <ChevronDownIcon size={24} className="group-data-[state=open]:rotate-180" />
         </div>
@@ -48,10 +44,10 @@ export default function BookSelector({
           </DropdownMenuItem>
         </Link>
         <BookSettings
-          bookId={currentBookMemo.id}
-          bookTitle={currentBookMemo.title}
-          bookDescription={currentBookMemo.description}
-          bookHasTasks={currentBookMemo.hasTasks}
+          bookId={currentBook.id}
+          bookTitle={currentBook.title}
+          bookDescription={currentBook.description}
+          bookHasTasks={currentBook.hasTasks}
         >
           <div className="flex items-center gap-2">
             <Settings2Icon size={18} className="shrink-0" />

@@ -1,6 +1,6 @@
 "use client";
 import { NoteType } from "@/lib/types";
-import { toSnakeCase } from "@/lib/utils";
+import { cn, toSnakeCase } from "@/lib/utils";
 import { useMemo } from "react";
 import NoteItem from "./note-item";
 
@@ -28,7 +28,11 @@ export default function NoteList({ notes }: Props) {
             <section
               id={toSnakeCase(note.title)}
               key={note.id}
-              className="h-full w-screen shrink-0 snap-start overflow-y-scroll border-b border-r border-primary/10 shadow-sm md:w-[48vw]"
+              className={cn(
+                "shrink-0 snap-start overflow-y-scroll",
+                "border-b border-r border-primary/10 shadow-sm",
+                "max-h-[calc(100dvh-56px)] w-screen md:max-h-[calc(100dvh-48px)] md:w-[48vw]",
+              )}
             >
               <NoteItem key={note.id} note={note} />
             </section>
