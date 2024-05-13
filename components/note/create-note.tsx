@@ -43,7 +43,7 @@ export default function CreateNoteButton({ bookId }: { bookId: string }) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit)}
-          className="flex w-80 min-w-80 flex-col justify-center gap-2 border-b border-r border-primary/10 bg-accent px-6 py-4"
+          className="flex w-screen md:w-80 snap-start min-w-full md:min-w-80 flex-col justify-center gap-2 border-b border-r border-primary/10 bg-accent px-6 py-4"
         >
           <FormField
             control={form.control}
@@ -86,7 +86,7 @@ export default function CreateNoteButton({ bookId }: { bookId: string }) {
   return (
     <button
       onClick={() => setOpen(true)}
-      className="flex w-20 min-w-20 items-center justify-center hover:bg-muted/20"
+      className="flex w-screen md:w-20 snap-start md:min-w-20 min-w-full items-center justify-center hover:bg-muted/20"
       disabled={isPending}
     >
       {isPending ? <LoadingIcon size={14} /> : <PlusCircleIcon className="shrink-0" size={20} />}

@@ -12,7 +12,6 @@ import { getSession } from "@/lib/auth";
 import { BugReportType, UserTableType } from "@/lib/types";
 import { Command, TestTube2Icon, User } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import AdminTestPage from "../../components/test-page";
 
 export default async function AdminPage() {
@@ -27,28 +26,20 @@ export default async function AdminPage() {
 
     return (
       <Tabs defaultValue="users" className="min-h-screen">
-        <header className="flex w-full flex-col gap-4 border-b bg-muted/40 px-4 py-4 sm:flex-row sm:items-center sm:py-8 lg:h-[60px] lg:px-6">
-          <Link href="/" className="font-semibold">
-            <h1>Tabula Notlar</h1>
-          </Link>
-
-          <nav>
-            <TabsList className="w-full bg-transparent text-sm font-medium">
-              <TabsTrigger value="users">
-                <User className="mr-2 h-4 w-4" />
-                Kullanıcılar
-              </TabsTrigger>
-              <TabsTrigger value="commands">
-                <Command className="mr-2 h-4 w-4" />
-                Komuta Merkezi
-              </TabsTrigger>
-              <TabsTrigger value="test">
-                <TestTube2Icon className="mr-2 h-4 w-4" />
-                Test
-              </TabsTrigger>
-            </TabsList>
-          </nav>
-        </header>
+        <TabsList className="w-full bg-transparent text-sm font-medium flex items-center justify-center gap-2 my-2">
+          <TabsTrigger value="users" className="bg-accent hover:bg-accent/50 data-[state=active]:border-primary/20 border border-transparent">
+            <User className="mr-2 h-4 w-4" />
+            Kullanıcılar
+          </TabsTrigger>
+          <TabsTrigger value="commands" className="bg-accent hover:bg-accent/50 data-[state=active]:border-primary/20 border border-transparent">
+            <Command className="mr-2 h-4 w-4" />
+            Komuta Merkezi
+          </TabsTrigger>
+          <TabsTrigger value="test" className="bg-accent hover:bg-accent/50 data-[state=active]:border-primary/20 border border-transparent">
+            <TestTube2Icon className="mr-2 h-4 w-4" />
+            Test
+          </TabsTrigger>
+        </TabsList>
 
         <TabsContent value="users">
           <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
@@ -151,7 +142,7 @@ export default async function AdminPage() {
                 </TableBody>
                 <TableFooter>
                   <TableRow>
-                    <TableCell colSpan={8}>Total User Count</TableCell>
+                    <TableCell colSpan={9}>Total User Count</TableCell>
                     <TableCell>{users.length}</TableCell>
                   </TableRow>
                 </TableFooter>

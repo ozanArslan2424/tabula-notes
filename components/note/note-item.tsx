@@ -1,14 +1,13 @@
 "use client";
 import { updateNote } from "@/lib/actions/update";
 import { NoteType } from "@/lib/types";
-import { cn, getCharacterCount, getWordCount } from "@/lib/utils";
+import { getCharacterCount, getWordCount } from "@/lib/utils";
 import { CheckIcon, SaveIcon, XIcon } from "lucide-react";
 import { useState, useTransition } from "react";
 import ReactMarkdown from "react-markdown";
 import TextareaAutosize from "react-textarea-autosize";
 import remarkGfm from "remark-gfm";
 import { remarkMark } from "remark-mark-highlight";
-import { useDoubleTap } from "use-double-tap";
 import { LoadingIcon } from "../custom-loading";
 import { Button } from "../ui/button";
 import DeleteNoteButton from "./delete-note";
@@ -24,11 +23,6 @@ export default function NoteItem({ note }: Props) {
   const [status, setStatus] = useState<"idle" | "success" | "fail">("idle");
   const [markdown, setMarkdown] = useState(note.content || "");
   const [isPending, startTransition] = useTransition();
-
-  const doubleTap = useDoubleTap((e) => {
-    e.preventDefault();
-    setFocused(true);
-  });
 
   function moveCaretAtEnd(e: React.FocusEvent<HTMLTextAreaElement>) {
     var temp_value = e.target.value;
@@ -57,7 +51,6 @@ export default function NoteItem({ note }: Props) {
   const wordCount = getWordCount(markdown);
 
   return (
-    // <div className="grid h-full grid-flow-row grid-cols-1 grid-rows-[61px_auto]">
     <>
       <div className="sticky top-0 z-10 flex h-[61px] items-center justify-between border-b border-primary/10 bg-background px-6">
         <NoteTitle noteTitle={note.title} noteId={note.id} />
@@ -96,7 +89,7 @@ export default function NoteItem({ note }: Props) {
         </div>
       </div>
 
-      <article className={cn("max-h-screen px-8 py-4", focused ? "bg-accent" : "bg-background")}>
+      <article className="max-h-screen px-8 py-4 bg-background">
         {focused ? (
           <TextareaAutosize
             className="w-full resize-none appearance-none overflow-hidden hyphens-auto text-wrap break-words border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
@@ -108,7 +101,6 @@ export default function NoteItem({ note }: Props) {
           />
         ) : (
           <ReactMarkdown
-            {...doubleTap}
             remarkPlugins={[remarkGfm, remarkMark]}
             className={
               markdown
@@ -116,7 +108,7 @@ export default function NoteItem({ note }: Props) {
                 : "w-full pb-4 italic text-muted-foreground/70"
             }
           >
-            {markdown ? convertedMarkdown : "Not içeriği bulunmuyor. Düzenlemek için çift tıkla."}
+            {markdown ? convertedMarkdown : "Not içeriği bulunmuyor. Düzenlemek için üstteki butonu kullan."}
           </ReactMarkdown>
         )}
       </article>
