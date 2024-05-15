@@ -89,7 +89,7 @@ export default function NoteItem({ note }: Props) {
         </div>
       </div>
 
-      <article className="max-h-screen px-8 py-4 bg-background">
+      <article className="max-h-screen bg-background px-8 py-4">
         {focused ? (
           <TextareaAutosize
             className="w-full resize-none appearance-none overflow-hidden hyphens-auto text-wrap break-words border-none bg-transparent py-2 text-sm leading-relaxed outline-none"
@@ -102,6 +102,7 @@ export default function NoteItem({ note }: Props) {
         ) : (
           <ReactMarkdown
             remarkPlugins={[remarkGfm, remarkMark]}
+            rehypePlugins={[]}
             className={
               markdown
                 ? "prose-xs prose w-full max-w-full pb-4 dark:prose-invert sm:prose-sm prose-p:hyphens-auto prose-p:text-wrap prose-p:break-words prose-em:text-yellow-600 prose-table:m-0 prose-table:text-xs prose-hr:my-4 prose-hr:border-primary/70 dark:prose-em:text-yellow-500"

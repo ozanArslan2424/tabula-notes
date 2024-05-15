@@ -20,27 +20,26 @@ export const InviteRequestForm = () => {
   };
 
   return success ? (
-    <div className="w-full rounded-md bg-emerald-500 px-3 py-2 text-center">
+    <div className="container w-full rounded-md bg-emerald-500 px-3 py-2 text-center">
       <p className="text-white">Davet isteğin alındı. :&#41;</p>
     </div>
   ) : (
-    <form onSubmit={handleRegisterRequest} className="space-y-2 px-4">
+    <form onSubmit={handleRegisterRequest} className="space-y-2">
       <Label htmlFor="new_email">Kaydolmak mı istiyorsun?</Label>
-      <div className="flex items-center gap-4">
-        <Input
-          disabled={success}
-          id="new_email"
-          name="new_email"
-          type="email"
-          required
-          placeholder="E-Posta Adresi"
-          value={reqMail}
-          onChange={(e) => setReqMail(e.target.value)}
-        />
-        <Button variant="custom_submit" type="submit" disabled={success}>
-          Davet Kodu İste
-        </Button>
-      </div>
+
+      <Input
+        disabled={success}
+        id="new_email"
+        name="new_email"
+        type="email"
+        required
+        placeholder="E-Posta Adresi"
+        value={reqMail}
+        onChange={(e) => setReqMail(e.target.value)}
+      />
+      <Button className="w-full" variant="outline" type="submit" disabled={success}>
+        Davet Kodu İste
+      </Button>
     </form>
   );
 };

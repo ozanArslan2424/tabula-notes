@@ -1,21 +1,18 @@
 "use client";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { login } from "@/lib/actions/auth.actions";
-import { sendEmail } from "@/lib/actions/mail.actions";
 import { LoginSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { redirect } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 
-export const LoginForm = ({ simple }: { simple?: boolean }) => {
+export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
-  const [reqMail, setReqMail] = useState<string>("");
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -34,76 +31,39 @@ export const LoginForm = ({ simple }: { simple?: boolean }) => {
     });
   };
 
-  const handleRegisterRequest = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await sendEmail({
-      type: "request",
-      email: reqMail,
-    }).then(() => toast.success("Davet isteğin alındı."));
-  };
-
   return (
-    <>
-      <h1 className="mb-4 text-center text-3xl font-bold">Giriş Yap</h1>
-      <Form {...form}>
-        <form className="min-w-96 space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>E-posta Adresi</FormLabel>
-                <FormControl>
-                  <Input disabled={isPending} {...field} id="email" type="email" required placeholder="mail@mail.com" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Şifre</FormLabel>
-                <FormControl>
-                  <Input disabled={isPending} {...field} id="password" type="password" required />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button className="w-full" type="submit" disabled={isPending}>
-            {isPending ? "Giriş yapılıyor..." : "Giriş Yap"}
-          </Button>
-        </form>
-      </Form>
-      {!simple && (
-        <>
-          <div className="my-4 flex items-center gap-2">
-            <div className="h-0.5 w-full bg-accent"></div>
-            <p className="text-primary">veya</p>
-            <div className="h-0.5 w-full bg-accent"></div>
-          </div>
-
-          <form onSubmit={handleRegisterRequest} className="space-y-4">
-            <Label htmlFor="new_email">Kaydolmak için başvur.</Label>
-            <Input
-              disabled={isPending}
-              id="new_email"
-              name="new_email"
-              type="email"
-              required
-              placeholder="E-Posta Adresi"
-              value={reqMail}
-              onChange={(e) => setReqMail(e.target.value)}
-            />
-            <Button variant="secondary" className="w-full" type="submit" disabled={isPending}>
-              Davet Kodu İste
-            </Button>
-          </form>
-        </>
-      )}
-    </>
+    <Form {...form}>
+      <form className="min-w-96 space-y-4" onSubmit={form.handleSubmit(handleSubmit)}>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>E-posta Adresi</FormLabel>
+              <FormControl>
+                <Input disabled={isPending} {...field} id="email" type="email" required placeholder="mail@mail.com" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Şifre</FormLabel>
+              <FormControl>
+                <Input disabled={isPending} {...field} id="password" type="password" required />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button className="w-full" type="submit" disabled={isPending}>
+          {isPending ? "Giriş yapılıyor..." : "Giriş Yap"}
+        </Button>
+      </form>
+    </Form>
   );
 };
