@@ -126,12 +126,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     },
   });
 
-  if (!existingUser) {
-    return { error: "Kullanıcı bulunamadı." };
-  }
-
-  if (!existingUser.password) {
-    return { error: "Kullanıcı bulunamadı." };
+  if (!existingUser || !existingUser.password) {
+    return { error: "E-posta veya şifre değerlerinden biri yanlış." };
   }
 
   const isValidPassword = await argon2.verify(existingUser.password, password);
