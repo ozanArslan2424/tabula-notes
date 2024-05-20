@@ -1,10 +1,12 @@
 import { InviteRequestForm } from "@/components/auth/invite-request-form";
 import { LinkButton } from "@/components/link-button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 export default function LandingPage() {
   return (
     <main className="p-8">
+      <Link href="tabulanotes.vercel.app"><span className="text-2xl my-4">YENİ ADRESE GİT: <code>tabulanotes.vercel.app</code></span></Link>
       <div className="prose mx-auto my-8 text-center dark:prose-invert">
         <h1>Tabula Notlar</h1>
       </div>
