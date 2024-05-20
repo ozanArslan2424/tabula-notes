@@ -19,7 +19,7 @@ export default async function DashPage() {
       </aside>
 
       <main className="mb-8 grow space-y-2 text-center md:text-left">
-      <Link href="tabulanotes.vercel.app"><span className="text-2xl my-4">YENİ ADRESE GİT: <code>tabulanotes.vercel.app</code></span></Link>
+      <Link href="https://tabulanotes.vercel.app"><span className="text-2xl my-4">YENİ ADRESE GİT: <code>https://tabulanotes.vercel.app</code></span></Link>
 
         <BookList books={books} userId={user.id} />
       </main>
