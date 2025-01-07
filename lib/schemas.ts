@@ -45,3 +45,24 @@ export const profileSchema = z.object({
 	createdAt: z.string(),
 	updatedAt: z.string(),
 });
+
+export const noteSchema = z.object({
+	id: z.string(),
+	userId: z.string(),
+	title: z.string().min(3, { message: "Title must be at least 3 characters long" }),
+	description: z.optional(z.string()),
+	content: z.string(),
+	createdAt: z.string(),
+	updatedAt: z.string(),
+});
+
+export const insertNoteSchema = noteSchema.pick({ title: true, content: true });
+
+export const updateContentSchema = noteSchema.pick({ content: true });
+
+export const updateNoteSchema = noteSchema.pick({
+	title: true,
+	description: true,
+});
+
+export const allNotesSchema = z.array(noteSchema);

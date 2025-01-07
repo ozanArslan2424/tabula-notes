@@ -1,3 +1,4 @@
+import throttle from "lodash.throttle";
 import Watcher from "watcher";
 import { log } from "@/lib/log";
 import config from "@/routes.config";
@@ -53,9 +54,6 @@ export function makeServerRoute(fp: string) {
 }
 
 export async function writeGeneratedFile() {
-	const extractTypes = `
-`;
-
 	const clientGlobalTypes = `
 type ClientRoutePath = ${[...clientMap].map((path) => `"${path}"`).join(" | ")};
 type ClientRoutePathParam<P extends ClientRoutePath> = ExtractRouteParams<P>;
@@ -82,8 +80,11 @@ declare global {${clientMap.size === 0 ? "" : clientGlobalTypes}\n${serverMap.si
 export const clientRoutePaths:ClientRoutePath[] = ${JSON.stringify([...clientMap])};
 export const serverRoutePaths:ServerRoutePath[] = ${JSON.stringify([...serverMap])};`;
 
+	log.success("Generated routes file written!");
 	await Bun.write(config.generatedFilePath, content);
 }
+
+const writeGeneratedFileThrottled = throttle(writeGeneratedFile, 2000);
 
 w.on("ready", () => log.start("👀 Watching routes..."));
 w.on("error", log.error);
@@ -100,9 +101,7 @@ w.on("add", (fp) => {
 		serverMap.add(route.path);
 	}
 
-	log.debug("map", serverMap);
-	log.count("--");
-	writeGeneratedFile();
+	writeGeneratedFileThrottled();
 });
 
 w.on("unlink", (fp) => {
@@ -115,9 +114,7 @@ w.on("unlink", (fp) => {
 		if (!route) return;
 		serverMap.delete(route.path);
 	}
-	log.debug("map", serverMap);
-	log.count("--");
-	writeGeneratedFile();
+	writeGeneratedFileThrottled();
 });
 
 w.on("rename", (fp, newFp) => {
@@ -138,9 +135,7 @@ w.on("rename", (fp, newFp) => {
 		if (!newRoute) return;
 		serverMap.add(newRoute.path);
 	}
-	log.debug("map", serverMap);
-	log.count("--");
-	writeGeneratedFile();
+	writeGeneratedFileThrottled();
 });
 
 w.on("unlinkDir", (dir) => {
@@ -152,9 +147,7 @@ w.on("unlinkDir", (dir) => {
 		serverMap = new Set([...serverMap].filter((route) => !route.startsWith(dirPath)));
 	}
 
-	log.debug("map", { clientMap, serverMap });
-	log.count("--");
-	writeGeneratedFile();
+	writeGeneratedFileThrottled();
 });
 
 w.on("renameDir", (dir, newDir) => {
@@ -182,7 +175,5 @@ w.on("renameDir", (dir, newDir) => {
 		});
 	}
 
-	log.debug("map", { clientMap, serverMap });
-	log.count("--");
-	writeGeneratedFile();
+	writeGeneratedFileThrottled();
 });

@@ -10,14 +10,14 @@ type ExtractSearchParams<P> = P extends `${infer _Start}?${infer Search}`
 	: { [k in string]: string };
 
 declare global {
-type ClientRoutePath = "/change-password" | "/forgot-password" | "/profile" | "/register" | "/" | "/login" | "/verify-email";
+type ClientRoutePath = "/note" | "/profile" | "/register" | "/login" | "/note/:id" | "/change-password" | "/verify-email" | "/forgot-password" | "/";
 type ClientRoutePathParam<P extends ClientRoutePath> = ExtractRouteParams<P>;
 type ClientRouteSearchParam<P extends ClientRoutePath> = ExtractSearchParams<P>;
 
-type ServerRoutePath = "/api/auth/login" | "/api/auth/logout" | "/api/auth/profile" | "/api/auth/verify-email-resend" | "/api/auth/change-password" | "/api/auth/verify-email" | "/api/auth/register" | "/api/auth/forgot-password";
+type ServerRoutePath = "/api/note/update/:id" | "/api/auth/verify-email" | "/api/auth/profile" | "/api/auth/change-password" | "/api/auth/register" | "/api/auth/forgot-password" | "/api/note/create" | "/api/note/all" | "/api/auth/login" | "/api/note/:id" | "/api/auth/logout" | "/api/auth/verify-email-resend";
 type ServerRoutePathParam<P extends ServerRoutePath> = ExtractRouteParams<P>;
 type ServerRouteSearchParam<P extends ServerRoutePath> = ExtractSearchParams<P>;
 }
 
-export const clientRoutePaths:ClientRoutePath[] = ["/change-password","/forgot-password","/profile","/register","/","/login","/verify-email"];
-export const serverRoutePaths:ServerRoutePath[] = ["/api/auth/login","/api/auth/logout","/api/auth/profile","/api/auth/verify-email-resend","/api/auth/change-password","/api/auth/verify-email","/api/auth/register","/api/auth/forgot-password"];
+export const clientRoutePaths:ClientRoutePath[] = ["/note","/profile","/register","/login","/note/:id","/change-password","/verify-email","/forgot-password","/"];
+export const serverRoutePaths:ServerRoutePath[] = ["/api/note/update/:id","/api/auth/verify-email","/api/auth/profile","/api/auth/change-password","/api/auth/register","/api/auth/forgot-password","/api/note/create","/api/note/all","/api/auth/login","/api/note/:id","/api/auth/logout","/api/auth/verify-email-resend"];

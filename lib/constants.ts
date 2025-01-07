@@ -1,6 +1,6 @@
 export const metadata = {
-	title: "Kit",
-	description: "A starter kit for building web apps.",
+	title: "Tabula Notes",
+	description: "A simple note taking app.",
 };
 
 export const SESSION_COOKIE_NAME = "auth-session";

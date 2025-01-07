@@ -38,3 +38,15 @@ export const verification = sqliteTable("verification", {
 	expiresAt: timestamp("expiresAt").notNull(),
 	createdAt: timestamp("createdAt"),
 });
+
+export const note = sqliteTable("note", {
+	id: text("id").primaryKey(),
+	userId: text("userId")
+		.notNull()
+		.references(() => user.id),
+	title: text("title").notNull(),
+	description: text("description"),
+	content: text("content").notNull(),
+	createdAt: timestamp("createdAt").notNull(),
+	updatedAt: timestamp("updatedAt").notNull(),
+});
